@@ -1,14 +1,14 @@
 'use client';
 
-import { BookOpenCheck, Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { BookOpenCheck, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
       {/* Main Card */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="p-8">
@@ -23,43 +23,47 @@ export default function LoginPage() {
 
           {/* Tabs */}
           <div className="flex bg-gray-100 p-1 rounded-xl mb-8">
-            <button className="flex-1 py-2 text-sm font-medium text-blue-700 bg-white rounded-lg shadow-sm transition-all">
+            <Link href="/login" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 rounded-lg transition-all text-center">
               Log In
-            </button>
-            <Link href="/signup" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 rounded-lg transition-all text-center">
-              Sign Up
             </Link>
+            <button className="flex-1 py-2 text-sm font-medium text-blue-700 bg-white rounded-lg shadow-sm transition-all">
+              Sign Up
+            </button>
           </div>
 
           {/* Form */}
           <form className="space-y-5">
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Email Address
+                Full Name
               </label>
-              <div className="relative">
-                <input
-                  type="email"
-                  placeholder="researcher@university.edu"
-                  className="w-full pl-4 pr-4 py-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all placeholder:text-gray-400"
-                />
-              </div>
+              <input
+                type="text"
+                placeholder="Enter your full name"
+                className="w-full px-4 py-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all placeholder:text-gray-400"
+              />
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Password
-                </label>
-                <a href="#" className="text-xs font-semibold text-blue-700 hover:text-blue-800">
-                  FORGOT PASSWORD?
-                </a>
-              </div>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                placeholder="name@university.edu"
+                className="w-full px-4 py-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all placeholder:text-gray-400"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="••••••••"
-                  className="w-full pl-4 pr-10 py-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all placeholder:text-gray-400"
+                  placeholder="Min. 8 characters"
+                  className="w-full px-4 py-3 bg-gray-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all placeholder:text-gray-400"
                 />
                 <button
                   type="button"
@@ -75,7 +79,7 @@ export default function LoginPage() {
               type="button"
               className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-200 transition-all transform active:scale-[0.98]"
             >
-              Log In
+              Create Account
             </button>
           </form>
 
@@ -85,11 +89,11 @@ export default function LoginPage() {
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-gray-500">Or</span>
+              <span className="bg-white px-2 text-gray-400">or</span>
             </div>
           </div>
 
-          {/* Google Login */}
+          {/* Google Login*/}
           <button className="w-full py-3 px-4 bg-white border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-all flex items-center justify-center gap-3 shadow-sm">
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -112,25 +116,24 @@ export default function LoginPage() {
             Continue with Google
           </button>
 
-          {/* Footer Link inside card */}
+          {/* Footer */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link href="/signup" className="font-semibold text-blue-700 hover:text-blue-800">
-                Sign up
-              </Link>
+                Already have an account?{' '}
+                <Link href="/login" className="font-semibold text-blue-700 hover:text-blue-800">
+                    Log in
+                </Link>
             </p>
           </div>
         </div>
+
       </div>
 
-      {/* Bottom Footer */}
-      <div className="mt-8 flex gap-6 text-xs text-gray-400 font-medium uppercase tracking-wider">
+    
+      <div className="mt-4 flex gap-4 text-xs text-gray-400">
         <a href="#" className="hover:text-gray-600">Terms</a>
         <span>•</span>
         <a href="#" className="hover:text-gray-600">Privacy</a>
-        <span>•</span>
-        <a href="#" className="hover:text-gray-600">Security</a>
       </div>
       <div className="mt-2 text-xs text-gray-300">
         © 2026 LUMEN ACADEMIC CURATOR

@@ -7,7 +7,7 @@ export default function SideBar() {
     const pathname = usePathname();
 
     const navItems = [
-        { label: 'Home', icon: Home, href: '/', active: pathname === '/' },
+        { label: 'Home', icon: Home, href: '/dashboard', active: pathname === '/dashboard' },
         { label: 'Library', icon: Library, href: '/library', active: pathname === '/library' },
     ];
 

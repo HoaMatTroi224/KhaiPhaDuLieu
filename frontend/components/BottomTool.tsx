@@ -36,24 +36,29 @@ export default function BottomTool() {
                         onClick={() => handleHighlight('bg-blue-200')}
                         className="w-6 h-6 rounded-full bg-blue-200 hover:scale-110 hover:ring-2 hover:ring-blue-200 hover:ring-offset-2 transition-all"
                     ></button>
-                    
+                    {/* Nút màu Hồng */}
+                    <button 
+                        onClick={() => handleHighlight('bg-pink-200')}
+                        className="w-6 h-6 rounded-full bg-pink-200 hover:scale-110 hover:ring-2 hover:ring-pink-200 hover:ring-offset-2 transition-all"
+                    ></button>
+
                     <div className="w-[1px] h-6 bg-gray-200 mx-2"></div>
                     
                     {/* Nút Clear */}
                     <button 
                         onClick={handleClearHighlight}
-                        className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-red-500 transition-colors"
+                        className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-blue-500 transition-colors"
                     >
                         <Eraser size={14} /> Clear
                     </button>
                 </div>
 
-                <div className="w-[1px] h-6 bg-gray-200"></div>
+                {/* <div className="w-[1px] h-6 bg-gray-200"></div> */}
 
                 {/* Wifi Status */}
-                <div className="flex items-center gap-2 text-xs font-medium text-gray-400 ml-8">
-                    <WifiOff size={14} className="text-orange-400" /> Offline Cache
-                </div>
+                {/* <div className="flex items-center gap-2 text-xs font-medium text-gray-400 ml-8">
+                    <Wifi size={14} className="text-green-400" /> Online Cache
+                </div> */}
             </div>
         </div>
     );

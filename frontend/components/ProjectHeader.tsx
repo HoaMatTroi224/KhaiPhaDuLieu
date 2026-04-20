@@ -13,7 +13,7 @@ export default function ProjectHeader({ title = "Untitled Project" }: ProjectHea
             
             {/* Left: Back Button + Project Title */}
             <div className="flex items-center gap-4">
-                <Link href="/projects" className="text-gray-500 hover:text-gray-700 transition-colors">
+                <Link href="/library" className="text-gray-500 hover:text-gray-700 transition-colors">
                     <ArrowLeft size={22} />
                 </Link>
 

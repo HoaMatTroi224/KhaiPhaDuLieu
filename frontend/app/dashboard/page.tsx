@@ -33,8 +33,8 @@ export default function Dashboard() {
             {/* Greeting */}
             <h1 className="text-4xl font-bold mb-8 text-gray-900 tracking-tight">Welcome back, Ánh!</h1>
             <p className="text-gray-600">
-                <span className="italic">"Nơi những ý tưởng gặp nhau,</span>
-                <span className="font-bold"> nơi những ước mơ trở thành hiện thực."</span>
+                <span className="italic">"Where ideas meet,</span>
+                <span className="font-bold"> where dreams become reality."</span>
             </p>
 
             <div className="border-t border-gray-100 my-10" />
@@ -47,9 +47,12 @@ export default function Dashboard() {
                     Recent Projects
                 </h2>
 
-                <span className="text-sm text-blue-600 cursor-pointer hover:underline">
+                <Link href="/library" className="text-sm text-blue-600 cursor-pointer hover:underline">
+                    <span>View All →</span>
+                </Link>
+                {/* <span className="text-sm text-blue-600 cursor-pointer hover:underline">
                     View All →
-                </span>
+                </span> */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
