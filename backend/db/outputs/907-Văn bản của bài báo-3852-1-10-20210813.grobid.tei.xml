@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Duc</forename><forename type="middle">Quang</forename><surname>Pham</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">National Center for Technological Progress</orgName>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Innovation and Technology Service Center</orgName>
+								<orgName type="department" key="dep2">Institute of Science Technology and Innovation</orgName>
+								<address>
+									<country key="VN">Vietnam</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><roleName>Quoc</roleName><forename type="first">Tuan</forename><surname>Banh</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">National Center for Technological Progress</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Thanh</forename><forename type="middle">Tung</forename><surname>Vu</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">School of Mechanical Engineering</orgName>
+								<orgName type="institution">Hanoi University of Science and Technology</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Quang</forename><forename type="middle">Thai</forename><surname>Le</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Innovation and Technology Service Center</orgName>
+								<orgName type="department" key="dep2">Institute of Science Technology and Innovation</orgName>
+								<address>
+									<country key="VN">Vietnam</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Quoc</forename><forename type="middle">Dat</forename><surname>Nguyen</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Innovation and Technology Service Center</orgName>
+								<orgName type="department" key="dep2">Institute of Science Technology and Innovation</orgName>
+								<address>
+									<country key="VN">Vietnam</country>
+								</address>
+							</affiliation>
+						</author>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B74A585E95CD13D4009D053A2D056A65</idno>
+					<note type="submission">Received 15 June 2020; accepted 18 August 2020</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2026-05-11T08:28+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>light interferometric images</term>
+					<term>light interferometry</term>
+					<term>optical tomography</term>
+					<term>profilometry. Classification number: 1.3</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p><s>In this study, the authors proposed a new method that allows the reconstruction of three-dimensional (3D) tomographic images of an object using a broadband light source.</s><s>The frequency of the reference wave was modulated by Doppler's effect due to the movement with a constant velocity of the reference mirror.</s><s>The variation of the interference light intensity caused by Doppler's effect at the position of each pixel of the camera was characterised by the light intensity function and this function was sampled by a very high frame rate camera.</s><s>Applying the band-pass filter and inverse Fourier transform to the spectrum of the intensity function allowed reconstructing the 3D image of the object with very high resolution.</s></p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Giới thiệu</head><p><s>Chụp cắt lớp kết hợp quang học OCT (Optical coherence tomography) là một kỹ thuật hình ảnh sử dụng ánh sáng có độ kết hợp thấp (nguồn sáng phổ rộng) để thu được hình ảnh cắt lớp 3 chiều của các mẫu vật có độ tán xạ cao, như các mô sinh học với độ phân giải theo chiều sâu cỡ vài micromet.</s><s>OCT thường được sử dụng để chụp ảnh cắt lớp y tế và trong công nghiệp không xâm lấn hay phá hủy mẫu vật, vì vậy nó đã trở thành một công cụ mạnh trong nhiều ứng dụng thuộc nhiều lĩnh vực khác nhau <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b3">[3]</ref>.</s><s>Chụp cắt lớp quang học OCT được phân loại theo chụp cắt lớp kết hợp quang miền thời gian (TD-OCT) <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b3">[3]</ref> và chụp cắt lớp kết hợp quang miền tần số (FD-OCT) <ref type="bibr" target="#b4">[4]</ref><ref type="bibr" target="#b5">[5]</ref><ref type="bibr" target="#b6">[6]</ref>.</s><s>Trong TD-OCT, ánh sáng phản xạ từ vật giao thoa với ánh sáng phản xạ từ gương tham chiếu và được ghi nhận bởi một cảm biến hình ảnh.</s><s>Khi gương tham chiếu được quét, một loạt các hình ảnh giao thoa giữa sóng phản xạ từ vật thể và sóng tham chiếu được ghi lại để tạo ra hàm cường độ sóng giao thoa, các đỉnh của các hàm cường độ xác định cấu trúc của mẫu vật <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b3">[3]</ref>.</s><s>Khác với TD-OCT, gương tham chiếu của hệ thống FD-OCT được cố định, nguồn sáng băng thông rộng được sử dụng, tín hiệu giao thoa của sóng vật và sóng tham chiếu tương ứng với mỗi bước sóng của nguồn sáng được ghi nhận một cách riêng biệt thông qua việc sử dụng cách tử quang, hoặc cảm biến quang tuyến tính hay nguồn sáng có chức năng lựa chọn và điều chỉnh bước sóng <ref type="bibr" target="#b4">[4]</ref><ref type="bibr" target="#b5">[5]</ref><ref type="bibr" target="#b6">[6]</ref>.</s><s>Do mối quan hệ theo biến đổi Fourier giữa thông tin độ sâu của vật và phổ của nguồn sáng, biến đổi Fourier từ tín hiệu cường độ giao thoa theo phổ của nguồn sáng cho phép khôi phục hình ảnh độ sâu của vật thể.</s><s>OCT trong miền tần số, vì vậy có thể được chia thành OCT phổ tần số ánh sáng (Spectral Domain -SD) và OCT nguồn quét (Swept Source -SS) OCT <ref type="bibr" target="#b4">[4]</ref><ref type="bibr" target="#b5">[5]</ref><ref type="bibr" target="#b6">[6]</ref>.</s></p><p><s>Thông thường, FD-OCT có lợi thế hơn TD-OCT ở độ nhạy cao, tỷ lệ tín hiệu trên nhiễu (SNR) cao và tốc độ đo nhanh.</s><s>Độ phân giải thấp hơn liên quan đến tốc độ quét của gương tham chiếu và băng thông của nguồn sáng được coi là trở ngại lớn của hệ thống OCT trong miền thời gian <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b3">[3]</ref>, tuy nhiên với việc sử dụng nguồn sáng băng thông rộng và camera tốc độ chụp lớn, hình ảnh 3D có độ phân giải cao của mẫu vật sinh học có thể được ghi nhận theo thời gian thực bằng nhiều phương pháp trong các nghiên cứu gần đây <ref type="bibr" target="#b7">[7]</ref><ref type="bibr" target="#b8">[8]</ref><ref type="bibr" target="#b10">[9]</ref>.</s></p><p><s>Trong nghiên cứu trước, chúng tôi đã đề xuất một hệ thống hoạt động như một bộ dịch pha dựa trên hiệu ứng Doppler với nguồn sáng phổ siêu rộng được thực hiện bằng Trong nghiên cứu này, chúng tôi đề xuất một phương pháp tái tạo ảnh mới, mở rộng ứng dụng của bộ dịch pha dựa trên hiệu ứng Doppler cho hình ảnh chụp cắt lớp 3D.</s><s>Phương pháp mới cũng có thể cải thiện hiệu suất của OCT trong miền thời gian.</s><s>Hàm cường độ giao thoa được điều chế bằng chuyển động của gương tham chiếu và được lấy mẫu bằng một camera có tốc độ khung hình rất cao.</s><s>Biến đổi Fourier của hàm cường độ giao thoa chỉ ra mối liên hệ giữa phổ của ánh sáng phản xạ từ vật và vận tốc của gương tham chiếu.</s><s>Bằng cách áp dụng bộ lọc thông dải cho miền tần số của cường độ giao thoa, nhiễu liên quan đến chuyển động của gương tham chiếu và nhiễu môi trường có thể được loại bỏ.</s><s>Biến đổi Fourier ngược của hàm cường độ giao thoa sau khi lọc cho phép khôi phục hình ảnh cắt lớp 3D của vật với độ phân giải rất cao.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nội dung nghiên cứu</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nguyên lý</head><p><s>Sơ đồ nguyên lý của hệ thống được miêu tả trong hình 1. Giả sử rằng w R và w O là tần số góc của sóng tham chiếu và sóng vật, w b = w R -w O thể hiện sự khác nhau giữa tần số góc của sóng tham chiếu và sóng vật, khi gương tham chiếu và vật đứng yên thì w b = 0. Khi gương tham chiếu di chuyển với vận tốc v R thì hiện tượng Doppler xảy ra, w b được tính theo công thức: <ref type="bibr" target="#b4">4</ref> 2</s></p><formula xml:id="formula_0">R b R O R v w w w kv π λ = -≈ = (1)</formula><p><s>trong đó λ là bước sóng ánh sáng.</s></p><p><s>Cường độ vân giao thoa được lấy mẫu tại một điểm ảnh có vị trí x trên cảm biến của camera được miêu tả bởi công thức:</s></p><formula xml:id="formula_1">max max min min ( , ) ( , , ){1 ( )cos[ 2 2 )]} z k o o R z k I x t I x k z v k kv t zk dkdz θ = + + + ∫ ∫ (2) trong đó I O (x, k, z) = A 2 O (x, k, z) + A 2 R (k)</formula><formula xml:id="formula_2">tham chiếu), v(k) = 2A O (x, k, z)A R (k)/[A 2 O (x, k, z) + A 2 R (k)]</formula><formula xml:id="formula_3">trong đó I i (x, t, z l ) = I o (x, k l,i , z l ){1 + v(k l,i )cos[Ɵ O + 2kv R t + 2z l k l,i ]}, z l = Z min + lΔl</formula><p><s>Từ công thức (3), có thể nhận thấy rằng I i (x, t, z l ) là một hàm của thời gian, do đó biến đổi Fourier theo thời gian của nó là FI i (x, w b , z l ) được tính theo công thức:</s></p><formula xml:id="formula_4">, ,<label>( 1)</label></formula><p><s>, <ref type="bibr" target="#b0">( 1)</ref> , /</s></p><p><s>,</s></p><p><s>,</s></p><p><s>( , , ) ( , )( ) ( )</s></p><formula xml:id="formula_8">( ) ( , ) ( , )rect[ ] 2( ) ( ( , ) ( , )rect[ o l b R i b l Oi l l i b l i b R l i l i j jz w v O i l i l l i l i R b R l i O i l i l FI x w z I x z k k w w v k k I x z v x z e k k v w v k I x z v x z θ δ + + + + + = - + - + + - + + , /<label>(2 )</label></formula><p><s>,</s></p><p><s>)</s></p><formula xml:id="formula_10">o l b R l i j jz w v l i l i R k e k k v θ -- + - (4) , ,<label>( 1)</label></formula><p><s>, <ref type="bibr" target="#b0">( 1)</ref> , /</s></p><p><s>,</s></p><p><s>,</s></p><p><s>( , , ) ( , )( ) ( )</s></p><formula xml:id="formula_14">( ) ( , ) ( , )rect[ ] 2( ) ( ( , ) ( , )rect[ o l b R i b l Oi l l i b l i b R l i l i j jz w v O i l i l l i l i R b R l i O i l i l FI x w z I x z k k w w v k k I x z v x z e k k v w v k I x z v x z θ δ + + + + + = - + - + + - + + , /<label>(2 )</label></formula><p><s>,</s></p><p><s>) Từ công thức (7) ta có thể thấy rằng, I(x, z l ) là hàm cường độ của vân giao thoa theo chiều sâu z l và nó được tính bằng biến đổi Fourier ngược của FI(x, k l ) trong công thức <ref type="bibr" target="#b6">(6)</ref>.</s><s>Vì cường độ của sóng tham chiếu là không đổi, do đó I(x, z l ) chính là ảnh cắt lớp của vật theo các chiều sâu khác nhau.</s><s>Quá trình lấy mẫu và khôi phục ảnh 3 chiều cắt lớp của vật được miêu tả trong hình 2.  Quy trình khôi phục được lặp lại với tất cả các điểm ảnh của ảnh vân giao thoa và ảnh cường độ sáng của vật tại các vị trí chiều sâu theo chục z được hiển thị trong hình 6 và 7. Ảnh cường độ sáng trung bình được tính từ tất cả các ảnh cường độ sáng tại các bước sóng khác nhau được thể hiện trong hình 7(A).</s><s>Ảnh cắt ngang theo chiều y-z của ảnh 3 chiều của vật được thể hiện trong hình 7(B).</s></p><formula xml:id="formula_16">o l b R l i j jz w v l i l i R k e k k v</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Kết luận</head><p><s>Trong nghiên cứu này, chúng tôi đã đề xuất một phương pháp mới được coi là sự kết hợp giữa TD-OCT và FD-OCT để tái tạo hình ảnh 3 chiều của vật thể sinh học với độ phân giải theo các chiều xy và z rất cao.</s><s>Bộ dịch pha sử dụng hiệu ứng Doppler cho phép thu được chính xác phổ của tín hiệu ánh sáng phản xạ từ vật.</s><s>Bộ lọc thông giải được sử dụng để lựa chọn phần tín hiệu có chứa thông tin của vật trong phổ của hàm cường độ tín hiệu giao thoa, đồng thời loại bỏ các tín hiệu gây nhiễu sinh ra bởi sự di chuyển cơ học của gương tham chiếu.</s><s>Bên cạnh đó, với việc áp dụng các bộ lọc thông giải lên từng vùng khác nhau trong phổ của hàm cường độ sáng giao thoa cho phép chúng ta khôi phục lại thông tin 3 chiều của vật với từng bước sóng hoặc từng giải màu khác nhau mà không yêu cầu bất kỳ một bộ lọc màu vật lý nào.</s></p><p><s>Hệ quang học được thiết lập rất đơn giản, tuy nhiên kỹ thuật dịch chuyển pha cho phép hàng nghìn bước sóng của nguồn sáng có thể được sử dụng để khôi phục lại hình ảnh 3 chiều của vật.</s><s>Trong các thí nghiệm được tiến hành trong nghiên cứu này, thời gian đo vật là 8 giây, điều này hoàn toàn có thể giảm xuống đáng kể với việc sử dụng các camera tốc độ khung hình cao hơn.</s><s>Với camera tốc độ chụp cao hơn, tốc độ của gương tham chiếu khi đó cũng có thể được điều chỉnh tăng lên để thu được thông tin từ nhiều bước sóng của nguồn sáng hơn và hệ thống có thể khôi phục lại được hình ảnh 3 chiều của vật có chiều sâu lớn hơn trong thời gian ngắn hơn.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>LỜI CẢM ƠN</head><p><s>Nghiên cứu này được tài trợ bởi Quỹ phát triển khoa học và công nghệ quốc gia (NAFOSTED) thông qua đề tài mã số 103.03-2018.344.</s><s>Nhóm nghiên cứu xin trân trọng cảm ơn.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>TÀI LIỆU THAM KHẢO</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc><div><p><s>là độ tương phản của vân giao thoa, z là chiều dài khác nhau về đường đi của sóng tham chiếu và sóng vật liên quan tới thông tin 3 chiều của vật, véc-tơ sóng k max và k min tương ứng với bước sóng λ min và λ max trong giải phổ của nguồn sáng.</s><s>Chú ý rằng, trong thực tế cảm biến quang của camera là một ma trận điểm ảnh 2 chiều với vị trí các điểm ảnh được đánh số theo 2 chiều x và y, tuy nhiên để đơn giản trong việc miêu tả nguyên lý hệ thống, cảm biến quang trong tường hợp này là một mảng 1 chiều theo chiều x, các phép toán trong trường hợp ma trận 2 chiều được tính toán hoàn toàn tương tự.</s><s>Giả sử rằng, mẫu vật có chiều sâu tuyệt đối là (Z max -Z min ) và được chia thành L&gt;0 lớp bằng nhau, mỗi lớp có chiều dài Δl, vị trí của mỗi lớp được đánh số bởi số nguyên dương l, L ≥ l &gt; 0. Do đặc tính hấp thụ của vật, giải phổ và cường độ ánh sáng phản xạ từ các lớp khác nhau của vật là khác nhau.</s><s>Hình 1. Sơ đồ hệ thống.Giải phổ của sóng ánh sáng phản xạ từ lớp l của vật được chia thành N l phần, trong đó cường độ sáng I oi (x, z l ) và độ tương phản v i (x, z l ) (1 ≤ i ≤ N) của các bước sóng khác nhau trong mỗi phần là tương đương nhau, trong trường hợp này phương trình (2) được viết lại thành:</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc><div><p><s>đó δ(w b ) là hàm delta của w b .</s><s>Từ công thức (4), phổ của FI i (x, w, z l ) được thể hiện trong khoảng 2v R k l,I ≤ w b ≤ 2v R k l,(i+1) .</s><s>Cho mỗi tần số w b = 2v R k chọn trong phổ của FI i (x,w b ,z l ) được tính theo công thức: biến đổi Fourier của hàm cường độ vân giao thoa I(x, t) tại một tần số w b xác định tương ứng với vector sóng k được tính theo công thức: công thức (6), có thể thấy rằng FI(x, k) là biến đổi Fourier của I(x, z l ) theo chiều sâu z l :</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Hình 2 .</head><label>2</label><figDesc><div><p><s>Quá trình lấy mẫu và khôi phục ảnh 3D cắt lớp của mẫu vật được thực hiện qua các bước: (A) Lấy mẫu hàm cường độ vân giao thoa bởi camera có tốc độ chụp cực nhanh, (B) Biến đổi Fourier, (C) Áp dụng hàm lọc thông giải, (D) Chuyển về trung tâm và biến đổi Fourier ngược để khôi phục lại, (E) Ảnh cắt lớp 3 chiều cho từng điểm ảnh của vật.</s><s>63(1) 1.2021 Khoa học Tự nhiên Khoảng đo và độ phân giải Giả sử rằng có N s mẫu vân giao thoa I(x, t) được lấy mẫu bởi camera, khi đó độ phân giải phổ tần số của FI(x, k) sẽ là Δf b = f s /N s .</s><s>Mỗi tần số f b được chọn trong phổ tần số của FI(x, k) tương đương với bước sóng λ trong phổ của sóng ánh sáng phản xạ từ vật: công thức (7), I(x, z l ) là cường độ sáng của vật tại vị trí z l , được tính bằng biến đổi Fourier ngược của FI(x, k) theo 1/λ, vì vậy chiều sâu lớn nhất của vật mà hệ thống có thể đo được được tính theo công thức: 0 ≤ z lmax ≤ λ max /2, trong đó từ công thức (8), λ max = 2v R /f bmin , f bmin = N s /f s .</s><s>Điều này có nghĩa là nếu vật có chiều sâu lớn hơn z lmax , hệ thống không thể đo chính xác được và độ phân giải của phép đo chiều sâu của vật từ công thức (8) là: Δz = z lmax /N s .</s><s>Thí nghiệm và kết quả Thí nghiệm được tiến hành theo hình 3, nguồn sáng phổ rộng NKT SUPERK COMPACT SUPERCONTINUUM LASERS với giải phổ nằm trong khoảng từ 450 tới 2.400 nm được sử dụng để chiếu sáng vật.</s><s>Camera tốc độ cao Redlake; MotionScope M5 với kích thước điểm ảnh là 13,68×13,68 µm 2 được sử dụng để ghi nhận hình ảnh của các vân giao thoa.</s><s>Mẫu vật là một lát tế bào Hành được sử dụng.</s><s>Thí nghiệm được tiến hành như quy trình trong hình 2. Thấu kính phóng đại được sử dụng với 10× khuếch đại.</s><s>Vận tốc của gương tham chiếu vẫn được thiết lập là 40 µm/s.</s><s>Tốc độ chụp của camera là 1.000 fps và 8.000 ảnh vân giao thoa được ghi nhận.</s><s>Cường độ vân giao thoa được trích xuất từ 8.000 ảnh vân giao thoa được hiển thị trong hình 4(A), phổ tần số vân giao thoa được hiển thị trong hình 4(B) nằm trong khoảng từ 66,75 tới 191,75 Hz và độ phân giải là 0,125 Hz.</s><s>Giải phổ của ánh sáng vật được tính theo công thức (8) trong khoảng 0,417 tới 1,199 µm.</s><s>Ảnh 3 chiều tại vị trí điểm ảnh trung tâm của vật được hiển thị trong hình 5.</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Hình 3 .Hình 6 .</head><label>36</label><figDesc><div><p><s>Sơ đồ hệ thí nghiệm.</s><s>Hình 4. (A) Hàm cường độ vân giao thoa và (B) Phổ tần số tại vị trí điểm ảnh trung tâm thu được từ 8.000 tấm vân giao thoa.</s><s>Hình 5. Ảnh cường độ sáng theo chiều sâu của vật tại vị trí điểm ảnh trung tâm của camera được khôi phục từ phổ tần số của hàm cường độ vân giao thoa.</s><s>Ảnh cắt lớp cường độ sáng của vật tại các chiều sâu khác nhau.</s><s>Hình 7. (A) Ảnh cường độ sáng trung bình được tính từ các ảnh tại vị trí các lớp khác nhau và (B) Ảnh cắt theo chiều dọc y-z của vật được khôi phục lại.</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Ghi nhận hình ảnh cắt lớp 3 chiều sử dụng hiệu ứng dịch chuyển pha Doppler với nguồn sáng phổ rộng Phạm Đức Quang 1, 2* , Bành Quốc Tuấn 1 , Vũ Thanh Tùng 3 , Lê Quang Thái 2 , Nguyễn Quốc Đạt 2</head><label></label><figDesc></figDesc><table><row><cell>1 Viện Ứng dụng Công nghệ</cell></row><row><cell>2 Trung tâm Dịch vụ Khoa học và Công nghệ,</cell></row><row><cell>Học viện Khoa học, Công nghệ và Đổi mới sáng tạo</cell></row><row><cell>3 Viện Cơ khí, Trường Đại học Bách khoa Hà Nội</cell></row><row><cell>Ngày nhận bài 15/6/2020; ngày chuyển phản biện 18/6/2020; ngày nhận phản biện 12/8/2020; ngày chấp nhận đăng 18/8/2020</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Tóm tắt: Trong nghiên cứu này, các tác giả đề xuất một phương pháp mới cho phép ghi nhận hình ảnh cắt lớp 3 chiều của mẫu vật sử dụng phương pháp giao thoa với nguồn sáng phổ rộng. Tần số của sóng tham chiếu được điều chế theo hiệu ứng Doppler do sự di chuyển với một vận tốc cố định của gương tham chiếu. Sự thay đổi cường độ ánh sáng của vân giao thoa giữa sóng tham chiếu và sóng ánh sáng phản xạ từ vật (sóng vật) do hiệu ứng Doppler tại vị trí của mỗi điểm ảnh được đặc trưng bởi hàm cường độ sáng và hàm này được lấy mẫu bởi camera có tần số rất cao. Áp dụng hàm lọc thông giải và biến đổi Fourier ngược cho phổ tần số của hàm cường độ vân giao thoa cho phép khôi phục lại ảnh cắt lớp 3 chiều của mẫu vật với độ phân giải rất cao. Từ khóa: ảnh giao thoa ánh sáng, chụp cắt lớp, đo biên dạng, giao thoa ánh sáng. Chỉ số phân loại: 1.3 63(1) 1.2021 Khoa học Tự nhiên cách</head><label></label><figDesc><div><p><s>[10]huyển gương tham chiếu với vận tốc không đổi[10].</s><s>Biên độ phức (complex amplitude), bao gồm thông tin về pha và biên độ của sóng phản xạ từ mỗi điểm trên bề mặt của vật tương ứng với từng bước sóng của nguồn sáng, có thể được tính toán từ phổ của hàm cường độ vân giao thoa thu được từ một loạt các ảnh giao thoa của sóng vật và sóng tham chiếu.</s><s>Điều này cho phép khôi phục chính xác cấu trúc 3D và hình ảnh quang phổ đầy đủ (full spectral image) bề mặt của vật.</s></p></div></figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Reconstructing three-dimensional tomography image using Doppler phase shift effects with a broadband light source 63(1) 1.2021 Khoa học Tự nhiên</head><label></label><figDesc><div><p><s>O là pha khởi tạo ban đầu (Ɵ O được quyết định bởi mối liên hệ giữa vị trí của vật và vị trí ban đầu của gương</s></p></div></figDesc><table /><note><p><s>là cường độ vân giao thoa, A 2 O và A 2 R là biên độ sóng vật và sóng tham chiếu, k là vector sóng, Ɵ</s></p></note></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Optical coherence tomography of the human retina</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Hee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Izatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Swanson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Schuman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">P</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Puliafito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Fujimoto</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Archiv. Ophthalmol</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="page" from="325" to="332" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">W</forename><surname>Drexler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Morgner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">X</forename><surname>Kartner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Pitris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Boppart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">D</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">In vivo ultrahigh-resolution optical coherence tomography</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">P</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Ippen</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Fujimoto</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Lett</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="1221" to="1223" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Real-time in vivo imaging by high-speed spectral optical coherence tomography</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wojtkowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Bajraszewski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Targowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kowalczyk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Lett</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="1745" to="1747" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Improved signal-to-noise ratio in spectral-domain compared with timedomain optical coherence tomography</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Boer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Cense</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">H</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Pierce</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Tearney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">E</forename><surname>Bouma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Lett</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="2067" to="2069" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">115 kHz tuning repetition rate ultrahigh-speed wavelength-swept semiconductor laser</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Y</forename><surname>Oh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Yun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Tearney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">E</forename><surname>Bouma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Lett</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="3159" to="3161" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Clinical and research applications of anterior segment optical coherence tomography -a review</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L B</forename><surname>Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Huang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Clinical and Experimental Ophthalmology</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="page" from="81" to="89" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Computational high-resolution optical imaging of the living human retina</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">D</forename><surname>Shemonski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A</forename><surname>South</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y.-Z</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">G</forename><surname>Adie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Carney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Boppart</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Photonics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="440" to="443" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><surname>Scholler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Mazlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Thouvenin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Groux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-A</forename><surname>Sahel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Probing dynamic processes in the eye at multiple spatial and temporal scales with multimodal full field oct</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fink</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Boccara</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Grieve</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomed. Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="731" to="746" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">High-resolution in-vivo human retinal imaging using full-field OCT with optical stabilization of axial motion</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mecê</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Scholler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Groux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Boccara</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomed. Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="492" to="504" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Selectable-wavelength low-coherence digital holography with chromatic phase shifter</title>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">D</forename><surname>Pham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hasegawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kiire</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Barada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Yatagai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hayasaki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="19744" to="19756" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

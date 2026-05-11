@@ -1,0 +1,1428 @@
+{
+  "level": "sentence",
+  "biblio": {
+    "title": "Effect of glycidyl methacrylate compatibiliser and montmorillonite reinforcement on the properties and morphology of PBAT/PLA blends",
+    "authors": [
+      "Tưởng Thị",
+      "Nguyệt Ánh",
+      "Hoàng Hương",
+      "Hoàng Đoàn",
+      " Linh",
+      "Tiến Nguyễn",
+      " Đạt",
+      "Thị Nghiêm",
+      " Thảo",
+      "Ngọc Nguyễn",
+      "Đặng Diệp",
+      "Yến Thảo",
+      "Văn Đoàn",
+      "Chu Hưởng",
+      " Xuân Quang",
+      "Thi Nguyet",
+      "Anh Tuong",
+      "Huong Hoang",
+      "Linh Hoang",
+      "Tien Doan",
+      "Thi Nguyen",
+      "Ngoc Nghiem",
+      "Thao Nguyen",
+      "Linh Yen",
+      "Van Dang",
+      "Xuan Doan",
+      " Chu"
+    ],
+    "doi": "10.31276/vjst.2025.3301",
+    "hash": "4A3A69B85BEE7FC9A27906B90194AE85",
+    "publication_date": "2026-03-25",
+    "publication_year": 2026,
+    "publisher": "Ministry of Science and Technology, Vietnam (VMOST)",
+    "journal": "Ministry of Science and Technology, Vietnam",
+    "abstract": [
+      [
+        {
+          "id": 0,
+          "text": "Polymer blend trên cơ sở polybutylene adipate terephthalate (PBAT) kết hợp với polylactic acid (PLA) với tính chất cơ lý được cải thiện đã được chế tạo thành công trên máy đùn trục vít, sử dụng chất trợ tương hợp glycidyl methacrylate (GMA) và chất gia cường khoáng sét montmorillonite (MMT).",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 1,
+          "text": "Các tính chất của blend được đánh giá bằng các phương pháp: kỹ thuật phản xạ toàn phần suy giảm -phổ hồng ngoại biến đổi Fourier (ATR-FTIR), phân tích nhiệt trọng lượng (TGA), kính hiển vi điện tử quét (SEM) và thử nghiệm cơ học.",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 2,
+          "text": "Kết quả nghiên cứu cho thấy, tỷ lệ PBAT/PLA 40/60 cho các tính chất cơ học tối ưu, chất trợ tương hợp trên cơ sở GMA làm tăng tính tương hợp trong blend PBAT/PLA thông qua phản ứng giữa nhóm epoxy với các nhóm COOH và OH cuối mạch polymer.",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 3,
+          "text": "Việc sử dụng GMA kết hợp với clay đã cải thiện độ bền cơ học, độ bền nhiệt, độ ổn định cấu trúc của vật liệu.",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 4,
+          "text": "Blend PBAT/PLA/chất trợ tương hợp/clay với tỷ lệ khối lượng 40/60/10/20 cho độ bền kéo 30,06 MPa, độ dãn dài khi đứt 70,38%, module kéo 1568 MPa.",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 5,
+          "text": "Kết quả cho thấy, vật liệu có tiềm năng trong sản xuất bao bì và đồ đựng thực phẩm dùng một lần thân thiện với môi trường.",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 6,
+          "text": "Từ khóa: khoáng sét, polybutylene adipate terephthalate, polylactic acid, polymer blend, tính chất cơ học, trợ tương hợp glycidyl methacrylate.",
+          "coords": [],
+          "refs": []
+        }
+      ]
+    ]
+  },
+  "body_text": [
+    {
+      "id": "p_b3a2bc7b",
+      "text": "(3) 3.2026",
+      "coords": [],
+      "refs": [],
+      "head_section": "68"
+    },
+    {
+      "id": "p_099fc337",
+      "text": "Polybutylen adipat terephthalate (PBAT) là một polyester mềm dẻo, có độ dãn dài cao và khả năng phân hủy sinh học trong môi trường ủ phân composite [1].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b0",
+          "text": "[1]",
+          "offset_start": 148,
+          "offset_end": 151
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_099fc337",
+      "text": "Vì vậy, PBAT thường được ứng dụng trong sản xuất các sản phẩm nhựa, bao bì dùng một lần thân thiện với môi trường và bao bì tiếp xúc trực tiếp với thực phẩm.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_099fc337",
+      "text": "Tuy nhiên, độ bền cơ học thấp của PBAT hạn chế việc ứng dụng vào các sản phẩm yêu cầu độ bền, độ cứng cao và khả năng tạo hình bởi phương pháp định hình nhiệt hoặc đúc phun [1].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b0",
+          "text": "[1]",
+          "offset_start": 173,
+          "offset_end": 176
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_d50a517e",
+      "text": "Để nâng cao độ bền cơ học của PBAT, các phương pháp phổ biến được sử dụng như bổ sung các chất gia cường; chế tạo polymer blend với một hoặc nhiều polymer khác.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_d50a517e",
+      "text": "Trong đó, việc kết hợp PBAT với các polymer khác để tạo thành blend hai hoặc đa cấu tử là phương pháp hiệu quả nhất, giúp cải thiện các tính chất cơ học một cách đáng kể, tùy thuộc vào loại polymer và tỷ lệ các polymer phối trộn [2].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b1",
+          "text": "[2]",
+          "offset_start": 229,
+          "offset_end": 232
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_2c99287d",
+      "text": "Các polymer được kết hợp với PBAT để tăng cường tính năng cơ lý là những polymer phân hủy sinh học có độ cứng cao, module cao, độ bền kéo đứt lớn, như: polyhydroxyl butyrate-co-valerate (PHBV), poly caprolactone (PCL), polylactic acid (PLA); trong đó, PLA nổi bật nhờ độ bền kéo đứt và module kéo lớn [3], có khả năng định hình nhiệt, phân hủy sinh học trong môi trường ủ compost.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b2",
+          "text": "[3]",
+          "offset_start": 301,
+          "offset_end": 304
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_2c99287d",
+      "text": "Tuy nhiên, PLA có đặc tính giòn (độ giãn dài khi đứt nhỏ hơn 5%), khiến khả năng ứng dụng bị hạn chế.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_2c99287d",
+      "text": "Do đó, polymer blend PBAT/PLA thường được chế tạo nhằm khắc phục những nhược điểm và tận dụng ưu điểm của cả hai polymer [3].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b2",
+          "text": "[3]",
+          "offset_start": 121,
+          "offset_end": 124
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_2c99287d",
+      "text": "Tuy nhiên, cấu trúc hóa học của PBAT và PLA là khác nhau, nên về lý thuyết chúng không tương hợp.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_2c99287d",
+      "text": "Vì vậy, việc lựa chọn chất trợ tương hợp và hàm lượng thích hợp là yếu tố quan trọng để cải thiện cấu trúc và tính chất của polymer blend [4].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b3",
+          "text": "[4]",
+          "offset_start": 138,
+          "offset_end": 141
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_2c99287d",
+      "text": "Cho đến hiện nay, việc tìm ra loại chất trợ tương hợp phù hợp cho blend PBAT/PLA tiếp tục thu hút sự quan tâm của các nhà nghiên cứu với nhiều vấn đề cân được làm sáng tỏ.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_de370fd8",
+      "text": "Ngoài việc sử dụng chất trợ tương hợp, các chất gia cường cũng đã được sử dụng để tăng cường tính cơ lý của polymer blend.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_de370fd8",
+      "text": "Trong số đó, khoáng sét montmorillonite (clay MMT) là một chất gia cường hiệu quả, giúp cải thiện tính cơ lý và có nguồn gốc khoáng tự nhiên, giá thành thấp, dễ dàng sử dụng trong sản xuất công nghiệp [5].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b4",
+          "text": "[5]",
+          "offset_start": 201,
+          "offset_end": 204
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_fdd36eeb",
+      "text": "M. Shahlari và cs (2012) [6] đã chế tạo vật liệu blend composite PBAT/PLA được gia cường bởi khoáng sét MMT montmorillonite biến tính mà không cần dùng thêm chất trợ tương hợp.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b5",
+          "text": "[6]",
+          "offset_start": 25,
+          "offset_end": 28
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_fdd36eeb",
+      "text": "Nhóm nghiên cứu đã bổ sung MMT giúp tăng cường vượt trội module đàn hồi, module dự trữ (tăng ~2,1 lần) so với blend không tương hợp PBAT/PLA, MMT; đồng thời đóng vai trò trợ tương hợp, giúp tăng độ bám dính bề mặt giữa PLA và PBAT được chứng minh bởi SEM [6].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b5",
+          "text": "[6]",
+          "offset_start": 255,
+          "offset_end": 258
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_fdd36eeb",
+      "text": "Tuy nhiên, độ giãn dài giảm đáng kể (giảm ~7,9 lần).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_fdd36eeb",
+      "text": "G. Zhang và cs (2024) [7], Y. Zhang và cs (2021) [8] đã chế tạo blend PBAT/PLA sử dụng chất trợ tương hợp trên cơ sở polymer ghép GMA và không dùng chất gia cường.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b6",
+          "text": "[7]",
+          "offset_start": 22,
+          "offset_end": 25
+        },
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "[8]",
+          "offset_start": 49,
+          "offset_end": 52
+        }
+      ],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_fdd36eeb",
+      "text": "Kết quả cho thấy, chất trợ tương hợp giúp gia tăng đáng kể độ giãn dài khi đứt so với blend PBAT/PLA không tương hợp; tuy nhiên độ bền kéo và module đàn hồi tăng rất ít, có trường hợp còn giảm nhẹ.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_fdd36eeb",
+      "text": "Trong khi đó, sự kết hợp đồng thời của MMT và GMA để tăng cường độ bền, module và độ giãn dài cho blend PBAT/PLA vẫn chưa được khai thác làm sáng tỏ.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_fdd36eeb",
+      "text": "Tại Việt Nam, cho đến hiện tại vẫn chưa có công bố nào về chế tạo vật liệu blend PBAT/PLA chứa chất gia cường clay và sử dụng chất trợ tương hợp GMA.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_e4984b41",
+      "text": "Nghiên cứu này tiến hành chế tạo blend PBAT/PLA với chất trợ tương hợp glycidyl methacrylate (GMA) và chất độn clay MMT bằng máy đùn hai trục vít.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_e4984b41",
+      "text": "GMA sẽ tăng cường các tương tác bề mặt giữa PBAT và PLA; trong khi đó, clay MMT tăng cường khả năng phân tán ứng suất.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_e4984b41",
+      "text": "Blend với chất trợ tương hợp maleic anhydride (MA) cũng được chế tạo và so sánh tính chất với blend sử dụng GMA.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_e4984b41",
+      "text": "Các đặc trưng cơ lý hóa của blend được xác định bởi các phân tích: ATR-FTIR, TGA, tính chất cơ học (độ bền kéo đứt, dãn dài khi đứt, module kéo) và cấu trúc hình thái bởi SEM, từ đó đánh giá sự tương tác giữa PBAT, PLA và MMT.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đặt vấn đề"
+    },
+    {
+      "id": "p_e3ddc25e",
+      "text": "Chế tạo chất trợ tương hợp: PBAT ghép glycidyl methacrylate (PGMA) và PBAT ghép maleic anhydride (PMA): Chất trợ tương hợp PGMA được chế tạo trên máy đùn hai trục vít; bằng phản ứng ghép GMA lên mạch PBAT, sử dụng chất khơi mào BPO.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_e3ddc25e",
+      "text": "Hỗn hợp nguyên liệu gồm: PBAT 100 phần khối lượng (pkl), GMA 10 pkl, BPO 0,5 pkl và oleamide 0,5 pkl được trộn cơ học đồng đều bằng máy trộn Labtech LMX10-V, sau đó, trộn hợp nóng chảy trên máy đùn hai trục vít Labtech LTE16-52, tốc độ trục vít 100 vòng/phút, nhiệt độ 13 khoang trộn của máy đùn được cài đặt trong khoảng ~125-165 o C. Hỗn hợp nhựa nóng chảy được làm mát, kéo sợi, cắt tạo hạt và sấy chân không tại 60 o C trong 24 giờ để loại bỏ hết vết GMA sót lại.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_e3ddc25e",
+      "text": "Để chứng minh không còn GMA chưa phản ứng trong PGMA, mẫu hạt nhựa PGMA sau khi sấy khô được ngâm thôi nhiễm trong nước cất tại nhiệt độ 95 o C trong 24 giờ; sau đó, dung dịch nước thôi nhiễm được phân tích bởi thuốc thử kali permanganate (màu hồng tím của thuốc thử giữ nguyên không đổi), phổ FTIR (không xuất hiện sự khác biệt so với phổ của nước cất).",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_e3ddc25e",
+      "text": "Các kết quả chứng tỏ không có sự xuất hiện của GMA dư trong PGMA bị thôi nhiễm ra môi trường bên ngoài.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_e3ddc25e",
+      "text": "PGMA được đo phổ IR và chuẩn độ để xác định hàm lượng GMA, hàm lượng GMA đạt 7% khối lượng so với PBAT xác định bằng chuẩn độ [9].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b8",
+          "text": "[9]",
+          "offset_start": 126,
+          "offset_end": 129
+        }
+      ],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_dab74cd0",
+      "text": "Chất trợ tương hợp PMA được chế tạo bằng phản ứng ghép MA lên mạch PBAT tương tự như chế tạo PGMA; hỗn hợp gồm: PBAT 100 pkl, MA 15 pkl, BPO 0,75 pkl, oleamide 0,5 pkl được trộn cơ học đồng đều, sau đó trộn hợp nóng chảy đùn tạo sợi, làm mát, kéo sợi, cắt tạo hạt và sấy chân không tại 60 o C trong 24 giờ.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_dab74cd0",
+      "text": "Hàm lượng nhóm MA đạt 7% khối lượng so với PBAT được xác định bằng chuẩn độ [10,11].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b9",
+          "text": "[10,",
+          "offset_start": 76,
+          "offset_end": 80
+        },
+        {
+          "type": "bibr",
+          "target": "#b10",
+          "text": "11]",
+          "offset_start": 80,
+          "offset_end": 83
+        }
+      ],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_dab74cd0",
+      "text": "Chế tạo blend PBAT/PLA/clay MMT: Để khảo sát hiệu quả tăng cường cơ tính của chất gia cường khoáng sét MMT đối với các blend đã có trợ tương hợp, tiến hành chế tạo các mẫu blend chứa MMT với đơn phối liệu trình bày trong bảng 2. Quy trình công nghệ tương tự như chế tạo blend có chất trợ tương hợp PGMA ở trên, giữ nguyên các thông số gia công trên máy đùn hai trục vít.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_dab74cd0",
+      "text": "Nhựa nguyên liệu, phụ gia và MMT được cân và trộn cơ học đồng đều, sau đó hỗn hợp được nạp vào phễu nạp liệu của máy đùn và bắt đầu quá trình trộn hợp nóng chảy, đùn tạo sợi, làm mát, kéo sợi và cắt hạt.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_dab74cd0",
+      "text": "Khoáng sét montmorillonite (MMT) là vật liệu gia cường vô cơ hiệu quả trong cải thiện tính chất cơ lý của polymer composite.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_dab74cd0",
+      "text": "Ở đây, clay MMT được sử dụng có kích thước hạt ~15-20 µm, diện tích bề mặt của chất độn micro nhỏ hơn diện tích bề mặt của chất độn nano cùng loại (kích thước hạt <100 nm); dẫn đến số lượng tương tác bề mặt giữa chất độn micro với nhựa nền sẽ ít hơn so với trường hợp chất độn nano -nhựa nền, hiệu quả gia cường của chất độn micro cũng thấp hơn so với chất độn nano.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_dab74cd0",
+      "text": "Do đó, chất độn micro clay MMT sẽ được sử dụng với hàm lượng 10-25 pkl, cao hơn so với hàm lượng thường sử dụng với chất độn nano để tăng cường hiệu quả gia cường của chất độn với nhựa nền.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên vật liệu",
+      "head_section": "Chế tạo blend PBAT/PLA chứa chất trợ tương hợp và clay MMT"
+    },
+    {
+      "id": "p_beb9dab0",
+      "text": "Phổ hồng ngoại ATR-FTIR được thực hiện trên quang phổ kế hồng ngoại Nicolet iS20, dải sóng 4000-400 cm -1 , số lần scan: 32, độ phân giải 4 cm -1 .",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp phân tích"
+    },
+    {
+      "id": "p_e1283a82",
+      "text": "Phân tích nhiệt trọng lượng (TGA) được tiến hành trên thiết bị Mettler Toledo TGA/DSC 3 + , nhiệt độ 25-600 o C, tốc độ gia nhiệt 10 o C/phút trong môi trường khí N 2 20 ml/phút.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp phân tích"
+    },
+    {
+      "id": "p_e1283a82",
+      "text": "Tính chất cơ học được thực hiện trên thiết bị INSTRON 5900R theo tiêu chuẩn ASTM D638, tốc độ kéo 200 mm/phút.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp phân tích"
+    },
+    {
+      "id": "p_e1283a82",
+      "text": "Cấu trúc hình thái của vật liệu được đánh giá bằng ảnh SEM trên thiết bị JEOL JSM-6510LV, điện thế 10 kV.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp phân tích"
+    },
+    {
+      "id": "p_e1283a82",
+      "text": "Mẫu được bẻ gãy trong nitơ lỏng, sau đó tiết diện cắt ngang này được phủ vàng và tiến hành chụp ảnh SEM.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp phân tích"
+    },
+    {
+      "id": "p_fd72164a",
+      "text": "Để đánh giá ảnh hưởng của chất trợ tương hợp đến tính chất của blend, các mẫu PBAT/PLA không chứa chất trợ tương hợp đã được khảo sát và đánh giá tính chất cơ học (độ bền kéo đứt, giãn dài khi đứt), kết quả được trình bày trong bảng 3. Có thể nhận thấy, các mẫu blend không chứa chất trợ tương hợp có độ bền kéo đứt không ổn định, độ dãn dài khi đứt rất thấp (dưới 7%), không thể hiện rõ xu hướng biến thiên khi hàm lượng PLA thay đổi.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_fd72164a",
+      "text": "Kết quả này được giải thích là do các tính chất cuối cùng của blend tùy thuộc vào cấu trúc hình thái bên cạnh các đặc điểm vốn có của từng polymer; việc pha trộn các polymer không giống nhau sẽ tạo ra các cấu trúc tách pha (giọt phân tán trong nền, hoặc trụ, hoặc cầu) tùy thuộc vào tương tác polymer-polymer, các thông số (tốc độ trục vít, nhiệt độ, tỷ lệ độ nhớt, thông số hòa tan và sức căng giao diện), sức căng giao diện polymer càng lớn thì kích thước pha phân tán càng lớn, dẫn đến tính chất của blend càng suy giảm [12].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "[12]",
+          "offset_start": 523,
+          "offset_end": 527
+        }
+      ],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_fd72164a",
+      "text": "PBAT và PLA có bản chất cấu trúc hóa học khác nhau, blend không trộn lẫn PBAT/PLA sẽ có sự tách pha polymer với sức căng giao diện lớn giữa 2 polymer, ít có sự bám dính tương tác bề mặt [12,13]; hệ quả là, tính chất của vật liệu không được cải thiện.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "[12,",
+          "offset_start": 186,
+          "offset_end": 190
+        },
+        {
+          "type": "bibr",
+          "target": "#b12",
+          "text": "13]",
+          "offset_start": 190,
+          "offset_end": 193
+        }
+      ],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_57efbafc",
+      "text": "Sự tương hợp giữa PBAT và PLA được tăng cường bằng cách sử dụng các chất trợ tương hợp PGMA và PMA.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_57efbafc",
+      "text": "Tính chất cơ học bao gồm độ bền kéo, độ giãn dài và module kéo của các mẫu blend PBAT/PLA có chứa PMA 1 pkl, PGMA 1 pkl được thể hiện trong hình 1.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_b7246584",
+      "text": "Có thể nhận thấy, các mẫu sử dụng chất trợ tương hợp PGMA 1 pkl cho tính chất cơ học cao hơn so với các mẫu sử dụng PMA 1 pkl (với cùng tỷ lệ PBAT/PLA).",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_b7246584",
+      "text": "Điều này cho thấy, ở hàm lượng 1 pkl PGMA có hiệu quả trợ tương hợp trong blend PBAT/PLA tốt hơn so với PMA.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_b7246584",
+      "text": "Chất trợ tương hợp hiệu quả làm giảm sức căng bề mặt giữa 2 polymer, từ đó giảm kích thước của giọt phân tán trong pha nền; cấu trúc giọt phân tán trong nền trở nên mịn hơn, đồng nhất hơn; từ đó dẫn đến tăng cường các tính chất của vật liệu.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_b7246584",
+      "text": "MPa, ε=11,31%.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_b7246584",
+      "text": "Sự thay đổi tính chất cơ học này được giải thích là do: khi hàm lượng PLA nhỏ hơn 50 pkl thì blend PBAT/PLA sẽ có cấu trúc với pha nền PBAT mềm dẻo và pha phân tán PLA cứng, PLA đồng thời gia cường cho nền PBAT; hàm lượng PLA tăng sẽ dẫn đến tăng độ bền kéo, tăng module kéo, giảm độ giãn dài khi đứt của vật liệu [14].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b13",
+          "text": "[14]",
+          "offset_start": 314,
+          "offset_end": 318
+        }
+      ],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_b7246584",
+      "text": "Tuy nhiên, khi hàm lượng PLA≥60 pkl, vật liệu PBAT/PLA có sự thay đổi cấu trúc với PLA làm pha nền cứng và PBAT đóng vai trò làm pha phân tán mềm dẻo [14]; do đó, độ bền kéo đứt và module kéo của vật liệu blend với nền PLA sẽ cao vượt trội so với vật liệu blend có pha nền PBAT.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b13",
+          "text": "[14]",
+          "offset_start": 150,
+          "offset_end": 154
+        }
+      ],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_0d2f3030",
+      "text": "Từ tính chất cơ học trên, có thể kết luận rằng PGMA có hiệu quả trợ tương hợp trong blend PBAT/PLA tốt hơn so với PMA; hàm lượng PLA trong blend tăng từ 20 đến 70 pkl thì dẫn đến độ bền kéo, module kéo tăng dần, tăng đáng kể khi PLA≥60 pkl, độ giãn dài giảm dần.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_0d2f3030",
+      "text": "Tỷ lệ PBAT/PLA 40/60 (TA46) được chọn để chế tạo các mẫu blend cho các nghiên cứu tiếp theo do mẫu vật liệu vừa có độ bền kéo, module kéo lớn -phản ánh độ cứng của toàn khối vật liệu; đồng thời độ giãn dài không quá thấp.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Tính chất cơ học",
+      "head_section": "Ảnh hưởng của loại chất trợ tương hợp và tỷ lệ polyme:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Để đánh giá ảnh hưởng của hàm lượng PGMA đến tính chất của vật liệu, các mẫu blend PBAT/PLA 40/60 với hàm lượng PGMA thay đổi: 1,0; 5,0; 7,5; 10,0; 12,5 pkl được chế tạo.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Kết quả tính chất cơ học của các mẫu trong hình 2 cho thấy, khi tăng hàm lượng PGMA từ 1,0 đến 12,5 pkl, độ bền kéo đứt, độ giãn dài khi đứt.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Module kéo tăng dần và đạt các giá trị cực đại tại PGMA 10 pkl, sau đó giảm nhẹ khi PGMA tiếp tục tăng lên 12,5 pkl.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Mẫu TA46-PGMA10 cho độ bền kéo đứt, module kéo, giãn dài khi đứt lần lượt là 24,28 MPa; 725 MPa và 102,17% tương ứng.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Kết quả này được giải thích là khi tăng hàm lượng PGMA sẽ làm tăng sự liên kết bề mặt giữa PBAT và PLA, từ đó tính chất cơ lý của vật liệu được cải thiện.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Tuy nhiên, khi hàm lượng PGMA vượt quá giá trị tối ưu sẽ gây ra sự khâu mạch cục bộ của polymer, xuất hiện sự phá hủy giòn tại các khối polymer khâu mạch đó; hệ quả là làm giảm đồng thời cả độ bền kéo, module đàn hồi và giãn dài khi đứt của vật liệu.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Kết quả này tương đồng với nghiên cứu của N. Zhang và cs (2009) [15], với blend PBAT/PLA được trợ tương hợp bởi GMA, khi hàm lượng GMA tăng quá giá trị tối ưu sẽ có quá nhiều nhóm epoxy của GMA phản ứng với nhóm -COOH, -OH cuối mạch PBAT và PLA; gây ra sự khâu mạch cục bộ của polymer, từ đó làm suy giảm đồng thời độ bền kéo, độ dãn dài và độ dai va đập.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b14",
+          "text": "[15]",
+          "offset_start": 64,
+          "offset_end": 68
+        }
+      ],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Các kết quả tính chất cơ học cho thấy, khi hàm lượng MMT tăng từ 10 đến 25 pkl thì độ bền kéo đứt, module kéo tăng dần và đạt giá trị lớn nhất tại 20 pkl MMT, sau đó các tính chất giảm nhẹ khi MMT tiếp tục tăng lên 25 pkl.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Trong khi đó, độ giãn dài khi đứt giảm dần khi hàm lượng MMT tăng dần.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Mẫu TA46-MMT20 cho giá trị cực đại của độ bền kéo đứt và module kéo, lần lượt là 30,06 và 1568 MPa tương ứng; giãn dài khi đứt đạt 70,38%.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Điều này được giải thích là do hàm lượng MMT càng tăng lên sẽ làm gia tăng mật độ tương tác kỵ nước giữa nhựa nền với chuỗi alkyl béo trên bề mặt MMT, từ đó tăng khả năng truyền tải ứng suất từ nhựa nền sang chất độn; do đó, tính chất cơ lý của vật liệu được cải thiện.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_206f8c15",
+      "text": "Tuy nhiên, hàm lượng MMT tăng lên quá cao sẽ dẫn đến sự kết tụ của các hạt clay trong quá trình trộn hợp nóng chảy; hệ quả là blend tạo thành sẽ dễ bị phá hủy cục bộ tại các khối kết tụ; từ đó dẫn đến suy giảm tính chất của vật liệu.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_df95f799",
+      "text": "Tóm lại, tính chất cơ học của blend PBAT/PLA sẽ được cải thiện đáng kể khi sử dụng chất trợ tương hợp PGMA và chất gia cường MMT, phù hợp với các ứng dụng chế tạo bao bì đựng thực phẩm (chai, lọ, cốc, đĩa, khay) dùng một lần với độ bền kéo đứt ≥18 MPa, giãn dài ≥4%, module kéo ≥1000 MPa [16,17].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b15",
+          "text": "[16,",
+          "offset_start": 288,
+          "offset_end": 292
+        },
+        {
+          "type": "bibr",
+          "target": "#b16",
+          "text": "17]",
+          "offset_start": 292,
+          "offset_end": 295
+        }
+      ],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_df95f799",
+      "text": "Với 10 pkl PGMA và 20 pkl MMT; độ bền kéo, module kéo và độ giãn dài của vật liệu lần lượt đạt 30,06 MPa, 1568 MPa và 70,38%.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Ảnh hưởng của hàm lượng chất trợ tương hợp PGMA:"
+    },
+    {
+      "id": "p_c7f5e570",
+      "text": "Sự tăng cường tương tác bề mặt giữa PBAT và PLA khi sử dụng chất trợ tương hợp được chứng minh bởi phổ ATR-FTIR của các mẫu: không có chất trợ tương hợp (ucTA46) và có chất trợ tương hợp (TA46-PMA1, TA46-PGMA1, TA46-PGMA10, TA46-MMT20).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phổ hồng ngoại"
+    },
+    {
+      "id": "p_c7f5e570",
+      "text": "Phổ IR của các mẫu được trình bày trong hình 4.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phổ hồng ngoại"
+    },
+    {
+      "id": "p_dab80814",
+      "text": "Phân tích nhiệt trọng lượng (TGA) cho biết mức độ ổn định nhiệt của một vật liệu, từ đó đánh giá được độ bền cấu trúc, mức độ tương hợp giữa các cấu tử thành phần của vật liệu.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phân tích nhiệt"
+    },
+    {
+      "id": "p_dab80814",
+      "text": "Giản đồ TGA và DTG của các mẫu blend không chứa và có chứa chất trợ tương hợp, có clay MMT được thể hiện trong hình 6.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phân tích nhiệt"
+    },
+    {
+      "id": "p_8e0450a3",
+      "text": "Giản đồ TGA và DTG cho thấy, nhiệt độ bắt đầu phân hủy và nhiệt độ tại tốc độ phân hủy lớn nhất của các mẫu Như vậy, PGMA có hiệu quả trợ tương hợp giữa PBAT và PLA tốt hơn so với PMA; từ đó dẫn đến tăng độ ổn định cấu trúc, tăng độ bền cơ học, độ bền nhiệt của vật liệu.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phân tích nhiệt"
+    },
+    {
+      "id": "p_4106550a",
+      "text": "Mức độ tương hợp, sự tương tác bề mặt giữa các cấu tử trong polymer blend được đánh giá thông qua đặc trưng hình thái của vật liệu, thể hiện trên ảnh SEM.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_4106550a",
+      "text": "Ảnh SEM các mẫu blend không và có chất trợ tương hợp, có khoáng sét MMT được trình bày trong hình 7.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_200454f4",
+      "text": "Nhận thấy, ucTA46 (không chứa chất trợ tương hợp) bị phá hủy với sự tách pha rõ ràng, các giọt PBAT tách ra khỏi nền PLA (hình 7A).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_200454f4",
+      "text": "Các blend có chất trợ tương hợp (hình 7B-E) rất ít hoặc không xuất hiện sự tách pha, bề mặt tương đối mịn do PMA và PGMA đã làm tăng sự bám dính giữa PBAT và PLA.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_200454f4",
+      "text": "Mẫu TA46-PMA1 (hình 7B) có sự tách pha polymer rất ít; TA46-PGMA1 không thấy sự phân tách pha PBAT với PLA (hình 7C); TA46-PGMA10 cho bề mặt phá hủy rất mịn và đồng nhất (hình 7D).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_200454f4",
+      "text": "Kết quả cho thấy, PGMA giúp PBAT phân tán đồng đều hơn và tạo liên kết tốt hơn với nền PLA so với PMA; hàm lượng PGMA tăng lên làm tăng sự liên kết bề mặt giữa PBAT và PLA, làm cấu trúc blend đồng nhất hơn.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_200454f4",
+      "text": "Mẫu TA46-MMT20 chỉ xuất hiện một vài điểm trắng nhỏ (hình 7E); chứng tỏ MMT đã phân tán khá đồng đều vào nền polymer.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_9555b099",
+      "text": "Có thể kết luận rằng, PGMA 10 pkl giúp tăng liên kết bề mặt giữa PBAT và PLA, giúp PBAT phân tán vào nền PLA đồng đều hơn, tạo ra cấu trúc blend đồng nhất và bền vững.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_9555b099",
+      "text": "Clay 20 pkl cũng phân tán đồng đều vào nền polymer, không kết tụ tập hợp hạt, mang lại hiệu quả gia cường cho mẫu vật liệu.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Cấu trúc hình thái"
+    },
+    {
+      "id": "p_bfb4b3a9",
+      "text": "Polymer blend trên cơ sở PBAT kết hợp với PLA được tăng cường tính chất cơ lý đã được chế tạo thành công trên máy đùn hai trục vít, sử dụng chất trợ tương hợp Glycidyl methacrylate (PGMA) và chất gia cường khoáng sét MMT.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết luận"
+    },
+    {
+      "id": "p_bfb4b3a9",
+      "text": "Các kết quả chỉ ra, tỷ lệ PBAT/PLA 40/60 cho các tính chất cơ học tối ưu; PGMA tăng tính tương hợp của blend bằng phản ứng giữa nhóm epoxy với nhóm -COOH, -OH cuối mạch polymer; sử dụng PGMA kết hợp với MMT làm tăng độ bền cơ học, độ bền nhiệt, độ ổn định cấu trúc của vật liệu.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết luận"
+    },
+    {
+      "id": "p_bfb4b3a9",
+      "text": "Mẫu blend PBAT/PLA/PGMA/MMT (40/60/10/20) đã chế tạo cho các tính chất cơ học: σ=30,06 MPa, ε=70,38% và module kéo 1.568 MPa.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết luận"
+    },
+    {
+      "id": "p_551dec36",
+      "text": "Nghiên cứu này được thực hiện trong khuôn khổ đề tài \"Nghiên cứu chế tạo hạt nhựa trên cơ sở Polybutylen adipat terephtalat (PBAT) và các phụ gia phân hủy sinh học ứng dụng sản xuất đồ gia dụng dùng một lần\" do Bộ Khoa học và Công nghệ cấp kinh phí.",
+      "coords": [],
+      "refs": [],
+      "head_section": "LỜI CẢM ƠN"
+    },
+    {
+      "id": "p_551dec36",
+      "text": "Nhóm tác giả xin trân trọng cảm ơn.",
+      "coords": [],
+      "refs": [],
+      "head_section": "LỜI CẢM ƠN"
+    }
+  ],
+  "figures_and_tables": [
+    {
+      "id": "fig_0",
+      "label": "",
+      "head": "",
+      "type": "figure",
+      "desc": "Chế tạo blend PBAT/PLA có và không có chất trợ tương hợp: Các mẫu blend PBAT/PLA có và không có chất trợ tương hợp được chế tạo với đơn phối liệu trình bày trong bảng 1. Trong đó, PBAT, PLA được ký hiệu lần lượt là T và A tương ứng, blend không tương hợp được thêm ký hiệu uc; blend với tỷ lệ phần khối lượng PBAT/PLA=x/y được ký hiệu là TAxy tương ứng.Quy trình chung chế tạo các mẫu blend PBAT/PLA: Cân chính xác khối lượng của nhựa và các phụ gia, tiến hành trộn cơ học đồng đều trong 2 phút, sau đó, chuyển hỗn hợp nguyên liệu vào phễu nạp liệu của máy đùn hai trục vít để bắt đầu quá trình trộn hợp nóng chảy, nhiệt độ 13 khoang trộn của máy đùn từ họng cấp liệu đến đầu đùn như sau: 175/180/185/190/195/200/200/195/190/180/175/170/165 o C, tốc độ trục vít 100 vòng/phút.Hỗn hợp nhựa nóng chảy thoát khỏi đầu đùn hình thành sợi nhựa; sợi được kéo, làm mát trong bể nước và cắt tạo hạt.Thu sản phẩm hạt nhựa tạo thành và đánh giá tính chất.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_1",
+      "label": "12",
+      "head": "Bảng 1 .Bảng 2 .",
+      "type": "figure",
+      "desc": "Đơn phối liệu chế tạo blend PBAT/PLA có và không có chất trợ tương hợp.Đơn phối liệu cho chế tạo blend PBAT/PLA có chứa MMT.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_2",
+      "label": "",
+      "head": "",
+      "type": "figure",
+      "desc": "Với cả 2 loại trợ tương hợp, khi hàm lượng PLA tăng từ 20 đến 70 pkl, tương ứng với tỷ lệ PBAT/PLA thay đổi từ 80/20 đến 30/70 thì độ bền kéo đứt, module kéo tăng dần.Đặc biệt, module tăng đáng kể tại 60 và 70 pkl PLA.Ngược lại, độ giãn dài giảm dần khi hàm lượng PLA tăng từ 20 đến 60 pkl và giảm mạnh tại 70 pkl PLA.Mẫu TA82-PGMA1 cho σ=10,86 MPa, module kéo=238 MPa, ε=208,82%; mẫu TA46-PGMA1 cho giá trị độ bền và module tăng mạnh: σ=15,89 MPa, module kéo=540 MPa, ε=50,27%; mẫu TA37-PGMA1 cho: σ=17,05 MPa, module kéo=660",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_3",
+      "label": "91913",
+      "head": "9 Hình 1 . 9 Hình 1 .Hình 3 .",
+      "type": "figure",
+      "desc": "Tính chất cơ học của blend khi sử dụng PGMA 1 pkl và PMA 1 pkl, với hàm lượng PLA thay đổi.Có thể nhận thấy, các mẫu sử dụng chất trợ tương hợp PGMA 1 pkl cho tính chất cơ học cao hơn so với các mẫu sử dụng PMA 1 pkl (với cùng tỷ lệ PBAT/PLA).Điều này cho thấy, ở hàm lượng 1 pkl PGMA có hiệu quả trợ tương hợp trong blend PBAT/PLA tốt hơn so với PMA.Chất trợ tương hợp hiệu quả làm giảm sức căng bề mặt giữa 2 polymer, từ đó giảm kích thước của giọt phân tán trong pha nền; cấu trúc giọt phân tán trong nền trở nên mịn hơn, đồng nhất hơn; từ đó dẫn đến tăng cường các tính chất của vật liệu.Với cả 2 loại trợ tương hợp, khi hàm lượng PLA tăng từ 20 đến 70 pkl, tương ứng với tỷ lệ PBAT/PLA thay đổi từ 80/20 đến 30/70 thì độ bền kéo đứt, modul kéo tăng dần.Đặc biệt, module tăng đáng kể tại 60 và 70 pkl PLA.Ngược lại, độ giãn dài giảm dần khi hàm lượng PLA tăng từ 20 đến 60 pkl và giảm mạnh tại 70 pkl PLA.Mẫu TA82-PGMA1 cho σ=10,86 MPa, module kéo=238 MPa, ε=208,82%; mẫu TA46-PGMA1 cho giá trị độ bền và module tăng mạnh: σ=15,89 MPa, module kéo=540 MPa, ε=50,27%; mẫu TA37-PGMA1 cho: σ=17,05 MPa, module kéo=660 MPa, ε=11,31%.Sự thay đổi tính chất cơ học này được giải thích là do: khi hàm lượng PLA nhỏ hơn 50 pkl thì blend PBAT/PLA Tính chất cơ học của blend khi sử dụng PGMA 1 pkl và PMA 1 p lượng PLA thay đổi.Có thể nhận thấy, các mẫu sử dụng chất trợ tương hợp PGMA 1 pkl cho học cao hơn so với các mẫu sử dụng PMA 1 pkl (với cùng tỷ lệ PBAT/PLA).Đ thấy, ở hàm lượng 1 pkl PGMA có hiệu quả trợ tương hợp trong blend PBAT/P so với PMA.Chất trợ tương hợp hiệu quả làm giảm sức căng bề mặt giữa 2 po giảm kích thước của giọt phân tán trong pha nền; cấu trúc giọt phân tán trong mịn hơn, đồng nhất hơn; từ đó dẫn đến tăng cường các tính chất của vật liệu.Với cả 2 loại trợ tương hợp, khi hàm lượng PLA tăng từ 20 đến 70 pkl với tỷ lệ PBAT/PLA thay đổi từ 80/20 đến 30/70 thì độ bền kéo đứt, modul ké Đặc biệt, module tăng đáng kể tại 60 và 70 pkl PLA.Ngược lại, độ giãn dài g hàm lượng PLA tăng từ 20 đến 60 pkl và giảm mạnh tại 70 pkl PLA.Mẫu TA cho σ=10,86 MPa, module kéo=238 MPa, ε=208,82%; mẫu TA46-PGMA1 ch bền và module tăng mạnh: σ=15,89 MPa, module kéo=540 MPa, ε=50,27%; PGMA1 cho: σ=17,05 MPa, module kéo=660 MPa, ε=11,31%.Sự thay đổi học này được giải thích là do: khi hàm lượng PLA nhỏ hơn 50 pkl thì blend Hình 1. Tính chất cơ học của blend khi sử dụng PGMA 1 pkl và PMA 1 pkl, với hàm lượng PLA thay đổi.Hình 2. Tính chất cơ học của blend TA46-PGMA với hàm lượng PGMA thay đổi.68(3) 3.2026 Do đó, hàm lượ ng trợ tương hợp được sử dụng là 10 pkl cho hiệu quả tương hợp tốt nhất giữa PLA và PBAT.Độ bền kéo, module kéo và độ dãn dài của vật liệu lần lượt đạt 24,28 MPa, 725 MPa và 102,17%.Ảnh hưởng của chất gia cường khoáng sét MMT: Các mẫu TA46-PGMA10 được chế tạo với các hàm lượng MMT thay đổi: 10, 15, 20, 25 pkl; các tính chất cơ học được trình bày trong hình 3. Tính chất cơ học của blend TA46-PGMA10-MMT với hàm lượng MMT thay đổi.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_4",
+      "label": "45",
+      "head": "Hình 4 .Hình 5 .",
+      "type": "figure",
+      "desc": "Phổ ATR-FTIR của các mẫu blend không chứa và có chứa chất trợ tương hợp PGMA, PMA.Có thể nhận thấy, phổ IR của blend không tương hợp ucTA46 xuất hiện peak tại 1123 và 1019 cm -1 với cường độ trung bình chỉ ra sự tồn tại của các liên kết C-O trong nhóm -COOH và C-OH cuối mạch PBAT và PLA.Với các mẫu chứa chất trợ tương hợp, hai peak này dịch chuyển về tần số thấp hơn; cụ thể, TA46-PMA1 xuất hiện peak tại 1121 và 1017 cm -1 ; TA46-PGMA1 và TA46-PGMA10 cho peak tại 1118 và 1016 cm -1 .Điều này chứng tỏ rằng, đã xảy ra phản ứng hóa học giữa các nhóm -COOH, -OH cuối mạch PBAT và PLA với các chức epoxy, maleic của PGMA, PMA và hình thành các liên kết C-O-C mới đặc trưng bởi các peak trong dải 1300-1000 cm -1 .Điều này dẫn đến sự gia tăng liên kết bề mặt giữa PBAT và PLA; từ đó cải thiện tính tương hợp, tính chất cơ học so với blend không chứa chất tương hợp [3, 18, 19], mà chứng minh bởi các kết quả cơ tính ở trên.Cơ chế tương hợp giữa PBAT và PLA được minh họa trên hình 5. Minh họa cơ chế tương hợp giữa PBAT và PLA bằng hợp chất chứa nhóm epoxy [3, 18-20].Phổ IR của TA46-PGMA10 cho thấy, cường độ các peak 1118, 1082, 1016 cm -1 mạnh hơn so với các peak tương ứng của TA46-PMA1 và TA46-PGMA1; chứng tỏ mật độ liên kết C-O-C trong các mẫu sử dụng PGMA là lớn hơn so với mẫu sử dụng PMA.Khi hàm lượng PGMA tăng từ 1 lên 10 pkl, mật độ liên kết C-O-C tăng lên.Nhóm epoxy có thể phản ứng với cả -COOH và -OH để tạo thành liên kết C-O-C mới [18].Trong khi đó, nhóm maleic chỉ phản ứng với nhóm -OH để hình thành nhóm ester.Do đó, mật độ các liên kết C-O-C hình thành tại bề mặt tiếp xúc pha PBAT/PLA khi sử dụng PGMA sẽ lớn hơn so với khi sử dụng PMA.Phổ IR của TA46-MMT20 chứa clay MMT xuất hiện peak 1470, 1600-1650 cm -1 được quy cho liên kết N-H và C-N trong hợp chất amoni trên bề mặt MMT biến tính.Có thể kết luận, PGMA có hiệu quả trợ tương hợp cho blend PBAT/PLA với cơ chế phản ứng giữa nhóm epoxy và các nhóm COOH, OH cuối mạch PBAT và PLA.Tăng hàm lượng PGMA làm tăng mức độ tương hợp của PBAT/PLA, sự ổn định cấu trúc và các tính chất của vật liệu.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_5",
+      "label": "6",
+      "head": "Hình 6 .",
+      "type": "figure",
+      "desc": "(A) Giản đồ TGA của PLA, PBAT; (B) Giản đồ DTG của PLA, PBAT; (C) Giản đồ TGA của ucTA46, TA46-PMA1, TA46-PGMA10, TA46-MMT20; (D) Giản đồ DTG của ucTA46, TA46-PMA1, TA46-PGMA10, TA46-MMT20.68(3) 3.2026 blend tăng theo thứ tự: ucTA46<TA46-PMA1<TA46-PGMA1<TA46-PGMA10≈TA46-MMT20.Mẫu TA46-PGMA10 có nhiệt độ bắt đầu phân hủy là 335 o C và nhiệt độ tại tốc độ phân hủy lớn nhất (T max ) là 374, 426 o C. ucTA46 không chứa chất tương hợp, do đó kém bền cấu trúc, kém ổn định nhiệt và phân hủy sớm hơn so với blend có chứa PMA và PGMA; cụ thể, nhiệt độ bắt đầu phân hủy đạt tại 258 o C, nhiệt độ T max đạt tại 301 và 419 o C, đều thấp hơn so với các giá trị tương ứng của các blend chứa chất trợ tương hợp PMA và PGMA.Mẫu TA46-PMA1 kém ổn định nhiệt so với TA46-PGMA1, TA46-PGMA10, và TA46-MMT20 do sự bám dính, liên kết bề mặt giữa PBAT và PLA thấp hơn.Mẫu chứa MMT 20 pkl cho nhiệt độ bắt đầu phân hủy và nhiệt độ T max (335, 373, 425 o C tương ứng) thấp hơn một chút so với mẫu TA46-PGMA10 không chứa MMT, do hợp chất hữu cơ quaternary alkyl ammonium trên bề mặt MMT thực hiện trước quá trình phân hủy.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_6",
+      "label": "7",
+      "head": "Hình 7 .",
+      "type": "figure",
+      "desc": "Ảnh kính hiển vi điện tử quét (SEM) các mẫu: (A) ucTA46, (B) TA46-PMA1, (C) TA46-PGMA1, (D) TA46-PGMA10, (E) TA46-MMT20.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "tab_0",
+      "label": "",
+      "head": "68(3) 3.2026",
+      "type": "table",
+      "desc": "",
+      "content": {
+        "headers": [],
+        "rows": [
+          [
+            "PBAT Ecopond KB100 được cung cấp bởi Zhuhai"
+          ],
+          [
+            "Kingfa Biomaterials, Guangdong; chỉ số chảy 3~5 g/10"
+          ],
+          [
+            "phút (190 o C, 2,19 kg), nhiệt độ nóng chảy 125 o C. Polylactic"
+          ],
+          [
+            "acid Luminy LX175 Total Energies-Corbion, Thái Lan;"
+          ],
+          [
+            "chỉ số chảy 3 g/10 phút (190 o C, 2,19 kg), nhiệt độ nóng"
+          ],
+          [
+            "chảy 155 o C. Glycidyl methacrylate (GMA) độ tinh khiết"
+          ],
+          [
+            "≥99%; benzoyl peroxide (BPO) độ tinh khiết ≥98% được"
+          ],
+          [
+            "mua từ Shanghai Macklin Biochemical Technology. Maleic"
+          ],
+          [
+            "anhydride (MA) độ tinh khiết ≥98%, phụ gia trợ gia công"
+          ],
+          [
+            "oleamide độ tinh khiết ≥98% là sản phẩm của Shanghai"
+          ],
+          [
+            "Zhanyun Chemical. Khoáng sét MMT, loại dùng làm chất"
+          ],
+          [
+            "độn cho polymer composite được biến tính bề mặt bởi"
+          ],
+          [
+            "Octadecyl trimethyl ammonium, được mua từ Nanomer"
+          ],
+          [
+            "Beijing East-West Company, kích thước hạt: ~15-20 µm."
+          ]
+        ],
+        "metadata": {
+          "row_count": 14,
+          "column_count": 1,
+          "has_headers": false
+        }
+      },
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "tab_1",
+      "label": "",
+      "head": "Bảng 3. Tính chất cơ học của các mẫu blend PBAT/PLA không chứa chất trợ tương hợp.",
+      "type": "table",
+      "desc": "",
+      "content": {
+        "headers": [],
+        "rows": [
+          [
+            "Ký hiệu",
+            "PBAT/PLA",
+            "Độ bền kéo đứt",
+            "Giãn dài khi đứt"
+          ],
+          [
+            "mẫu",
+            "(pkl/pkl)",
+            "(σ, MPa)",
+            "(ε, %)"
+          ],
+          [
+            "PLA",
+            "0/100",
+            "35,00±0,20",
+            "3,60±0,50"
+          ],
+          [
+            "PBAT",
+            "100/0",
+            "17,00±0,50",
+            ">450% (không đứt)"
+          ],
+          [
+            "ucTA82",
+            "80/20",
+            "7,02±2,50",
+            "6,95±2,00"
+          ],
+          [
+            "ucTA73",
+            "70/30",
+            "4,91±2,00",
+            "6,00±2,00"
+          ],
+          [
+            "ucTA64",
+            "60/40",
+            "22,09±3,00",
+            "3,46±1,50"
+          ],
+          [
+            "ucTA55",
+            "50/50",
+            "15,53±2,50",
+            "3,35±1,50"
+          ],
+          [
+            "ucTA46",
+            "40/60",
+            "21,65±2,80",
+            "4,50±1,00"
+          ],
+          [
+            "ucTA37",
+            "30/70",
+            "9,62±2,00",
+            "4,94±1,70"
+          ]
+        ],
+        "metadata": {
+          "row_count": 10,
+          "column_count": 4,
+          "has_headers": false
+        }
+      },
+      "note": "",
+      "coords": []
+    }
+  ],
+  "references": [
+    {
+      "id": "b1",
+      "target": "b0",
+      "title": "An overview on synthesis, properties and applications of poly(butylene-adipate-coterephthalate)-PBAT",
+      "authors": [
+        "J Jian",
+        "Z Xiangbin",
+        "H Xianbo"
+      ],
+      "journal": "Advanced Industrial and Engineering Polymer Research",
+      "publication_date": "2020",
+      "year": 2020,
+      "volume": "3",
+      "issue": "1",
+      "page_start": "19",
+      "page_end": "26",
+      "doi": "10.1016/j.aiepr.2020.01.001"
+    },
+    {
+      "id": "b2",
+      "target": "b1",
+      "title": "Improvement of thermal stability, rheological and mechanical properties of PLA, PBAT and their blends by reactive extrusion with functionalized epoxy",
+      "authors": [
+        "R Itry",
+        "K Lamnawar",
+        "A Maazouz"
+      ],
+      "journal": "Polymer Degradation and Stability",
+      "publication_date": "2012",
+      "year": 2012,
+      "volume": "97",
+      "issue": "10",
+      "page_start": "1898",
+      "page_end": "1914",
+      "doi": "10.1016/j.polymdegradstab.2012.06.028"
+    },
+    {
+      "id": "b3",
+      "target": "b2",
+      "title": "Mechanical properties, rheological behaviors, and phase morphologies of hightoughness PLA/PBAT blends by in-situ reactive compatibilization",
+      "authors": [
+        "X Wang",
+        "S Peng",
+        "H Chen"
+      ],
+      "journal": "Composites Part B: Engineering",
+      "publication_date": "2019",
+      "year": 2019,
+      "pages": "173",
+      "doi": "10.1016/j.compositesb.2019.107028"
+    },
+    {
+      "id": "b4",
+      "target": "b3",
+      "title": "Preparation, characterization and properties of binary and ternary blends with thermoplastic starch, poly(lactic acid) and poly(butylene adipate-coterephthalate)",
+      "authors": [
+        "J Ren",
+        "H Fu",
+        "T Ren"
+      ],
+      "journal": "Carbohydrate Polymers",
+      "publication_date": "2009",
+      "year": 2009,
+      "volume": "77",
+      "issue": "3",
+      "page_start": "576",
+      "page_end": "582",
+      "doi": "10.1016/j.carbpol.2009.01.024"
+    },
+    {
+      "id": "b5",
+      "target": "b4",
+      "title": "Effect of glycidyl methacrylate (GMA) on the thermal, mechanical and morphological property of biodegradable PLA/PBAT blend and its nanocomposites",
+      "authors": [
+        "M Kumar",
+        "S Mohanty",
+        "S Nayak"
+      ],
+      "journal": "Bioresource Technology",
+      "publication_date": "2010",
+      "year": 2010,
+      "volume": "101",
+      "issue": "21",
+      "page_start": "8406",
+      "page_end": "8415",
+      "doi": "10.1016/j.biortech.2010.05.075"
+    },
+    {
+      "id": "b6",
+      "target": "b5",
+      "title": "Mechanical and morphological properties of poly(butylene adipate co terephthalate) and poly(lactic acid) blended with organically modified silicate layers",
+      "authors": [
+        "M Shahlari",
+        "S Lee"
+      ],
+      "journal": "Polymer Engineering & Science",
+      "publication_date": "2012",
+      "year": 2012,
+      "volume": "52",
+      "issue": "7",
+      "page_start": "1420",
+      "page_end": "1428",
+      "doi": "10.1002/pen.23082"
+    },
+    {
+      "id": "b7",
+      "target": "b6",
+      "title": "Functionalization of poly (butylene adipate-co-terephthalate) and its toughening effect on poly (lactic acid)",
+      "authors": [
+        "G Zhang",
+        "H Li",
+        "W Jiang"
+      ],
+      "journal": "European Polymer Journal",
+      "publication_date": "2024",
+      "year": 2024,
+      "volume": "206",
+      "doi": "10.1016/j.eurpolymj.2024.112764"
+    },
+    {
+      "id": "b8",
+      "target": "b7",
+      "title": "Effect of glycidyl methacrylate-grafted poly(ethylene octene) on the compatibility in PLA/PBAT blends and films",
+      "authors": [
+        "Y Zhang",
+        "S Jia",
+        "H Pan"
+      ],
+      "journal": "Korean Journal of Chemical Engineering",
+      "publication_date": "2021",
+      "year": 2021,
+      "volume": "38",
+      "issue": "8",
+      "page_start": "1746",
+      "page_end": "1755",
+      "doi": "10.1007/s11814-021-0809-1"
+    },
+    {
+      "id": "b9",
+      "target": "b8",
+      "title": "Manipulating phase structure of biodegradable PLA/PBAT system: Effects on dynamic rheological responses and 3D printing",
+      "authors": [
+        "Y Lyu",
+        "Y Chen",
+        "Z Lin"
+      ],
+      "publication_date": "2020",
+      "year": 2020,
+      "volume": "200",
+      "doi": "10.1016/j.compscitech.2020.108399"
+    },
+    {
+      "id": "b10",
+      "target": "b9",
+      "title": "Revisiting maleic anhydride-grafted biopolymers for improved compatibility and toughening of PLA/PBAT blends: Effects of molecular weight and grafting ratio",
+      "authors": [
+        "Z Miao",
+        "L Li",
+        "Y Xie"
+      ],
+      "journal": "Polymer",
+      "publication_date": "2025",
+      "year": 2025,
+      "volume": "320",
+      "doi": "10.1016/j.polymer.2025.128055"
+    },
+    {
+      "id": "b11",
+      "target": "b10",
+      "title": "Enhanced mechanical properties of polylactic acid/poly(butylene adipate-coterephthalate) modified with maleic anhydride",
+      "authors": [
+        "K Nam",
+        "S Kim",
+        "D Kim"
+      ],
+      "journal": "Polymers",
+      "publication_date": "2024",
+      "year": 2024,
+      "volume": "16",
+      "issue": "4",
+      "doi": "10.3390/polym16040518"
+    },
+    {
+      "id": "b12",
+      "target": "b11",
+      "title": "Ductility improvements of PLA-based binary and ternary blends with controlled morphology using PBAT, PBSA, and nanoclay",
+      "authors": [
+        "M Nofar",
+        "R Salehiyan",
+        "U Ciftci"
+      ],
+      "journal": "Composites Part B: Engineering",
+      "publication_date": "2020",
+      "year": 2020,
+      "pages": "182",
+      "doi": "10.1016/j.compositesb.2019.107661"
+    },
+    {
+      "id": "b13",
+      "target": "b12",
+      "title": "Design of biodegradable PLA/PBAT blends with balanced toughness and strength via interfacial compatibilization and dynamic vulcanization",
+      "authors": [
+        "X Chen",
+        "Z Zeng",
+        "Y Ju"
+      ],
+      "journal": "Polymer",
+      "publication_date": "2023",
+      "year": 2023,
+      "volume": "266",
+      "doi": "10.1016/j.polymer.2022.125620"
+    },
+    {
+      "id": "b14",
+      "target": "b13",
+      "title": "Influence of chain extender on mechanical, thermal and morphological properties of blown films of PLA/PBAT blends",
+      "authors": [
+        "L Arruda",
+        "M Magaton",
+        "R Bretas"
+      ],
+      "journal": "Polymer Testing",
+      "publication_date": "2015",
+      "year": 2015,
+      "volume": "4327",
+      "doi": "10.1016/j.polymertesting.2015.02.005"
+    },
+    {
+      "id": "b15",
+      "target": "b14",
+      "title": "Preparation and properties of biodegradable poly(lactic acid)/poly(butylene adipateco-terephthalate) blend with glycidyl methacrylate as reactive processing agent",
+      "authors": [
+        "N Zhang",
+        "Q Wang",
+        "J Ren"
+      ],
+      "journal": "Journal of Materials Science",
+      "publication_date": "2009",
+      "year": 2009,
+      "volume": "44",
+      "issue": "1",
+      "page_start": "250",
+      "page_end": "256",
+      "doi": "10.1007/s10853-008-3049-4"
+    },
+    {
+      "id": "b16",
+      "target": "b15",
+      "title": "Developments in plastic materials and recycling systems for packaging food, beverages and other fast-moving consumer goods",
+      "authors": "T Cooper",
+      "publication_date": "2013",
+      "year": 2013,
+      "page_start": "58",
+      "page_end": "107",
+      "doi": "10.1533/9780857098979.58"
+    },
+    {
+      "id": "b17",
+      "target": "b16",
+      "title": "Bio and fossilbased polymeric blends and nanocomposites for packaging: Structureproperty relationship",
+      "authors": [
+        "F Luzi",
+        "L Torre",
+        "J Kenny"
+      ],
+      "journal": "Materials",
+      "publication_date": "2019",
+      "year": 2019,
+      "volume": "12",
+      "issue": "3",
+      "doi": "10.3390/ma12030471"
+    },
+    {
+      "id": "b18",
+      "target": "b17",
+      "title": "A reactive compatibilization with the compound containing four epoxy groups for polylactic acid/poly(butylene adipate-co-terephthalate)/thermoplastic starch ternary bio-composites",
+      "authors": [
+        "Y Fang",
+        "J Lin",
+        "Y Zhang"
+      ],
+      "journal": "International Journal of Biological Macromolecules",
+      "publication_date": "2024",
+      "year": 2024,
+      "volume": "262",
+      "doi": "10.1016/j.ijbiomac.2024.129998"
+    },
+    {
+      "id": "b19",
+      "target": "b18",
+      "title": "Compatibilization strategies and analysis of morphological features of poly(butylene adipate-co-terephthalate) (PBAT)/poly(lactic acid) PLA blends: A state-of-the-art review",
+      "authors": [
+        "C Aversa",
+        "M Barletta",
+        "G Cappiello"
+      ],
+      "journal": "European Polymer Journal",
+      "publication_date": "2022",
+      "year": 2022,
+      "volume": "173",
+      "doi": "10.1016/j.eurpolymj.2022.111304"
+    },
+    {
+      "id": "b20",
+      "target": "b19",
+      "title": "In-situ reaction compatibilization modification of poly(butylene succinate-coterephthalate)/polylactide acid blend films by multifunctional epoxy compound",
+      "authors": [
+        "X Wang",
+        "H Pan",
+        "S Jia"
+      ],
+      "journal": "International Journal of Biological Macromolecules",
+      "publication_date": "2022",
+      "year": 2022,
+      "volume": "213",
+      "page_start": "934",
+      "page_end": "943",
+      "doi": "10.1016/j.ijbiomac.2022.06.026"
+    }
+  ]
+}

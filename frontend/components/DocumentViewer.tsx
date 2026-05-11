@@ -73,13 +73,13 @@ export default function DocumentViewer() {
     return (
         <div className="max-w-3xl">
             {/* Source Information */}
-            <div className="flex items-center justify-between mb-6">
+            {/* <div className="flex items-center justify-between mb-6">
                 <button className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700">
                     <ChevronDown size={18} />
                     VIEW ORIGINAL TEXT SOURCE
                 </button>
                 <div className="text-xs text-gray-400">3,420 Words &bull; 12 Pages</div>
-            </div>
+            </div> */}
 
             {/* Paper Content */}
             <div 
@@ -92,10 +92,10 @@ export default function DocumentViewer() {
                 </h1>
 
                 {/* Badges */}
-                <div className="flex gap-2 mb-8">
+                {/* <div className="flex gap-2 mb-8">
                     <span className="px-4 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">VERIFIED INSIGHT</span>
                     <span className="px-4 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">PEER REVIEWED</span>
-                </div>
+                </div> */}
 
                 {/* Executive Summary */}
                 <div className="mb-10">
@@ -106,7 +106,7 @@ export default function DocumentViewer() {
                 </div>
 
                 {/* Key Findings */}
-                <div>
+                {/* <div>
                     <h2 className="font-semibold text-lg mb-4">Key Findings</h2>
 
                     <ul className="space-y-6">
@@ -127,7 +127,7 @@ export default function DocumentViewer() {
                             </p>
                         </li>
                     </ul>
-                </div>
+                </div> */}
             </div>
         </div>
     );

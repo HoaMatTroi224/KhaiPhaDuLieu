@@ -1,0 +1,1265 @@
+{
+  "level": "sentence",
+  "biblio": {
+    "title": "Method development for the simultaneous quantification of orcinol glucoside and curculigoside in Curculigo orchioides by UPLC-PDA",
+    "authors": [
+      "Thi Nguyen",
+      "Huynh Nguyen",
+      "Van Le",
+      "Thi Tran"
+    ],
+    "doi": "10.31276/vjst.65(9).28-33",
+    "hash": "938970ED86B279C55523981E577EFC0F",
+    "publication_date": "2023-09-25",
+    "publication_year": 2023,
+    "publisher": "Ministry of Science and Technology, Vietnam (VMOST)",
+    "journal": "Ministry of Science and Technology, Vietnam",
+    "abstract": [
+      [
+        {
+          "id": 0,
+          "text": "Sâm cau là một cây thuốc được phân bố rộng rãi ở Việt Nam, Trung Quốc, Ấn Độ, Malaysia, Nhật Bản và Úc [1].",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 1,
+          "text": "Trong các bài thuốc cổ truyền, thân rễ Sâm cau thường dùng để chữa phong thấp, lưng lạnh đau, thần kinh suy nhược… [1].",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 2,
+          "text": "Thành phần hoá học chính của thân rễ Sâm cau là các hợp chất phenol glycosid gồm OG và CG (A) [2, 3] (hình 1) có các tác dụng sinh học như chống loãng xương [2], chống trầm cảm, chống ôxy hoá, tăng cường miễn dịch và cải thiện chứng loãng xương ở người già [4].",
+          "coords": [],
+          "refs": []
+        },
+        {
+          "id": 3,
+          "text": "Ngoài ra, cùng với đặc tính sinh thái như dễ trồng, phát triển tốt với điều kiện khí hậu tại Việt Nam [1] nên Sâm cau được coi là loại dược liệu tiềm năng trong phòng và chữa bệnh trong tương lai.",
+          "coords": [],
+          "refs": []
+        }
+      ],
+      [
+        {
+          "id": 0,
+          "text": "3 respectively.",
+          "coords": [],
+          "refs": []
+        }
+      ]
+    ]
+  },
+  "body_text": [
+    {
+      "id": "p_05fd2c2a",
+      "text": "Dược liệu Sâm cau đã được đưa vào chuyên luận Dược điển của Trung Quốc, Hồng Kông, Việt Nam [5][6][7] và đưa mức chỉ tiêu chất lượng cho thân rễ Sâm cau dựa vào hàm lượng CG là chất điểm chỉ (marker) quan trọng cho định lượng bằng sắc ký lỏng hiệu năng cao (HPLC).",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b6",
+          "text": "[5]",
+          "offset_start": 92,
+          "offset_end": 95
+        },
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "[6]",
+          "offset_start": 95,
+          "offset_end": 98
+        },
+        {
+          "type": "bibr",
+          "target": "#b8",
+          "text": "[7]",
+          "offset_start": 98,
+          "offset_end": 101
+        }
+      ]
+    },
+    {
+      "id": "p_05fd2c2a",
+      "text": "Tuy nhiên, Dược điển Việt Nam V chỉ có chỉ tiêu định lượng về \"hàm lượng chất chiết được trong dược liệu\" [7].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b8",
+          "text": "[7]",
+          "offset_start": 106,
+          "offset_end": 109
+        }
+      ]
+    },
+    {
+      "id": "p_05fd2c2a",
+      "text": "Do đó, việc bổ sung chỉ tiêu hàm lượng bằng phương pháp hiện đại HPLC là cần thiết nhằm nâng cao tiêu chuẩn chất lượng cho Sâm cau và phù hợp với tiêu chuẩn của nhiều",
+      "coords": [],
+      "refs": []
+    },
+    {
+      "id": "p_53d94167",
+      "text": "Dược liệu Sâm cau đã được đưa vào chuyên luận Dược điển của Trung Quốc, Hồng Kông, Việt Nam [5][6][7] và đưa mức chỉ tiêu chất lượng cho thân rễ Sâm cau dựa vào hàm lượng CG là chất điểm chỉ (marker) quan trọng cho định lượng bằng sắc ký lỏng hiệu năng cao (HPLC).",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b6",
+          "text": "[5]",
+          "offset_start": 92,
+          "offset_end": 95
+        },
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "[6]",
+          "offset_start": 95,
+          "offset_end": 98
+        },
+        {
+          "type": "bibr",
+          "target": "#b8",
+          "text": "[7]",
+          "offset_start": 98,
+          "offset_end": 101
+        }
+      ],
+      "head_section": "Hình 1. Công thức cấu tạo của OG (A) và CG (B)."
+    },
+    {
+      "id": "p_53d94167",
+      "text": "Tuy nhiên, Dược điển Việt Nam V chỉ có chỉ tiêu định lượng về \"hàm lượng chất chiết được trong dược liệu\" [7].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b8",
+          "text": "[7]",
+          "offset_start": 106,
+          "offset_end": 109
+        }
+      ],
+      "head_section": "Hình 1. Công thức cấu tạo của OG (A) và CG (B)."
+    },
+    {
+      "id": "p_53d94167",
+      "text": "Do đó, việc bổ sung chỉ tiêu hàm lượng bằng phương pháp hiện đại HPLC là cần thiết nhằm nâng cao tiêu chuẩn chất lượng cho Sâm cau và phù hợp với tiêu chuẩn của nhiều nước trên thế giới.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Hình 1. Công thức cấu tạo của OG (A) và CG (B)."
+    },
+    {
+      "id": "p_53d94167",
+      "text": "Nghiên cứu về thành phần hóa học và hoạt tính sinh học của Sâm cau cho thấy, ngoài CG, OG cũng là một thành phần chính đáng chú ý [2,4].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b3",
+          "text": "[2,",
+          "offset_start": 130,
+          "offset_end": 133
+        },
+        {
+          "type": "bibr",
+          "target": "#b5",
+          "text": "4]",
+          "offset_start": 133,
+          "offset_end": 135
+        }
+      ],
+      "head_section": "Hình 1. Công thức cấu tạo của OG (A) và CG (B)."
+    },
+    {
+      "id": "p_53d94167",
+      "text": "Vì vậy, nghiên cứu này được thực hiện với mục tiêu xây dựng quy trình định lượng đồng thời OG và CG trong Sâm cau bằng phương pháp UPLC-PDA phục vụ cho việc kiểm soát chất lượng và xây dựng tiêu chuẩn dược liệu cũng như các chế phẩm từ Sâm cau ở Việt Nam.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Hình 1. Công thức cấu tạo của OG (A) và CG (B)."
+    },
+    {
+      "id": "p_922329cb",
+      "text": "Mẫu thân rễ Sâm cau tươi thu tại Sín Chéng, huyện Si Ma Cai, tỉnh Lào Cai vào tháng 3/2021 được rửa sạch, phơi khô, xay và rây làm nguyên liệu xây dựng quy trình định lượng.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên liệu và phương pháp nghiên cứu",
+      "head_section": "Nguyên liệu"
+    },
+    {
+      "id": "p_922329cb",
+      "text": "Mẫu được định danh thuộc loài Curculigo orchioides bằng cách phân tích trình tự gen trnH-psbA và rps16, được thực hiện bởi Trung tâm Khoa học và Công nghệ Dược Sài Gòn (Sapharcen) thuộc Đại học Y Dược TP Hồ Chí Minh. 5 mẫu Sâm cau khác (thân rễ và rễ) thu hái tại Đắk Nông, Sơn La và Lào Cai tại các thời điểm khác nhau từ năm 2021 đến 2022, được dùng để định lượng so sánh hàm lượng của OG và CG theo quy trình đã xây dựng.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên liệu và phương pháp nghiên cứu",
+      "head_section": "Nguyên liệu"
+    },
+    {
+      "id": "p_922329cb",
+      "text": "Các mẫu được lưu tại Bộ môn Dược liệu, Khoa Dược, Đại học Y Dược TP Hồ Chí Minh.",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Nguyên liệu và phương pháp nghiên cứu",
+      "head_section": "Nguyên liệu"
+    },
+    {
+      "id": "p_29ccc90c",
+      "text": "Chất chuẩn gồm OG (98,57%, HPLC) và CG (99,02%, HPLC) được cung cấp bởi Khoa Dược, Đại học Y Dược TP Hồ Chí Minh.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Các dung môi, hóa chất, thiết bị"
+    },
+    {
+      "id": "p_29ccc90c",
+      "text": "Các dung môi đạt tiêu chuẩn dùng cho HPLC gồm methanol (Scharlau, Tây Ban Nha), acid trifluoroacetic -TFA (Scharlau, Tây 65(9) 9.2023 Ban Nha), acetonitril -ACN (Merck, Đức) và acid formic -FA (J.T. Baker, Mỹ), nước cất 2 lần.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Các dung môi, hóa chất, thiết bị"
+    },
+    {
+      "id": "p_29ccc90c",
+      "text": "Quy trình định lượng được xây dựng trên hệ thống Acquity UPLC-PDA (Waters) và cột InfinityLab Poroshell 120 CS-C18 (3,0×150 mm, 2,7 µm).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Các dung môi, hóa chất, thiết bị"
+    },
+    {
+      "id": "p_988471e7",
+      "text": "Khảo sát điều kiện sắc ký UPLC: Khảo sát bước sóng phát hiện được thực hiện trên mẫu chuẩn OG (200 µg/ml) và CG (200 µg/ml) pha trong ethanol 70%.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp nghiên cứu"
+    },
+    {
+      "id": "p_988471e7",
+      "text": "Mẫu thử (2 g bột dược liệu/50 ml ethanol 70%) được khảo sát về điều kiện phân tách các pic định lượng trên hệ thống UPLC với thành phần pha động gồm các loại acid như FA, TFA và tỷ lệ của các acid với CAN, tốc độ dòng và chương trình dung môi sao cho pic OG và CG đạt yêu cầu về các thông số sắc ký (%RSD của thời gian lưu và diện tích pic, hệ số bất đối xứng và độ phân giải).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp nghiên cứu"
+    },
+    {
+      "id": "p_4c61c13f",
+      "text": "Khảo sát quy trình chiết xuất dược liệu: Sử dụng phương pháp UPLC để khảo sát điều kiện chiết xuất mẫu thử (40 mg/ml trong ethanol 70%), bao gồm phương pháp chiết xuất (đun hồi lưu và siêu âm), dung môi (methanol 100 và 70%, ethanol 96, 70 và 50%), thời gian (15, 30, 45, 60, 75 và 90 phút), số lần chiết xuất dược liệu (1, 2 và 3 lần) với thể tích dung môi chiết (10, 20 và 25 ml) để thu được hàm lượng của OG và CG đạt hiệu suất cao dựa trên việc so sánh diện tích đỉnh của các pic định lượng ở các điều kiện chiết xuất khác nhau trong cùng điều kiện phân tích.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Phương pháp nghiên cứu"
+    },
+    {
+      "id": "p_c3feb9fb",
+      "text": "-Mẫu chuẩn: Cân chính xác khoảng 10 mg chuẩn vào bình định mức 10 ml, thêm ethanol 70%, siêu âm và bổ sung dung môi đến vạch để được 2 dung dịch chuẩn gốc (OG và CG) có nồng độ là 1 mg/ml.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_c3feb9fb",
+      "text": "Từ các dung dịch này, pha dãy hỗn hợp chuẩn gồm 6 nồng độ có thành phần gồm OG (10, 50, 125, 250, 500 và 1000 µg/ml) và CG (5, 10, 50, 125, 250 và 500 µg/ml).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_c3feb9fb",
+      "text": "Các dung dịch chuẩn này được lọc qua màng lọc PTFE 0,22 µm.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_1b99a204",
+      "text": "-Mẫu thử: Cân chính xác khoảng 1,0 g bột dược liệu, thêm chính xác 20 ml ethanol 70%, đun hồi lưu trong 60 phút ở 95 o C, để nguội và lọc qua bông vào bình định mức 25 ml.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_1b99a204",
+      "text": "Tiếp tục chiết lần 2 với 5 ml dung môi ethanol 70% trong 30 phút ở cùng điều kiện như chiết lần 1, lọc qua gòn, rửa bã dược liệu và bông gòn sau khi lọc.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_1b99a204",
+      "text": "Bổ sung ethanol 70% vừa đủ 25 ml trong bình định mức, lắc đều, lọc qua màng lọc 0,22 μm.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_1ff800ae",
+      "text": "Điều kiện UPLC: Máy Acquity UPLC-PDA (Waters), đầu dò PDA, cột sắc ký InfinityLab Poroshell 120 CS-C18 (3,0×150 mm, 2,7 µm), bước sóng phát hiện 220 nm (OG) và 283 nm (CG).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_1ff800ae",
+      "text": "Pha động gồm TFA 0,05% (A) và ACN (B).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_1ff800ae",
+      "text": "Chương trình dung môi gồm: 8-12% B (1 phút), 12-15% B (8 phút), 15-25% B (4 phút), 25-46% B (9 phút), 46-70% B (1 phút) (tổng 20 phút).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_1ff800ae",
+      "text": "Nhiệt độ cột 25 o C, tốc độ dòng 0,3 ml/phút, thể tích tiêm mẫu 3 µl.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_b4eeb450",
+      "text": "Xác định hàm lượng (%) OG và CG: Tính hàm lượng của OG và CG trong dược liệu dựa vào diện tích pic của các hợp chất này trên sắc ký đồ của dung dịch thử, đường chuẩn đã lập của các chuẩn tương ứng của chúng.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_b4eeb450",
+      "text": "Cụ thể, hàm lượng của OG và CG được tính toán theo công thức sau: Đánh giá quy trình định lượng: Quy trình định lượng đã khảo sát được đánh giá theo hướng dẫn của ICH [8], bao gồm tính phù hợp hệ thống, tính chọn lọc, khoảng tuyến tính, giới hạn phát hiện (LOD), giới hạn định lượng (LOQ), độ lặp lại trong ngày, độ chính xác trung gian và độ đúng.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b9",
+          "text": "[8]",
+          "offset_start": 167,
+          "offset_end": 170
+        }
+      ],
+      "head_section": "Quy trình định lượng đồng thời OG và CG trong Sâm cau:"
+    },
+    {
+      "id": "p_69f4f286",
+      "text": "Thể tích dung môi chiết",
+      "coords": [],
+      "refs": [],
+      "head_paragraph": "Khảo sát quy trình xử lý mẫu thử",
+      "head_section": "Số lần chiết"
+    },
+    {
+      "id": "p_91764178",
+      "text": "Khảo sát tính phù hợp hệ thống: 6 lần tiêm liên tiếp mẫu thử Sâm cau (40 mg/ml) pha trong ethanol 70% có kết quả độ lệch chuẩn tương đối (RSD %) của các thông số sắc ký như diện tích pic, thời gian lưu không quá 2%, độ phân giải, hệ số bất đối, số đĩa lý thuyết đều đạt yêu cầu phân tích.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_91764178",
+      "text": "Do đó, quy trình định lượng đạt tính phù hợp hệ thống (bảng 2).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_91764178",
+      "text": "Tính đặc hiệu: Phân tích 4 mẫu gồm mẫu trắng (ethanol 70%), mẫu thử, mẫu chuẩn (OG và CG có nồng độ 200 µg/ml trong ethanol 70%) và mẫu thử thêm chuẩn.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_91764178",
+      "text": "Kết quả khảo sát tính đặc hiệu cho thấy, mẫu trắng không có pic của các chất cần định lượng, phổ UV và thời gian lưu (t R ) của OG (6,3 phút) và CG (18,1 phút) trong mẫu thử, mẫu chuẩn và mẫu thử thêm chuẩn tương đương nhau.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_91764178",
+      "text": "Khi thêm chuẩn vào mẫu thử, chiều cao và diện tích pic của OG và CG trong mẫu thử tăng cao hơn so với trước khi thêm chuẩn.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_5fb1e0ab",
+      "text": "Khoảng tuyến tính, LOD và LOQ: Kết quả bảng 3 cho thấy, quy trình định lượng đối với OG và CG có khoảng áp dụng tương đối rộng, với hàm lượng trong khoảng tuyến tính của OG (10-1000 µg/ml, R 2 =0,999) và CG (5-500 µg/ml, R 2 =0,9991).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_5fb1e0ab",
+      "text": "Giá trị LOD của OG và CG tại nồng độ lần lượt là 10 và 5 μg/ml ghi nhận tín hiệu của S/N (H tín hiệu/h nhiễu) đạt khoảng 2-3 (trong đó, H là chiều cao pic OG hoặc CG; h là chiều cao tín hiệu nhiễu nền lớn nhất).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_5fb1e0ab",
+      "text": "Giá trị LOQ là 0,83 µg/ml (OG) và 1,67 µg/ml (CG) được suy ra từ LOD (LOQ=3,3×LOD) [8].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b9",
+          "text": "[8]",
+          "offset_start": 83,
+          "offset_end": 86
+        }
+      ],
+      "head_section": "Đánh giá quy trình định lượng theo ICH"
+    },
+    {
+      "id": "p_d06adc47",
+      "text": "Kết quả bảng 6 và hình 4 cho thấy, các mẫu dược liệu Sâm cau ở các địa phương khác nhau có sự chênh lệch hàm lượng OG và CG.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết quả định lượng OG và CG trong 6 mẫu Sâm cau"
+    },
+    {
+      "id": "p_d06adc47",
+      "text": "Kết quả định lượng 6 mẫu cho thấy, thân rễ Sâm cau thu hái tại Sơn La (mẫu D) có hàm lượng OG cao nhất (1,301%) nhưng hàm lượng CG lại thấp nhất.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết quả định lượng OG và CG trong 6 mẫu Sâm cau"
+    },
+    {
+      "id": "p_d06adc47",
+      "text": "Trong khi mẫu rễ thu hái tại Đắk (mẫu F) chứa hàm lượng CG cao nhất (0,703%) nhưng lại không phát hiện được OG ở điều kiện phân tích.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết quả định lượng OG và CG trong 6 mẫu Sâm cau"
+    },
+    {
+      "id": "p_d06adc47",
+      "text": "Mẫu E (thân rễ, Đắk Nông) chứa cả 2 hợp chất này tương đối cao với OG (0,903%) và CG (0,123%).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết quả định lượng OG và CG trong 6 mẫu Sâm cau"
+    },
+    {
+      "id": "p_d06adc47",
+      "text": "Cả 3 mẫu A, B và C (thân rễ) trồng tại Lào Cai đều có chứa hàm lượng OG và CG ở mức độ trung bình với OG là 0,36-0,773% và CG 0,061-0,107%.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết quả định lượng OG và CG trong 6 mẫu Sâm cau"
+    },
+    {
+      "id": "p_82b16669",
+      "text": "OG và CG thường được xem là chất chỉ điểm quan trọng của dược liệu Sâm cau.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_82b16669",
+      "text": "Do đó, quy trình định lượng OG và CG bằng HPLC [9,10] hoặc UHPLC [3] cũng đã được xây dựng.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b10",
+          "text": "[9,",
+          "offset_start": 47,
+          "offset_end": 50
+        },
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "10]",
+          "offset_start": 50,
+          "offset_end": 53
+        },
+        {
+          "type": "bibr",
+          "target": "#b4",
+          "text": "[3]",
+          "offset_start": 65,
+          "offset_end": 68
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_82b16669",
+      "text": "Dược điển Trung Quốc [5] và Hồng Kông [6] chỉ yêu cầu kiểm nghiệm hàm lượng CG trong thân rễ Sâm cau.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b6",
+          "text": "[5]",
+          "offset_start": 21,
+          "offset_end": 24
+        },
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "[6]",
+          "offset_start": 38,
+          "offset_end": 41
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_82b16669",
+      "text": "Tuy nhiên, trong đa số các tài liệu đã công bố đều cho thấy pic của OG xuất hiện khá cao và là pic chính trên sắc ký đồ HPLC/UHPLC phân tích dịch chiết thân rễ Sâm cau ở bước sóng 220 nm [9,10].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b10",
+          "text": "[9,",
+          "offset_start": 187,
+          "offset_end": 190
+        },
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "10]",
+          "offset_start": 190,
+          "offset_end": 193
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_82b16669",
+      "text": "Hàm lượng của OG thường cao hơn so với CG ở các mẫu Sâm cau trồng tại Trung Quốc [10] và Việt Nam [9].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "[10]",
+          "offset_start": 81,
+          "offset_end": 85
+        },
+        {
+          "type": "bibr",
+          "target": "#b10",
+          "text": "[9]",
+          "offset_start": 98,
+          "offset_end": 101
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_82b16669",
+      "text": "Chính vì vậy, việc xây dựng quy trình định lượng đồng thời cả 2 hợp chất phenol glycosid này (OG và CG) nhằm phục vụ cho việc tiêu chuẩn hóa dược liệu Sâm cau là các nghiên cứu thiết thực hiện nay.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_a2ccace1",
+      "text": "Về điều kiện sắc ký, nghiên cứu đã lựa chọn phương pháp UPLC để xây dựng quy trình định lượng vì có nhiều ưu điểm hơn so với HPLC như tiết kiệm về dung môi, thời gian phân tích cũng như là hiệu quả phân tách tốt hơn.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_a2ccace1",
+      "text": "Quy trình định lượng OG và CG bằng HPLC của Dược điển Trung Quốc và Hồng Kông có thời gian phân tích 35-60 phút [5,6].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b6",
+          "text": "[5,",
+          "offset_start": 112,
+          "offset_end": 115
+        },
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "6]",
+          "offset_start": 115,
+          "offset_end": 117
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_a2ccace1",
+      "text": "Tuy nhiên, quy trình định lượng của nghiên cứu này được thực hiện trên cột C18 (cỡ hạt là 2,7 µm) có thời gian phân tích khá ngắn (20 phút) nhưng các pic định lượng vẫn đạt các yêu cầu phân tích theo ICH.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_a2ccace1",
+      "text": "Bước sóng phát hiện của OG là 220 nm và CG là 283 nm trong ethanol 70% cũng phù hợp với Dược điển Trung Quốc và Hồng Kông phát hiện OG và CG ở các bước sóng tương ứng là 220 và 285 nm trong methanol [5,6].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b6",
+          "text": "[5,",
+          "offset_start": 199,
+          "offset_end": 202
+        },
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "6]",
+          "offset_start": 202,
+          "offset_end": 204
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Về khảo sát quy trình chuẩn bị mẫu thử, trong số các quy trình định lượng đã công bố, ngoại trừ nghiên cứu của Q. Bian và cs (2013) [10], đa phần các nghiên cứu khác đều không khảo sát điều kiện chiết xuất (phương pháp chiết xuất, dung môi, nhiệt độ, thời gian) để đạt được hiệu suất chiết OG hoặc CG là tối ưu.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "[10]",
+          "offset_start": 132,
+          "offset_end": 136
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Kết quả khảo sát của chúng tôi cho thấy, phương pháp đun hồi lưu và dung môi ethanol 70% là lựa chọn tối ưu để chiết xuất đồng thời OG và CG trong thân rễ Sâm cau, phù hợp với đa số các nghiên cứu đã công bố.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Bên cạnh đó, các quy trình định lượng OG và CG trong thân rễ Sâm cau đã công bố đều thực hiện trên khối lượng mẫu thử khá lớn (2-5 g) do hàm lượng CG tương đối thấp.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Quy trình định lượng của nghiên cứu này thực hiện trên khối lượng mẫu là 1,0 g nhưng vẫn đảm bảo đạt các yêu cầu về thẩm định theo ICH.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Về thời gian chiết xuất mẫu thử cũng có sự khác biệt giữa các quy trình đã công bố với thời gian đun hồi lưu là 60 phút [6] và 120 phút [10].",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "[6]",
+          "offset_start": 120,
+          "offset_end": 123
+        },
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "[10]",
+          "offset_start": 136,
+          "offset_end": 140
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Kết quả nghiên cứu của Q. Bian và cs (2013) [10] đã cho thấy tổng thời gian chiết xuất ở 120 phút có thể chiết được OG và CG là tốt nhất.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "[10]",
+          "offset_start": 44,
+          "offset_end": 48
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Nghiên cứu này cũng đã khảo sát động học về thời gian chiết xuất cho thấy hàm lượng của OG và CG tăng ở thời gian đun hồi lưu từ 15 đến 90 phút.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Tuy nhiên, hàm lượng của các hợp chất này tăng không nhiều ở thời điểm từ 75 phút trở đi do hàm lượng các chất đã được bão hòa trong dung môi.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Do vậy, đề tài đã chọn thời gian đun là 90 phút (trên 1,0 g mẫu thử) vẫn đảm bảo chiết được các chất định lượng OG và CG là tối ưu.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_412dbc93",
+      "text": "Bên cạnh đó, đề tài còn khảo sát tỷ lệ dung môi và số lần chiết xuất mẫu thử để đảm bảo chiết kiệt các hợp chất cần định lượng.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Về kết quả định lượng OG và CG trong 6 mẫu Sâm cau, chỉ tiêu hàm lượng của CG (HPLC-PDA) được quy định không được dưới 0,1% (Dược điển Hồng Kông [6]) và 0,08% (Dược điển Trung Quốc [5]), Dược điển Việt Nam chưa có chỉ tiêu về hàm lượng của CG hay OG.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b7",
+          "text": "[6]",
+          "offset_start": 145,
+          "offset_end": 148
+        },
+        {
+          "type": "bibr",
+          "target": "#b6",
+          "text": "[5]",
+          "offset_start": 181,
+          "offset_end": 184
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Kết quả định lượng 6 mẫu Sâm cau thu hái tại Tây Nguyên (Đắk Nông) và miền Bắc (Sơn La, Lào Cai) có hàm lượng OG là 0,360-1,301% và CG 0,04-0,123%.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Như vậy, trong số các mẫu Sâm cau định lượng có 4 mẫu đạt chỉ tiêu hàm lượng của CG theo Dược điển Hồng Kông và Trung Quốc với hàm lượng của CG là 0,092-0,123% và chỉ có 2 mẫu gồm mẫu A (Lào Cai, 3/2021) và mẫu D (Sơn La, 5/2022) có hàm lượng CG khá thấp (0,04-0,06%) và điều này còn phụ thuộc vào thời gian thu hái mẫu, vì các mẫu ở Lào Cai thu hái vào các thời điểm khác (10/2021 và 3/2022) đều có hàm lượng CG cao hơn (0,092-0,107%).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Kết quả định lượng hàm lượng của OG và CG trong thân rễ Sâm cau của nghiên cứu này cũng phù hợp với kết quả của N.T.H. Ly và cs (2019) [9] đã định lượng trên các mẫu Sâm cau thu hái tại 10 tỉnh của Việt Nam với hàm lượng OG là 0,14-1,10% và CG 0,09-0,48%.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b10",
+          "text": "[9]",
+          "offset_start": 135,
+          "offset_end": 138
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Về hàm lượng của OG và CG so với các mẫu Sâm cau tại Trung Quốc, công bố của Q. Bian và cs (2019) [10] cho thấy hàm lượng của OG là 0,143-1,158% và CG >0,174%.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b11",
+          "text": "[10]",
+          "offset_start": 98,
+          "offset_end": 102
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Kết quả của chúng tôi và nghiên cứu của N.T.H. Ly và cs (2019) [9] đều cho thấy hàm lượng OG trong các mẫu Sâm cau của Việt Nam cũng tương đương với các mẫu được trồng tại Trung Quốc.",
+      "coords": [],
+      "refs": [
+        {
+          "type": "bibr",
+          "target": "#b10",
+          "text": "[9]",
+          "offset_start": 63,
+          "offset_end": 66
+        }
+      ],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Trong khi đó, hàm lượng của CG trong các mẫu Sâm cau trồng tại Việt Nam hơi thấp hơn so với các mẫu tại Trung Quốc.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Tuy nhiên, điều đáng chú ý là mẫu F (Đắk Nông, 6/2022) có bộ phận dùng là rễ cho thấy hàm lượng của CG cao hơn đáng kể so với trong thân rễ, nhưng ngược lại hàm lượng của OG không phát hiện được (hình 4).",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_be2fd07e",
+      "text": "Rễ có thể là nguyên liệu tiềm năng giàu hợp chất CG, tuy nhiên cần phải có khảo sát thêm ở nhiều mẫu rễ khác của Sâm cau.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Bàn luận"
+    },
+    {
+      "id": "p_e93252d2",
+      "text": "Quy trình định lượng đồng thời OG và CG trong thân rễ Sâm cau bằng UPLC-PDA được xây dựng có thời gian phân tích ngắn cùng với quy trình xử lý mẫu thử cũng đã được khảo sát nhằm đảm bảo kết quả định lượng chính xác hàm lượng của OG và CG trong Sâm cau.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết luận"
+    },
+    {
+      "id": "p_e93252d2",
+      "text": "Bên cạnh đó, quy trình định lượng đạt tất cả các yêu cầu theo hướng dẫn thẩm định của ICH về tính tương thích hệ thống, tính tuyến tính (R 2 >0,999) trong khoảng áp dụng của OG (10-1000 µg/ml) và CG (5-500 µg/ml), độ đặc hiệu, độ lặp lại và độ chính xác trung gian (RSD<2,0%), độ đúng của phương pháp có tỷ lệ phục hồi OG là 97,08-103,60% và CG là 100,28-111,25.",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết luận"
+    },
+    {
+      "id": "p_e93252d2",
+      "text": "Ngoài ra, quy trình định",
+      "coords": [],
+      "refs": [],
+      "head_section": "Kết luận"
+    },
+    {
+      "id": "p_83e88e85",
+      "text": "Ngày nhận bài 14/2/2023; ngày chuyển phản biện 17/2/2023; ngày nhận phản biện 6/3/2023; ngày chấp nhận đăng 10/3/2023",
+      "coords": [],
+      "refs": []
+    }
+  ],
+  "figures_and_tables": [
+    {
+      "id": "fig_0",
+      "label": "",
+      "head": "6",
+      "type": "figure",
+      "desc": "trình dung môi gồm: 8-12% B (1 phút), 12-15% B (8 phút), 15-2 25-46% B (9 phút), 46-70% B (1 phút) (tổng 20 phút).Nhiệt độ c dòng 0,3 ml/phút, thể tích tiêm mẫu 3 µl.Xác định hàm lượng (%) OG và CG: Tính hàm lượng của O dược liệu dựa vào diện tích pic của các hợp chất này trên sắc ký đồ thử, đường chuẩn đã lập của các chuẩn tương ứng của chúng.Cụ của OG và CG được tính toán theo công thức sau: trong đó: St là diện tích pic của OG và CG trong mẫu thử (μV phương trình hồi quy đường tuyến tính của chuẩn; p là độ tinh chuẩn %; m là khối lượng cân của mẫu thử đã trừ độ ẩm (mg).Đánh giá quy trình định lượng: Quy trình định lượng đã khảo giá theo hướng dẫn của ICH [8], bao gồm tính phù hợp hệ thống khoảng tuyến tính, giới hạn phát hiện (LOD), giới hạn định lượng lại trong ngày, độ chính xác trung gian và độ đúng.Định lượng OG và CG trong các mẫu thử: Ứng dụng quy tr là diện tích pic của OG và CG trong mẫu thử (μV×s); a là hệ số phương trình hồi quy đường tuyến tính của chuẩn; p là độ tinh khiết của chất chuẩn %; m là khối lượng cân của mẫu thử đã trừ độ ẩm (mg).",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_1",
+      "label": "",
+      "head": "",
+      "type": "figure",
+      "desc": "Định lượng OG và CG trong các mẫu thử: Ứng dụng quy trình định lượng đã xây dựng để so sánh hàm lượng của OG và CG trong 6 mẫu Sâm cau.Các kết quả hàm lượng được hiển thị bằng hàm lượng (%) trung bình (TB±SD) và được phân tích thống kê bằng phương pháp One-Way ANOVA và phép kiểm định Tukey bằng phần mềm Minitab 19.Sự khác biệt giữa các giá trị trung bình được xem là có ý nghĩa thống kê khi p<0,05 với độ tin cậy 95%.3.Kết quả3.1.Khảo sát điều kiện sắc kýKết quả khảo sát phổ UV của mẫu chuẩn pha trong methanol cho thấy, các đỉnh hấp thu cực đại (λ max ) tại các bước sóng lần lượt là 202,2, 220,1 và 270,8 nm (OG); 199,9 và 282,7 nm (CG).Do đó, chọn bước sóng định lượng là 220 nm (OG) và 283 nm (CG) vì các đỉnh hấp thu này có tín hiệu ổn định, độ nhạy cao và ít bị ảnh hưởng bởi đường nền.Pha động phù hợp được lựa chọn để phân tích mẫu thử gồm TFA 0,05% (A) và ACN (B).Chương trình dung môi gồm: 8-12% B (1 phút), 12-15% B (8 phút), 15-25% B (4 phút), 25-46% B (9 phút), 46-70% B (1 phút) (tổng 20 phút).Nhiệt độ cột 25 o C, tốc độ dòng 0,3 ml/phút, thể tích tiêm mẫu 3 µl.Điều kiện sắc ký đã lựa chọn (hình 2) để định lượng đồng thời OG và CG cho thấy các pic cần định lượng tách hoàn toàn với các tạp kế cận và đạt các thông số sắc ký.7 ít bị ảnh hưởng bởi đường nền.Pha động phù hợp được lựa chọn để phân tích mẫu thử gồm TFA 0,05% (A) và ACN (B).Chương trình dung môi gồm: 8-12% B (1 phút), 12-15% B (8 phút), 15-25% B (4 phút), 25-46% B (9 phút), 46-70% B (1 phút) (tổng 20 phút).Nhiệt độ cột 25 o C, tốc độ dòng 0,3 ml/phút, thể tích tiêm mẫu 3 µl.Điều kiện sắc ký đã lựa chọn (hình 2) để định lượng đồng thời OG và CG cho thấy các pic cần định lượng tách hoàn toàn với các tạp kế cận và đạt các thông số sắc ký.Hình 2. Sắc ký đồ UPLC-PDA của mẫu thử ở các bước sóng: (A) 220 nm, (B) 283 nm và (C) mẫu chuẩn.Khảo sát quy trình xử lý mẫu thử Kết quả khảo sát ở hình 3 cho thấy, phương pháp chiết hồi lưu có ưu thế hơn ảnh hưởng bởi đường nền.Pha động phù hợp được lựa chọn để phân tích mẫu thử gồm TFA 0,05% (A) và ACN (B).Chương trình dung môi gồm: 8-12% B (1 phút), 12-15% B (8 phút), 15-25% B (4 phút), 25-46% B (9 phút), 46-70% B (1 phút) (tổng 20 phút).Nhiệt độ cột 25 o C, tốc độ dòng 0,3 ml/phút, thể tích tiêm mẫu 3 µl.Điều kiện sắc ký đã lựa chọn (hình 2) để định lượng đồng thời OG và CG cho thấy các pic cần định lượng tách hoàn toàn với các tạp kế cận và đạt các thông số sắc ký.Hình 2. Sắc ký đồ UPLC-PDA của mẫu thử ở các bước sóng: (A) 220 nm, (B) 283 nm và (C) mẫu chuẩn.Khảo sát quy trình xử lý mẫu thử Kết quả khảo sát ở hình 3 cho thấy, phương pháp chiết hồi lưu có ưu thế hơn ảnh hưởng bởi đường nền.Pha động phù hợp được lựa chọn để phân tích mẫu thử gồm TFA 0,05% (A) và ACN (B).Chương trình dung môi gồm: 8-12% B (1 phút), 12-15% B (8 phút), 15-25% B (4 phút), 25-46% B (9 phút), 46-70% B (1 phút) (tổng 20 phút).Nhiệt độ cột 25 o C, tốc độ dòng 0,3 ml/phút, thể tích tiêm mẫu 3 µl.Điều kiện sắc ký đã lựa chọn (hình 2) để định lượng đồng thời OG và CG cho thấy các pic cần định lượng tách hoàn toàn với các tạp kế cận và đạt các thông số sắc ký.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_2",
+      "label": "13",
+      "head": "Bảng 1 .Hình 3 .",
+      "type": "figure",
+      "desc": "Kết quả khảo sát ở hình 3 cho thấy, phương pháp chiết hồi lưu có ưu thế hơn phương pháp siêu âm.Về khảo sát dung môi chiết xuất mẫu thử, dung môi EtOH 70% thể hiện hiệu quả chiết xuất OG và CG cao nhất.Về khảo sát thời gian chiết, diện tích đỉnh OG và CG trong thời gian đun hồi lưu 75 và 90 phút cao hơn đáng kể so với các thời gian khác, tuy nhiên giữa thời gian đun 75 và 90 phút không có sự khác biệt nhiều.Do đó, chọn thời gian đun 90 phút nhằm đảm bảo chiết kiệt hoạt chất cần định lượng.Về khảo sát số lần chiết và tỷ lệ dung môi chiết xuất, các chất chiết được trên 92% ở lần chiết đầu tiên và đạt trên 98% ở lần chiết thứ 2 (bảng 1).Do đó, chọn cách chiết liên tục 2 lần để đảm bảo chiết kiệt hoạt chất cần định lượng.Đối với tỷ lệ thể tích, dung môi 25 ml đạt hiệu suất chiết cao hơn so với các tỷ lệ thể tích còn lại.8 sự khác biệt nhiều.Do đó, chọn thời gian đun 90 phút nhằm đảm bảo chiết kiệt hoạt chất cần định lượng.Về khảo sát số lần chiết và tỷ lệ dung môi chiết xuất, các chất chiết được trên 92% ở lần chiết đầu tiên và đạt trên 98% ở lần chiết thứ 2 (bảng 1).Do đó, chọn cách chiết liên tục 2 lần để đảm bảo chiết kiệt hoạt chất cần định lượng.Đối với tỷ lệ thể tích, dung môi 25 ml đạt hiệu suất chiết cao hơn so với các tỷ lệ thể tích còn lại.Hình 3. Kết quả khảo sát điều kiện chiết.Kết quả khảo sát thể tích dung môi và số lần chiết xuất mẫu thử.66 98,85 99,36 99,53 99,37 99,57 Đánh giá quy trình định lượng theo ICH Khảo sát tính phù hợp hệ thống: 6 lần tiêm liên tiếp mẫu thử Sâm cau (40 Kết quả khảo sát điều kiện chiết.Bảng 1. Kết quả khảo sát thể tích dung môi và số lần chiết xuất mẫu thử.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_3",
+      "label": "21",
+      "head": "Hình 2 .Bảng 1 .",
+      "type": "figure",
+      "desc": "Sắc ký đồ UPLC-PDA của mẫu thử ở các bước sóng: (A) 220 nm, (B) 283 nm và (C) mẫu chuẩn.8 sự khác biệt nhiều.Do đó, chọn thời gian đun 90 phút nhằm đảm bảo chiết kiệt hoạt chất cần định lượng.Về khảo sát số lần chiết và tỷ lệ dung môi chiết xuất, các chất chiết được trên 92% ở lần chiết đầu tiên và đạt trên 98% ở lần chiết thứ 2 (bảng 1).Do đó, chọn cách chiết liên tục 2 lần để đảm bảo chiết kiệt hoạt chất cần định lượng.Đối với tỷ lệ thể tích, dung môi 25 ml đạt hiệu suất chiết cao hơn so với các tỷ lệ thể tích còn lại.Hình 3. Kết quả khảo sát điều kiện chiết.Kết quả khảo sát thể tích dung môi và số lần chiết xuất mẫu thử.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_4",
+      "label": "3",
+      "head": "Bảng 3 .a",
+      "type": "figure",
+      "desc": "Đường tuyến tính, LOD, LOQ của OG và CG của quy trình định lượng.Hợp chất Phương trình hồi quy a R 2 Khoảng áp dụng (μg/ml) LOD (μg/ml) LOQ (μg/ml) : phương trình hồi quy có tính tương thích (F>F 0,05 ).Độ chính xác và độ đúng: Kết quả ở bảng 4 và 5 cho thấy, quy trình định lượng OG và CG trong Sâm cau đã xây dựng có độ lặp lại cao, trong đó độ lặp lại trong ngày của 6 mẫu thử được phân tích trong cùng một ngày có RSD của OG và CG đạt 0,52-1,41% và RSD của 12 mẫu thử được phân tích ở hai ngày khác nhau là 1,3-1,7%.Độ đúng của phương pháp có tỷ lệ hồi của OG là 97,08-103,60% (RSD=0,41-1,85%) và CG là 100,28-111,25 (RSD=0,98-1,70%).",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_5",
+      "label": "4",
+      "head": "Bảng 4 .",
+      "type": "figure",
+      "desc": "Độ chính xác của quy trình định lượng OG và CG. trong đó: a : độ lặp lại trong ngày, b : độ chính xác trung gian.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_6",
+      "label": "6",
+      "head": "Bảng 6 .",
+      "type": "figure",
+      "desc": "Hàm lượng của OG và CG trong 6 mẫu Sâm cau (,007 f n.d: non-detected = không thể phát hiện; a : thân rễ; b : rễ con.Các giá trị có ký tự theo sau khác nhau thể hiện sự khác biệt có ý nghĩa thống kê (Tukey, p<0,05).",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "fig_7",
+      "label": "64",
+      "head": "F 6 Hình 4 .",
+      "type": "figure",
+      "desc": "Đắk Chú thích: n.d: non-detected = không thể phát hiện; a: thân rễ; b: rễ con.Các giá trị có ký tự theo sau khác nhau thể hiện sự khác biệt có ý nghĩa thống kê (Tukey, p<0,05).Hình 4. Sắc ký đồ UPLC-PDA (λ max =220 nm) định lượng OG và CG trong Sắc ký đồ UPLC-PDA (λ max =220 nm) định lượng OG và CG trong 6 mẫu Sâm cau.",
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "tab_1",
+      "label": "",
+      "head": "2023 Bảng 2. Tính phù hợp hệ thống của quy trình định lượng OG và CG (n=6).",
+      "type": "table",
+      "desc": "",
+      "content": {
+        "headers": [],
+        "rows": [
+          [
+            "",
+            "t R (phút) (RSD %) S (μV × s) (RSD %) a Rs",
+            "As",
+            "N"
+          ],
+          [
+            "OG",
+            "6,3 (0,4)",
+            "3365744 (0,2)",
+            "1,97",
+            "0,99",
+            "11071"
+          ],
+          [
+            "CG",
+            "18,1 (0,2)",
+            "188846,5 (0,6)",
+            "1,83",
+            "1,01",
+            "277370"
+          ],
+          [
+            "Yêu cầu",
+            "RSD≤2",
+            "RSD≤2",
+            "Rs>1,5 0,8≤As≤1,5 ≥2000"
+          ],
+          [
+            "a : độ phân giải của pic định lượng so với pic liền trước; t R : thời gian lưu; S: diện tích đỉnh; Rs: độ phân giải; As: hệ số bất đối xứng; N: số đĩa"
+          ],
+          [
+            "lý thuyết.",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ],
+        "metadata": {
+          "row_count": 6,
+          "column_count": 4,
+          "has_headers": false
+        }
+      },
+      "note": "1,34 1,15 0,64 0,47 0,63 0,43 L1+L2 98,66 98,85 99,36 99,53 99,37 99,57 Đánh giá quy trình định lượng theo ICH Khảo sát tính phù hợp hệ thống: 6 lần tiêm liên tiếp mẫu thử Sâm cau (40 65(9) 9.",
+      "coords": []
+    },
+    {
+      "id": "tab_2",
+      "label": "",
+      "head": "Bảng 5. Độ đúng của quy trình định lượng OG và CG.",
+      "type": "table",
+      "desc": "",
+      "content": {
+        "headers": [],
+        "rows": [
+          [
+            "Hợp chất",
+            "OG",
+            "",
+            "",
+            "CG",
+            "",
+            ""
+          ],
+          [
+            "Tỷ lệ thêm vào",
+            "10%",
+            "20%",
+            "30%",
+            "30%",
+            "60%",
+            "90%"
+          ],
+          [
+            "Độ phục hồi",
+            "96,3-98,4 99,7-100,5 102,2-105,8 98,9-101,3 106,0-108,0 109,1-112,5"
+          ],
+          [
+            "Trung bình",
+            "97,08",
+            "100,01",
+            "103,60",
+            "100,28",
+            "107,18",
+            "111,25"
+          ],
+          [
+            "RSD %",
+            "1,18",
+            "0,41",
+            "1,85",
+            "1,25",
+            "0,98",
+            "1,70"
+          ]
+        ],
+        "metadata": {
+          "row_count": 5,
+          "column_count": 7,
+          "has_headers": false
+        }
+      },
+      "note": "",
+      "coords": []
+    },
+    {
+      "id": "tab_3",
+      "label": "",
+      "head": "Kết quả định lượng OG và CG trong 6 mẫu Sâm cau",
+      "type": "table",
+      "desc": "Kết quả bảng 6 và hình 4 cho thấy, các mẫu dược liệu Sâm cau ở các địa phương khác nhau có sự chênh lệch hàm lượng OG và CG.Kết quả định lượng 6 mẫu cho thấy, thân rễ Sâm cau thu hái tại Sơn La (mẫu D) có hàm lượng OG cao nhất (1,301%) nhưng hàm lượng CG lại thấp nhất.Trong khi mẫu rễ thu hái tại Đắk Nông (mẫu F) chứa hàm lượng CG cao nhất (0,703%) nhưng lại không phát hiện được OG ở điều kiện phân tích.Mẫu E (thân rễ, Đắk Nông) chứa cả 2 hợp chất này tương đối cao với OG (0,903%) và CG (0,123%).Cả 3 mẫu A, B và C (thân rễ) trồng tại Lào Cai đều có chứa hàm lượng OG và CG ở mức độ trung bình",
+      "content": {
+        "headers": [],
+        "rows": [
+          [
+            "với OG là 0,36-0,77% và CG 0,06-0,107%.",
+            ""
+          ],
+          [
+            "Mẫu",
+            "Nơi trồng",
+            "Thu hái",
+            "OG (%)",
+            "CG (%)"
+          ],
+          [
+            "A",
+            "Lào Cai a",
+            "3/2021",
+            "0,360±0,03 e",
+            "0,061±0,001 m"
+          ],
+          [
+            "B",
+            "Lào Cai a",
+            "10/2021",
+            "0,773±0,008 c",
+            "0,107±0,000 h"
+          ],
+          [
+            "C",
+            "Lào Cai a",
+            "3/2022",
+            "0,555±0,002 d",
+            "0,092±0,001 i"
+          ],
+          [
+            "D",
+            "Sơn La a",
+            "5/2022",
+            "1,301±0,024 a",
+            "0,041±0,000 k"
+          ],
+          [
+            "E",
+            "Đắk Nông a",
+            "5/2022",
+            "0,903±0,011 b",
+            "0,123±0,002 g"
+          ]
+        ],
+        "metadata": {
+          "row_count": 7,
+          "column_count": 2,
+          "has_headers": false
+        }
+      },
+      "note": "Bảng 6. Hàm lượng của OG và CG trong 6 mẫu Sâm cau (TB±SD%, n=3).",
+      "coords": []
+    }
+  ],
+  "references": [
+    {
+      "id": "b1",
+      "target": "b0",
+      "title": "Hàm lượng OG và CG trong các mẫu Sâm cau phụ thuộc vào vùng trồng và thời gian thu hái với OG là 0,36-1,301% và CG 0",
+      "authors": [
+        "Lào La",
+        "Đắk Cai",
+        "Nông"
+      ],
+      "volume": "123",
+      "page_start": "41",
+      "page_end": "41"
+    },
+    {
+      "id": "b2",
+      "target": "b1",
+      "title": "Nghiên cứu được hỗ trợ kinh phí của Sở Khoa học và Công nghệ tỉnh Đắk Nông, các tác giả xin chân thành cảm ơn",
+      "authors": [
+        "Cảm Lời",
+        "Ơn"
+      ],
+      "publisher": "TÀI LIỆU THAM KHẢO"
+    },
+    {
+      "id": "b3",
+      "target": "b2",
+      "title": "Vietnamese Medicinal Plants and Herbs",
+      "authors": "D Loi",
+      "publisher": "Medical Publishing House",
+      "publication_date": "2004",
+      "year": 2004,
+      "pages": "1294",
+      "notes": "in Vietnamese"
+    },
+    {
+      "id": "b4",
+      "target": "b3",
+      "title": "Orcinol glucoside improves senile osteoporosis through attenuating oxidative stress and autophagy of osteoclast via activating Nrf2/Keap1 and mTor signaling pathway",
+      "authors": [
+        "W Gong",
+        "M Liu",
+        "Q Zhang"
+      ],
+      "journal": "Oxidative Medicine and Cellular Longevity",
+      "publication_date": "2022",
+      "year": 2022,
+      "volume": "2022",
+      "issue": "2",
+      "page_start": "1",
+      "page_end": "18",
+      "doi": "10.1155/2022/5410377"
+    },
+    {
+      "id": "b5",
+      "target": "b4",
+      "title": "Qualitative and quantitative analysis on chemical constituents from Curculigo orchioides using ultra high performance liquid chromatography coupled with electrospray ionization quadrupole time-of-flight tandem mass spectrometry",
+      "authors": [
+        "Y He",
+        "X Dong",
+        "X Jia"
+      ],
+      "journal": "Journal of Pharmaceutical and Biomedical Analysis",
+      "publication_date": "2015",
+      "year": 2015,
+      "volume": "102",
+      "page_start": "236",
+      "page_end": "245",
+      "doi": "10.1016/j.jpba.2014.09.024"
+    },
+    {
+      "id": "b6",
+      "target": "b5",
+      "title": "Antioxidative phenols and phenolic glycosides from Curculigo orchioides",
+      "authors": [
+        "Q Bian",
+        "D Fu",
+        "A Hou"
+      ],
+      "journal": "Chemical and Pharmaceutical Bulletin",
+      "publication_date": "2005",
+      "year": 2005,
+      "volume": "53",
+      "issue": "8",
+      "page_start": "1065",
+      "page_end": "1067",
+      "doi": "10.1248/cpb.53.1065"
+    },
+    {
+      "id": "b7",
+      "target": "b6",
+      "title": "Pharmacopoeia of The People's Republic of China",
+      "publisher": "China Medical Science and Technology Press",
+      "publication_date": "2020",
+      "year": 2020,
+      "pages": "337"
+    },
+    {
+      "id": "b8",
+      "target": "b7",
+      "title": "Curculiginis Rhizoma",
+      "publication_date": "2012",
+      "year": 2012,
+      "volume": "4",
+      "page_start": "124",
+      "page_end": "132"
+    },
+    {
+      "id": "b9",
+      "target": "b8",
+      "title": "Vietnam Pharmacopoeia V",
+      "journal": "Medical Publishing House",
+      "publisher": "Ministry of Health",
+      "publication_date": "2017",
+      "year": 2017,
+      "volume": "1",
+      "pages": "1078",
+      "notes": "in Vietnamese"
+    },
+    {
+      "id": "b10",
+      "target": "b9",
+      "title": "Validation of Analytical Procedures: Text and Methodology Q2(R1), Harmonised Tripartite Guideline",
+      "publication_date": "2005",
+      "year": 2005,
+      "pages": "17"
+    },
+    {
+      "id": "b11",
+      "target": "b10",
+      "title": "Development of an analysis method using HPLC-UV for simultaneous quantification of orcinol glycosid and curculigosid in Rhizoma curculiginis",
+      "authors": [
+        "N Ly",
+        "N Quan",
+        "N Phuong"
+      ],
+      "journal": "Journal of Medicinal Materials",
+      "publication_date": "2019",
+      "year": 2019,
+      "volume": "24",
+      "issue": "3",
+      "page_start": "144",
+      "page_end": "148"
+    },
+    {
+      "id": "b12",
+      "target": "b11",
+      "title": "Fingerprint analysis and simultaneous determination of phenolic compounds in extracts of Rhizoma curculiginis by Hplc-diode array detector",
+      "authors": [
+        "Q Bian",
+        "H Yang",
+        "C Chan"
+      ],
+      "journal": "Chemical and Pharmaceutical Bulletin",
+      "publication_date": "2013",
+      "year": 2013,
+      "volume": "61",
+      "issue": "8",
+      "page_start": "802",
+      "page_end": "808",
+      "doi": "10.1248/cpb.c12-01058"
+    }
+  ]
+}

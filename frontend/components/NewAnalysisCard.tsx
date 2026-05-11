@@ -1,48 +1,197 @@
 'use client';
 
-import { useState } from "react";
-import { X, File } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X, File, Loader2 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import FileUploadArea from "./FileUploadArea";
 import TextPasteArea from "./TextPasteArea";
-import ProjectSettings from "./ProjectSettings";
+import ProjectSettings, { ProjectSettingsData } from "./ProjectSettings";
 
-export default function NewAnalysis() {
-    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-    const [isUploading, setIsUploading] = useState(false);
+import { supabase } from '@/lib/supabase/client';
+import { fail } from "assert";
+import path from "path";
 
-    const handleUploadedFiles = (files: File[]) => {
-        const MAX_SIZE = 50 * 1024 * 1024; // 50MB
+export default function NewAnalysisCard() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
-        const validFiles: File[] = [];
-        const invalidFiles: string[] = [];
+    const projectId = searchParams?.get('project_id');
 
-        files.forEach(file => {
-            if (file.size <= MAX_SIZE) {
-                validFiles.push(file);
-            } else {
-                invalidFiles.push(file.name);
+    // const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+    // const [isUploading, setIsUploading] = useState(false);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const [projectSettings, setProjectSettings] = useState<ProjectSettingsData>({
+        title: "",
+        tag: "",
+    });
+
+    useEffect(() => {
+        if (!projectId) {
+            router.push('/');
+        }
+    }, [projectId, router]);
+
+    const handleSelectedFiles = (files: File[]) => {
+        const MAX_SIZE = 10 * 1024 * 1024;  // 10MB
+        const validFiles = files.filter(file => {
+            // Validate file size
+            if (file.size > MAX_SIZE) {
+                alert(`${file.name} exceeds 10MB limit`);
+                return false;
             }
+            // Validate file type
+            if (!['application/pdf', 'text/plain'].includes(file.type)) {
+                alert(`${file.name} is not PDF or TXT`);
+                return false;
+            }
+            return true;
         });
 
-        if (invalidFiles.length > 0) {
-            alert(`The following files exceed the 50MB limit:\n${invalidFiles.join('\n')}`);
-        }
-
-        if (validFiles.length > 0) {
-            setIsUploading(true);
-
-            // Giả lập upload
-            setTimeout(() => {
-                setUploadedFiles(prev => [...prev, ...validFiles]);
-                setIsUploading(false);
-            }, 1836);
-        }
+        setSelectedFiles(prev => [...prev, ...validFiles]);
     };
+
+    // const handleUploadedFiles = (files: File[]) => {
+    //     const MAX_SIZE = 50 * 1024 * 1024; // 50MB
+
+    //     const validFiles: File[] = [];
+    //     const invalidFiles: string[] = [];
+
+    //     files.forEach(file => {
+    //         if (file.size <= MAX_SIZE) {
+    //             validFiles.push(file);
+    //         } else {
+    //             invalidFiles.push(file.name);
+    //         }
+    //     });
+
+    //     if (invalidFiles.length > 0) {
+    //         alert(`The following files exceed the 50MB limit:\n${invalidFiles.join('\n')}`);
+    //     }
+
+    //     if (validFiles.length > 0) {
+    //         setIsUploading(true);
+
+    //         // Giả lập upload
+    //         setTimeout(() => {
+    //             setUploadedFiles(prev => [...prev, ...validFiles]);
+    //             setIsUploading(false);
+    //         }, 1836);
+    //     }
+    // };
 
     const removeFile = (index: number) => {
-        setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+        // setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+        setSelectedFiles(prev => prev.filter((_, i) => i !== index));
     };
+
+    // Main function: Upload Files upto Supabase Storage
+    const uploadFileToSupabase = async (file: File, userId: string, projectId: string) => {
+        const timestamp = Date.now();
+        const randomSuffix = Math.random().toString(36).substring(2, 8);
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const uniqueName = `${timestamp}_${randomSuffix}_${safeName}`;
+
+        const path = `${userId}/${projectId}/${uniqueName}`;
+
+        const { data: signedData, error: signedError } = await supabase
+            .storage.from('documents')
+            .createSignedUploadUrl(path);
+
+        if (signedError || !signedData) throw new Error(signedError?.message || 'Failed to get upload URL');
+
+        const { error: uploadError } = await supabase
+            .storage.from('documents')
+            .uploadToSignedUrl(signedData.path, signedData.token, file, {
+                contentType: file.type,
+                cacheControl: '3600',
+                upsert: false
+            });
+
+        if (uploadError) throw new Error(uploadError.message);
+
+        const { data: { publicUrl } } = supabase 
+            .storage.from('documents')
+            .getPublicUrl(signedData.path);
+
+        return { path: signedData.path, url: publicUrl };
+    };
+
+    const handleGenerateSummary = async (settings: ProjectSettingsData) => {
+        if (!projectId) return alert('Missing project ID');
+        if (selectedFiles.length == 0) return alert('Please upload at least one file');
+        if (!settings.title?.trim()) return alert('Please enter a project name');
+
+        setIsSubmitting(true);
+
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) throw new Error('Not authenticated');
+
+            const uploadedFiles = [];
+            for (const file of selectedFiles) {
+                const result = await uploadFileToSupabase(file, user.id, projectId);
+                uploadedFiles.push({
+                    file_name: file.name,
+                    file_path: result.path,
+                    file_url: result.url,
+                    file_type: file.type === 'application/pdf' ? 'pdf' : 'txt',
+                    file_size: file.size,
+                });
+            }
+
+            const { data: { session } } = await supabase.auth.getSession();
+            const access_token = session?.access_token
+
+            const response = await fetch(`http://localhost:8000/projects/${projectId}/finalize`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                body: JSON.stringify({
+                    name: settings.title,
+                    domain: settings.tag,
+                    documents: uploadedFiles,
+                }),
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                // Cleanup files if fail
+                const paths = uploadedFiles.map(f => f.file_path)
+                await supabase.storage.from('documents').remove(paths);
+                throw new Error(error.detail || 'Failed to finalize project');
+            }
+
+            // setProjectSettings(prev => ({
+            //     ...prev,
+            //     title: settings.title,
+            //     tag: settings.tag
+            // }))
+
+            // dispatch
+            
+            router.refresh()
+            router.push(`/project/${projectId}`)
+        } catch (error: any) {
+            console.error('Error occured while trying to finalize project:', error);
+            alert(error.message || 'Failed to finalize project');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    if (!projectId) {
+        return (
+            <div className="flex item-center justify-center min-h-[400px]">
+                <Loader2 className="animate-spin text-blue-600" size={48} />
+            </div>
+        );
+    }
+
 
     return (
         <div className="bg-gray-50 rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
@@ -52,17 +201,22 @@ export default function NewAnalysis() {
                     {/* ==================== LEFT SIDE ==================== */}
                     <div className="flex-1">
                         <FileUploadArea 
-                            onFilesSelected={handleUploadedFiles} 
-                            isUploading={isUploading} 
+                            onFilesSelected={handleSelectedFiles} 
+                            isUploading={isSubmitting} 
                         />
 
-                        <TextPasteArea />
+                        {/* <TextPasteArea /> */}
                     </div>
 
                     {/* ==================== RIGHT SIDE ==================== */}
                     <div className="flex flex-col gap-6 lg:w-[380px]">
                         
-                        <ProjectSettings />
+                        <ProjectSettings
+                            value={projectSettings}
+                            onChange={setProjectSettings}
+                            onGenerate={handleGenerateSummary}
+                            disabled={isSubmitting}
+                        />
 
                         {/* ==================== CHOSEN FILES ==================== */}
                         <div>
@@ -70,13 +224,13 @@ export default function NewAnalysis() {
                                 CHOSEN FILES
                             </h4>
 
-                            {uploadedFiles.length === 0 ? (
+                            {selectedFiles.length === 0 ? (
                                 <div className="text-gray-400 text-sm py-8 text-center border border-dashed border-gray-200 rounded-2xl">
                                     No files chosen yet
                                 </div>
                             ) : (
                                 <div className="space-y-2">
-                                    {uploadedFiles.map((file, index) => (
+                                    {selectedFiles.map((file, index) => (
                                         <div 
                                             key={index}
                                             className="group flex items-center justify-between bg-white border border-gray-200 hover:border-gray-300 rounded-2xl px-4 py-3 transition-all"

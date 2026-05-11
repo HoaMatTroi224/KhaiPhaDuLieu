@@ -1,4 +1,5 @@
-import NewAnalysis from "@/components/NewAnalysisCard";
+import NewAnalysisCard from "@/components/NewAnalysisCard";
+import { Suspense } from "react";
 
 export default function NewProjectPage() {
     return (
@@ -11,8 +12,9 @@ export default function NewProjectPage() {
                     Upload your research papers or paste your notes to begin the synthesis.
                 </p>
             </div>
-            
-            <NewAnalysis />
+            <Suspense fallback={<div>Im lặng đi Gobi</div>}>
+                <NewAnalysisCard />
+            </Suspense>
         </>
     );
 }

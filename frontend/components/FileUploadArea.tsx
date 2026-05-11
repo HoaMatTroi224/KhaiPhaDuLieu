@@ -29,15 +29,16 @@ export default function FileUploadArea({ onFilesSelected, isUploading }: FileUpl
 
         const files = Array.from(e.dataTransfer.files).filter(file => 
             file.type === 'application/pdf' ||
-            file.type === 'text/plain' ||
-            file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            file.type === 'text/plain' // ||
+            // file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         );
         
         if (files.length > 0) {
             onFilesSelected(files);
         }
         else {
-            alert('Please upload files in PDF, TXT, or DOCX format.');
+            // alert('Please upload files in PDF, TXT, or DOCX format.');
+            alert('Please upload files in PDF and TXT format.');
         }
     };
 
@@ -88,12 +89,16 @@ export default function FileUploadArea({ onFilesSelected, isUploading }: FileUpl
                 <h2 className="text-2xl font-semibold text-gray-900 mb-3">
                     Drag & drop your files
                 </h2>
-                <p className="text-gray-500 mb-8 max-w-md">
+                {/* <p className="text-gray-500 mb-8 max-w-md">
                     Support for PDF, TXT and DOCX formats
+                </p> */}
+                <p className="text-gray-500 mb-8 max-w-md">
+                    Support for PDF and TXT formats
                 </p>
 
                 <button
-                    onClick={() => openFileDialog('.pdf,.txt,.docx')}
+                    // onClick={() => openFileDialog('.pdf,.txt,.docx')}
+                    onClick={() => openFileDialog('.pdf,.txt')}
                     className="flex items-center gap-2 px-8 py-3.5 bg-white border border-gray-300 hover:border-blue-400 hover:text-blue-600 rounded-2xl text-sm font-medium transition-all active:scale-95"
                 >
                     <FileText size={20} />

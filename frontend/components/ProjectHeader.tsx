@@ -26,17 +26,14 @@ export default function ProjectHeader({ title = "Untitled Project" }: ProjectHea
             </div>
 
             {/* Center: File Type Tabs */}
-            <div className="flex items-center bg-gray-100 p-1 rounded-full">
+            {/* <div className="flex items-center bg-gray-100 p-1 rounded-full">
                 <button className="px-4 py-1.5 text-sm font-medium rounded-full bg-white text-blue-600 shadow-sm">
                     PDF
                 </button>
                 <button className="px-4 py-1.5 text-sm font-medium text-gray-500">
                     TXT
                 </button>
-                <button className="px-4 py-1.5 text-sm font-medium text-gray-500">
-                    DOCX
-                </button>
-            </div>
+            </div> */}
 
             {/* Right: Placeholder for future actions */}
             <div className="flex items-center gap-3">

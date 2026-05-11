@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="vi">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Evaluation of the results of screening for fetal sex chromosome aneuploidy by non-invasive prenatal testing</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher>Ministry of Science and Technology, Vietnam (VMOST)</publisher>
+				<availability status="unknown"><p>Copyright Ministry of Science and Technology, Vietnam (VMOST)</p>
+				</availability>
+				<date type="published" when="2025-09-25">2025-09-25</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Thi</forename><forename type="middle">Huyen Trang</forename><surname>Ho</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Thi</forename><forename type="middle">Ha</forename><surname>Vu</surname></persName>
+							<affiliation key="aff5">
+								<orgName type="institution">Hanoi Medical University</orgName>
+								<address>
+									<addrLine>1 Ton That Tung</addrLine>
+								</address>
+							</affiliation>
+							<affiliation key="aff6">
+								<orgName type="institution">Kim Lien Ward</orgName>
+								<address>
+									<settlement>Hanoi</settlement>
+									<country key="VN">Vietnam</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff7">
+								<orgName type="institution">Hanoi Medical University Hospital</orgName>
+								<address>
+									<addrLine>1 Ton That Tung</addrLine>
+								</address>
+							</affiliation>
+							<affiliation key="aff8">
+								<orgName type="institution">Kim Lien Ward</orgName>
+								<address>
+									<settlement>Hanoi</settlement>
+									<country key="VN">Vietnam</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Thu</forename><forename type="middle">Lan</forename><surname>Hoang</surname></persName>
+							<affiliation key="aff5">
+								<orgName type="institution">Hanoi Medical University</orgName>
+								<address>
+									<addrLine>1 Ton That Tung</addrLine>
+								</address>
+							</affiliation>
+							<affiliation key="aff6">
+								<orgName type="institution">Kim Lien Ward</orgName>
+								<address>
+									<settlement>Hanoi</settlement>
+									<country key="VN">Vietnam</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Thi</forename><forename type="middle">Lan Anh</forename><surname>Luong</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Thi</forename><forename type="middle">Kim Phuong</forename><surname>Doan</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution">¹Nghe An Friendship General Hospital</orgName>
+								<address>
+									<addrLine>Vinh Phu Ward</addrLine>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff4">
+								<orgName type="institution">Nghe An Province</orgName>
+								<address>
+									<country key="VN">Vietnam</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Evaluation of the results of screening for fetal sex chromosome aneuploidy by non-invasive prenatal testing</title>
+					</analytic>
+					<monogr>
+						<title level="j" type="main">Ministry of Science and Technology, Vietnam</title>
+						<title level="j" type="abbrev">VMOST</title>
+						<idno type="ISSN">1859-4794</idno>
+						<imprint>
+							<publisher>Ministry of Science and Technology, Vietnam (VMOST)</publisher>
+							<biblScope unit="volume">67</biblScope>
+							<biblScope unit="issue">9</biblScope>
+							<date type="published" when="2025-09-25" />
+						</imprint>
+					</monogr>
+					<idno type="MD5">EF3F36A19533DC7DC0EDB04E546FD442</idno>
+					<idno type="DOI">10.31276/vjst.67(9).38-42</idno>
+					<note type="submission">Received 2 January 2024; revised 22 January 2024; accepted 28 February 2024</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2026-05-11T08:28+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>non-invasive prenatal testing</term>
+					<term>screening</term>
+					<term>sex chromosome aneuploidy. Classification numbers: 3.1</term>
+					<term>3.3</term>
+					<term>3.5</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p><s>Mục tiêu: Khảo sát kết quả sàng lọc lệch bội nhiễm sắc thể giới tính thai nhi bằng xét nghiệm trước sinh không xâm lấn (NIPT).</s><s>Phương pháp nghiên cứu: Nghiên cứu mô tả cắt ngang trên 1.200 thai phụ tham gia làm NIPT lệch bội tại Trung tâm Di truyền lâm sàng, Bệnh viện Đại học Y Hà Nội năm 2021-2022.</s><s>Các thai phụ có kết quả NIPT nguy cơ cao được xét nghiệm nhiễm sắc thể đồ từ tế bào dịch ối nuôi cấy để đánh giá hiệu quả sàng lọc NIPT.</s><s>Kết quả: Tuổi trung bình của đối tượng nghiên cứu là 31±4.</s><s>Tỷ lệ thai phụ làm các sàng lọc trước sinh khác trước khi làm NIPT là 63,0%; trong đó, 58,1% nguy cơ thấp, 4,9% nguy cơ cao.</s><s>Tỷ lệ NIPT dương tính với lệch bội nhiễm sắc thể giới tính (SCA) chiếm 0,67%.</s><s>Giá trị dự đoán dương tính (PPV) của tất cả các kết quả NIPT dương tính đối với SCA thai nhi là 62,5% (5/8), PPV cá nhân thấp nhất được quan sát thấy đối với thể monosomy X là 25% (1/4).</s><s>Kết luận: NIPT có thể sàng lọc SCA nhưng không phải là xét nghiệm chẩn đoán SCA cho thai.</s><s>Trong số các SCA được sàng lọc bởi NIPT, thể monosomy X có tỷ lệ dương tính giả cao nhất.</s><s>Tất cả các thai phụ có NIPT dương tính với SCA cần được tư vấn di truyền và chẩn đoán trước sinh.</s><s>Từ khóa: lệch bội nhiễm sắc thể giới tính, sàng lọc, xét nghiệm trước sinh không xâm lấn.</s></p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="vi">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p><s>67(9) 9. <ref type="bibr">2025</ref></s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Đặt vấn đề</head><p><s>Bất thường nhiễm sắc thể giới tính bao gồm các biến đổi về cấu trúc (mất đoạn, lặp đoạn, nhiễm sắc thể vòng…) hoặc số lượng (đơn nhiễm, tam nhiễm…) xảy ra ở nhiễm sắc thể X và/hoặc nhiễm sắc thể Y <ref type="bibr" target="#b0">[1]</ref>.</s><s>Đây là nguyên nhân chính dẫn đến các hội chứng liên quan đến rối loạn hình thành giới tính và phát triển cơ thể.</s><s>Trong đó, các hội chứng SCA như: Turner, 47,XXX và Klinefelter thường gặp nhất, với tỷ lệ khoảng 1/1.000-2.000</s><s>trẻ đẻ sống <ref type="bibr" target="#b1">[2]</ref>.</s><s>Việc sàng lọc, chẩn đoán sớm và chính xác các bất thường nhiễm sắc thể giới tính sẽ nâng cao hiệu quả quản lý thai kỳ, điều trị sớm, cải thiện chất lượng sống cho bệnh nhi sau khi được sinh ra.</s></p><p><s>Từ trước đến nay, các xét nghiệm sinh hóa sàng lọc trước sinh SCA như Double test, Triple test phối hợp có độ nhạy và độ đặc hiệu tương ứng khoảng 85 và 95% với Trisomy 21, tuy nhiên, hiệu quả sàng lọc SCA vẫn còn hạn chế.</s><s>Gần đây, xét nghiệm NIPT phân tích DNA thai tự do trong máu mẹ (cell-free fetal DNA -cffDNA) đã được ứng dụng rộng rãi trong sàng lọc SCA.</s><s>Phương pháp này cho thấy độ nhạy và độ đặc hiệu lên tới 99% đối với Trisomy 21, tuy nhiên các dữ liệu thống kê về giá trị sàng lọc SCA vẫn còn hạn chế.</s><s>Một số nghiên cứu trên thế giới sử dụng kỹ thuật giải trình tự NIPT đã cho thấy, PPV đối với SCA của thai nhi trong khoảng 31,8-77,3% <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b3">4]</ref>.</s><s>Tại Việt Nam đã có nhiều nghiên cứu về giá trị NIPT trong sàng lọc lệch bội Trisomy 13, Trisomy 18, Trisomy 21, nhưng các công bố về giá trị NIPT trong sàng lọc SCA vẫn còn rất hạn chế.</s><s>Để đánh giá giá trị của NIPT trong sàng lọc các bất thường số lượng nhiễm sắc thể giới tính ở thai nhi, nghiên cứu này được thực hiện nhằm khảo sát kết quả sàng lọc SCA bằng phương pháp NIPT.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Đối tượng và phương pháp nghiên cứu</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Đối tượng</head><p><s>1200 thai phụ từ tuần thai thứ 10 trở lên, có tham gia làm NIPT tại Trung tâm Di truyền lâm sàng, Bệnh viện Đại học Y Hà Nội trong năm 2021-2022.</s><s>NIPT được thực hiện trên hệ thống giải trình tự thế hệ mới của Illumina (Hoa Kỳ).</s><s>Ngưỡng cffDNA tối thiểu để phân tích là 4%.</s><s>Xét nghiệm SCA chỉ bao gồm các trường hợp: 45,X; 47,XXX; 47,XYY và 47,XXY.</s><s>Thu thập các thông tin nghiên cứu dựa trên hồ sơ lưu trữ.</s><s>Phân loại kết quả NIPT nguy cơ cao và thấp.</s><s>Các thai phụ có kết quả NIPT nguy cơ cao được xét nghiệm nhiễm sắc thể đồ tế bào dịch ối nuôi cấy để đánh giá hiệu quả sàng lọc NIPT.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Phương pháp xử lý số liệu</head><p><s>Sử dụng phần mềm EpiData 3.1 để nhập số liệu, STATA 17.0 để phân tích số liệu.</s><s>Thống kê mô tả với biến định tính là tần suất, tỷ lệ %.</s><s>Đánh giá và so sánh kết quả xét nghiệm NIPT với karyotype qua tính toán tỷ lệ và giá trị tiên đoán dương tính (PPV).</s><s>Mức ý nghĩa thống kê được thiết lập khi p&lt;0,05.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Đạo đức nghiên cứu</head><p><s>Nghiên cứu được thông qua bởi Hội đồng đạo đức của Trường Đại học Y Hà Nội và sự cho phép của Trung tâm Di truyền lâm sàng, Bệnh viện Đại học Y Hà Nội.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Kết quả</head><p><s>Bảng 1. Đặc điểm chung của đối tượng nghiên cứu (n=1200).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Đặc điểm chung</head><p><s>Số lượng (n) Tỷ lệ (%) Kết quả bảng 1 cho thấy, tuổi trung bình của đối tượng nghiên cứu là 31,7±5,7, phần lớn đối tượng thuộc nhóm &lt;35 tuổi (66,5%), chỉ có 33,5% đối tượng &gt;35 tuổi.</s><s>Tuổi thai khi lấy mẫu máu đều nằm trong khoảng 10-22 tuần thai.</s></p><p><s>Tỷ lệ thai phụ đã thực hiện sàng lọc trước sinh khác như siêu âm hình thái, Double test, Triple test… trước khi làm NIPT là 63,0%; trong đó, 58,1% nguy cơ thấp, 4,9% nguy cơ cao.</s><s>Tuy nhiên, trong 1200 ca NIPT, chỉ có 0,67% kết quả có nguy cơ cao với SCA.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Bảng 2. Kết quả xét nghiệm trước sinh không xâm lấn (n=1200).</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Kết quả Số lượng (n) Tỷ lệ (%)</head><p><s>Dương tính 8 0,67 Âm tính 1192 99,33</s></p><p><s>SCA: Lệch bội nhiễm sắc thể giới tính.</s></p><p><s>Kết quả bảng 2 cho thấy, 8/1200 trường hợp NIPT cho kết quả dương tính với SCA đều được chỉ định chọc ối vào tuần thai 16-18, chiếm tỷ lệ 0,67%.</s><s>Kết quả bảng 3 cho thấy, có SCA trong 5 trường hợp (1 trường hợp 45,X; 1 trường hợp 47,XXX; 2 trường hợp 47,XXY; 1 trường hợp XYY); 3 trường hợp còn lại có nhiễm sắc thể bình thường.</s></p><p><s>Giá trị dự đoán dương tính của tất cả các kết quả NIPT dương tính đối với SCA thai nhi là 62,5% (5/8).</s><s>Trong số 4 dạng SCA, PPV thấp nhất được quan sát thấy đối với monosomy X là 25% (1/4).</s><s>Kết quả bảng 4 cho thấy, trong số 5 trường hợp mắc SCA, 2 trường hợp bỏ thai; 1 trường hợp karyotype bình thường nhưng sảy thai lúc 18 tuần, sau khi chọc ối 10 ngày.</s><s>Đáng chú ý, các trường hợp giữ thai, đã sinh con, cho dù kết quả chẩn đoán trước sinh bất thường giới tính thì đều có kiểu hình bình thường khi được đánh giá sau sinh 1 tháng tuổi.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Bảng 4. Kết quả thai kỳ của những trường hợp phát hiện lệch bội nhiễm sắc thể giới tính bằng xét nghiệm trước sinh không xâm lấn.</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nguy cơ</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Bàn luận</head><p><s>Xét nghiệm NIPT dựa trên cơ sở phân tích DNA thai tự do trong máu mẹ (cffDNA).</s><s>cffDNA bắt nguồn chủ yếu từ nguyên bào nuôi của nhau thai, một tổ chức mô có cấu trúc khảm cao.</s><s>Do đó, NIPT cũng có các yếu tố tạo nên tỷ lệ dương tính giả, âm tính giả nhất định.</s><s>Việc lựa chọn xét nghiệm chẩn đoán sau khi có kết quả NIPT nguy cơ cao cũng cần được cân nhắc cẩn thận, dựa trên các nguồn gốc tế bào của từng loại mẫu.</s><s>Chọc ối cho phép hiển thị chính xác hơn kiểu nhân thật của thai nhi với khả năng giả khảm thấp hơn, trong khi lấy mẫu tua rau cho thấy hiện tượng khảm bánh rau có thể làm nhiễu kết quả xét nghiệm.</s></p><p><s>Phân tích DNA thai tự do trong máu mẹ cffDNA không chỉ được áp dụng để sàng lọc thể 3 nhiễm sắc thể 21, 18 và 13 mà còn có khả năng áp dụng để phát hiện các thể lệch bội khác, bao gồm cả nhiễm sắc thể giới tính.</s><s>Tỷ lệ phát hiện SCA của NIPT chỉ có thể được đánh giá chính xác nếu toàn bộ ca bệnh nguy cơ cao và thấp được thực hiện làm xét nghiệm karyotype và theo dõi kết quả thai kỳ.</s><s>Trong nghiên cứu của chúng tôi, khi các kết quả sàng lọc NIPT nguy cơ cao mới được thực hiện karyotyping cho dịch ối, do đó sử dụng tiêu chí PPV làm thước đo là một cách tiếp cận phù hợp hơn trong đánh giá giá trị của NIPT với sàng lọc SCA.</s></p><p><s>Chỉ số PPV với SCA trong nghiên cứu là 62,5%, có sự khác biệt so với một số nghiên cứu khác <ref type="bibr" target="#b3">[4]</ref>, có thể liên quan đến số lượng mẫu, tỷ lệ mắc bệnh trong quần thể nghiên cứu thấp, thiết kế nghiên cứu và số lượng thai phụ thực hiện xét nghiệm karyotype trong nghiên cứu.</s><s>Trong một số nghiên cứu lớn, chỉ có 1/3 thai phụ có xét nghiệm NIPT dương tính được theo dõi lâm sàng trong các nghiên cứu.</s><s>PPV của một xét nghiệm sẽ thấp hơn trong quần thể có tỷ lệ mắc bệnh thấp.</s><s>PPV với 45,X là thấp nhất trong số các nguy cơ SCA được phát hiện bởi NIPT.</s><s>Cỡ mẫu của nghiên cứu còn hạn chế nên kết quả chỉ có thể đưa ra nhận xét là PPV thấp nhất trong nghiên cứu chứ chưa đại diện cho quần thể.</s><s>Trường hợp monosomy X thường có dấu hiệu chỉ điểm là tăng độ mờ da gáy (NT).</s><s>Vì vậy, khi kết quả xét nghiệm NIPT dương tính với 45,X, nếu kết quả siêu âm có NT bình thường thì khả năng thai có NST giới tính bình thường (46,XX) cao hơn so với thai có tăng NT.</s><s>Trong trường hợp siêu âm có NT ≥3 mm, nên tư vấn thai phụ thực hiện thủ thuật xâm lấn làm xét nghiệm karyotype, thay vì tư vấn xét nghiệm NIPT.</s><s>Với hội chứng Turner, có thể có hình ảnh nang bạch huyết ở cổ, chân tay, hoặc nếp da hoặc nếp da thừa ở cổ, thiểu sản tim trái hoặc bất thường thận nhưng không điển hình.</s><s>Các hội chứng Klinefelter, Jacobs, XXX hầu như không phát hiện được bất thường trên siêu âm hình thái thai nhi.</s><s>Các dấu hiệu gợi ý SCA trên siêu âm rất nghèo nàn và không đặc hiệu, đa số trường hợp siêu âm hình thái thai nhi bình thường nhưng làm NIPT và chẩn đoán nhiễm sắc thể đồ trước sinh lại phát hiện SCA (bảng 4).</s><s>Trong 8 trường hợp SCA, đáng chú ý có 7 trường hợp siêu âm thai đều bình thường hoặc chỉ tăng khoảng sáng sau gáy mức độ nhẹ, duy nhất một trường hợp có siêu âm bất thường phức tạp bao gồm thông liên thất và đa ối.</s><s>Trường hợp này cũng có nhiễm sắc thể đồ bất thường phức tạp, 48,XXX,+18, không chỉ SCA đơn thuần XXX mà còn thêm một nhiễm sắc thể số 18. Điều này phù hợp với phát hiện bất thường hình thái phức tạp trên siêu âm hay gặp ở các thai mắc Trisomy 18. Các sàng lọc sinh hóa như Double test, Triple test hầu như ít có giá trị trong sàng lọc SCA.</s><s>Do vậy, nếu chỉ xét riêng trong sàng lọc SCA thai kỳ thì giá trị tiên đoán dương của NIPT cao hơn hẳn các phương pháp sàng lọc trước sinh truyền thống, điều này giúp tăng tỷ lệ phát hiện và giảm tỷ lệ thai phụ phải trải qua thủ thuật xâm lấn không cần thiết.</s><s>Khoảng 99% monosomy X bị sảy thai tự nhiên trong 3 tháng đầu thai kỳ, trong khi hầu hết lệch bội NST giới tính khác cho thấy không có triệu chứng lâm sàng rõ ràng hoặc bất thường trên siêu âm.</s><s>Mặc dù tỷ lệ mắc SCA của mỗi loại lệch bội tương đối hiếm, nhưng tỷ lệ SCA tích lũy xảy ra khoảng 0,3% tổng số trường hợp sinh sống.</s><s>Thật vậy, tỷ lệ trẻ sinh sống mắc lệch bội NST giới tính cao hơn rất nhiều so với lệch bội NST thường (Trisomy 21, Trisomy 18 hoặc Trisomy 13).</s><s>Điều này phản ánh thực tế rằng, SCA hiếm khi gây chết người và các đặc điểm kiểu hình của SCA ít nghiêm trọng hơn các lệch bội NST khác.</s><s>Theo Tổ chức Y tế thế giới (WHO), các hội chứng SCA chiếm gần 50% tổng số bất thường nhiễm sắc thể ở người.</s><s>Tổ chức này cũng báo cáo rằng, khoảng 1/400 người có kiểu hình bình thường (tương đương 0,25%) mang SCA <ref type="bibr" target="#b7">[8]</ref>.</s><s>Các can thiệp sớm như liệu pháp hormone và liệu pháp thay thế hormone đã được chứng minh có thể cải thiện biến chứng cho những trẻ mắc 45,X hoặc 47,XXY <ref type="bibr" target="#b8">[9]</ref>.</s><s>Đối với thai, Trisomy X có thể liên quan đến thai chậm phát triển, rối loạn nhận thức, khuyết tật về học tập và rối loạn tâm lý, do vậy phát hiện 67(9) 9.2025 sớm Trisomy X giúp gia đình và xã hội có thể lập kế hoạch giáo dục và chăm sóc y tế sớm cho trẻ <ref type="bibr" target="#b9">[10]</ref>.</s><s>Vì vậy, sàng lọc và chẩn đoán trước sinh SCA có thể góp phần đưa ra những biện pháp chăm sóc và điều trị cho trẻ SCA kịp thời.</s></p><p><s>Hạn chế của nghiên cứu này là cỡ mẫu nhỏ và chưa thể xác định được tỷ lệ âm tính giả trong phát hiện SCA bằng NIPT, do gặp khó khăn khi thực hiện chẩn đoán karyotyping cho từng trẻ sơ sinh.</s><s>Việc chẩn đoán các trẻ sơ sinh mắc SCA cũng nhiều khó khăn do trước tuổi dậy thì, nhiều hội chứng lệch bội nhiễm sắc thể giới tính có thể xuất hiện bình thường, không có hoặc chỉ có khuyết tật nhẹ về thể chất hoặc trí tuệ.</s><s>Các biểu hiện lâm sàng thường bộc lộ rõ hơn khi trẻ đến tuổi dậy thì hoặc khi có nhu cầu sinh sản, do đó, rất khó chẩn đoán lâm sàng xác định hội chứng SCA trước tuổi dậy thì mà không có xét nghiệm di truyền.</s><s>Một nghiên cứu tiếp theo với cỡ mẫu lớn hơn, đủ đại diện cho quần thể sẽ được tiến hành khi nhóm nghiên cứu tích lũy thêm được dữ liệu nghiên cứu.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Kết luận</head><p><s>Xét nghiệm trước sinh không xâm lấn có thể sàng lọc SCA hữu hiệu hơn các phương pháp sàng lọc trước sinh trước đây, giúp tăng tỷ lệ phát hiện và giảm tỷ lệ can thiệp xâm lấn không cần thiết, nhưng NIPT không phải là xét nghiệm chẩn đoán lệch bội NST giới tính cho thai.</s><s>Trong số các lệch bội nhiễm sắc thể giới tính được sàng lọc bởi NIPT, thể monosomy X có tỷ lệ dương tính giả cao nhất.</s><s>Điều này có thể hỗ trợ thông tin tư vấn di truyền cho các thai phụ có NIPT nguy cơ cao SCA.</s><s>Tất cả các thai phụ có NIPT dương tính với lệch bội nhiễm sắc thể giới cần được chẩn đoán trước sinh.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>LỜI CẢM ƠN</head><p><s>Nhóm tác giả xin chân thành cảm ơn Viện Di truyền Y học đã hỗ trợ hoàn thành bài báo này.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>TÀI LIỆU THAM KHẢO</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Bảng 3 . 5 PPV:</head><label>35</label><figDesc><div><p><s>Giá trị của xét nghiệm trước sinh không xâm lấn trong sàng lọc lệch bội nhiễm sắc thể giới tính.</s><s>Giá trị dự đoán dương tính.</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc><div><p><s>Do vậy, tỷ lệ phát hiện monosomy X sẽ thấp hơn do nhóm thai phụ có NT ≥3 mm đã được thực hiện xét nghiệm karyotype mà không xét nghiệm NIPT.</s><s>Trong nghiên cứu này, giá trị tiên đoán dương của NIPT trong monosomy X là 25%, thấp nhất trong số các bất thường số lượng NST giới tính được dự báo bởi NIPT.</s><s>Mặc dù cỡ mẫu nghiên cứu còn hạn chế nhưng xu hướng này cũng phù hợp với các nghiên cứu trước đó: PPV của NIPT đối với các hội chứng SCA: 45,X; 47,XXX; 47,XXY và 47,XYY lần lượt là: 23, 27, 50 và 36% [5-7].</s><s>Với cỡ mẫu còn hạn chế, 11 trường hợp nguy cơ cao lệch bội NST giới tính, M.T. Tran và cs (2024) [7] phát hiện SCA có giá trị tiên đoán dương là 61,1%, tương đồng với nghiên cứu của chúng tôi (62,5%); PPV của 47,XXX, 47,XYY; 47,XXY và 45,X lần lượt là 100, 100, 66,7 và 33,3%.</s><s>Giá trị PPV của hội chứng monosomy X đều thấp nhất trong số các loại lệch bội NST giới tính ở các nghiên cứu đã nêu trên.</s><s>Điều này có thể do một vài cơ chế sinh học như: trong số các loại lệch bội NST giới tính, thể 45,X có tỷ lệ khảm bánh rau cao hơn, tỷ lệ khảm 45,X ở mẹ cao hơn nên làm tăng kết quả dương tính giả monosomy X trong xét nghiệm NIPT.</s><s>Kết quả nghiên cứu cung cấp những gợi ý quan trọng cho việc tư vấn sản phụ khi nhận kết quả NIPT dương tính với SCA, đặc biệt là trong trường hợp thể 45,X, vốn có tỷ lệ dương tính giả cao hơn so với các dạng lệch bội nhiễm sắc thể khác.</s><s>Vì vậy, các kết quả NIPT dương tính SCA cần phải chẩn đoán trước sinh.</s><s>Đối với diễn giải kết quả chẩn đoán trước sinh SCA cũng cần thận trọng loại trừ các yếu tố nhiễu như khảm bánh rau, khảm từ mẹ, là các loại bất thường mà không tồn tại thực sự ở thai.</s><s>Tình trạng khảm bánh rau hoặc khảm từ mẹ có thể được xác nhận bằng cách phân tích sâu hơn về mô gai rau hoặc tế bào máu ngoại vi của thai phụ.</s><s>Đối với các bất thường của nhiễm sắc thể khác, đặc biệt là 3 nhiễm sắc thể 13, 18, 21, siêu âm hình thái và sàng lọc sinh hóa Double test, Triple test là những công cụ hữu hiệu trong phát hiện dị tật thai, tuy nhiên đối với các bất thường liên quan đến SCA X,Y, biểu hiện trên siêu âm thai nhi rất mờ nhạt và khó phát hiện do biểu hiện của các hội chứng bất thường SCA hầu hết liên quan đến chậm phát triển trí tuệ nhẹ, rối loạn đặc điểm sinh dục thứ phát hay vô sinh.</s></p></div></figDesc></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p><s>Ngày nhận bài 2/1/2024; ngày chuyển phản biện 5/1/2024; ngày nhận phản biện 22/1/2024; ngày chấp nhận đăng 28/2/2024</s></p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Detection of fetal sex chromosome aneuploidy by massively parallel sequencing of maternal plasma DNA: Initial experience in a Chinese hospital</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ultrasound in Obstetrics Gynecology</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page" from="17" to="24" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Noninvasive prenatal assessment of trisomy 21 by multiplexed maternal plasma DNA sequencing: Large scale validity study</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Chiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Akolekar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">W</forename><surname>Zheng</surname></persName>
+		</author>
+		<idno type="DOI">10.1136/bmj.c7401</idno>
+	</analytic>
+	<monogr>
+		<title level="j">BMJ</title>
+		<imprint>
+			<biblScope unit="volume">342</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Performance evaluation of noninvasive prenatal testing in screening chromosome disorders: A single-center observational study of 15,304 consecutive cases in China</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Hu</surname></persName>
+		</author>
+		<idno type="DOI">10.2147/IJWH.S455778</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Womens Health</title>
+		<imprint>
+			<biblScope unit="page" from="563" to="573" />
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Cellfree DNA screening for sex chromosomal aneuploidies in 9985 pregnancies: Italian single experience</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Margiotti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cesta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Russo</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s13104-020-05009-1</idno>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Res. Notes</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Noninvasive prenatal testing for assessing foetal sex chromosome aneuploidy: A retrospective study of 45,773 cases</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sun</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s13039-020-00521-2</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Cytogenet</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Unique challenges of NIPT for sex chromosome aneuploidy</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">W</forename><surname>Haug</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Reimers</surname></persName>
+		</author>
+		<idno type="DOI">10.1097/GRF.0000000000000804</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Obstet. Gynecol</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="568" to="578" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">The value of positive NIPT test and amniocentesis results at the Obstetrics and Gynecology Center -Hue Central Hospital</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Tran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L T</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">T T</forename><surname>Nguyen</surname></persName>
+		</author>
+		<idno type="DOI">10.46755/vjog.2024.5.1787</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Vietnamese Journal of Obstetrics and Gynecology</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="30" to="36" />
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note>in Vietnamese</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Noninvasive prenatal detection of sex chromosomal aneuploidies by sequencing circulating cell-free DNA from maternal plasma</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Mazloom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ž</forename><surname>Džakula</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Oeth</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/pd.4127</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Prenatal Diagnosis</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="591" to="597" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Cell-free DNA screening and sex chromosome aneuploidies</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Mennuti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chandrasekaran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Khalek</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/pd.4639</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Prenatal Diagnosis</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="980" to="985" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Noninvasive prenatal genetic testing for fetal aneuploidy detects maternal trisomy X</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/pd.3946</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Prenatal Diagnosis</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1114" to="1116" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>
