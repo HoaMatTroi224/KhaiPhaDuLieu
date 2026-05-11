@@ -11,6 +11,165 @@ import sqlite3
 import pandas as pd
 import re
 from google.colab import files
+import fitz
+import unicodedata
+import logging
+from typing import Dict
+
+# Sửa lỗi cú pháp hệ thống: __name__
+logger = logging.getLogger(__name__)
+
+class FileProcessor:
+    @staticmethod
+    def process_pdf(file_path: str) -> Dict:
+        try:
+            doc = fitz.open(file_path)
+            raw_text = ""
+            for page in doc:
+                raw_text += page.get_text("text") + "\n"
+            doc.close()
+        except Exception as e:
+            logger.error(f"Failed to read PDF: {e}")
+            raise RuntimeError(f"Không thể đọc file PDF: {e}")
+
+        text = raw_text
+
+        # GIỮ NGUYÊN LOGIC VÀ CẬP NHẬT BƯỚC XÓA HEADER 
+
+        # Xóa dòng Header chuyên mục phức tạp (Ví dụ: Khoa học Tự nhiên /Hóa học... 3.2026)
+        # Regex này nhận diện: Chữ + "/" + Chữ + ";" + các số/ngày tháng ở cuối dòng
+        text = re.sub(r'(?i)Khoa học [^/]+/[^;]+; Khoa học [^\n]+\d+\.\d{4}', '', text)
+
+        # Bổ sung xóa các cụm chuyên mục đơn lẻ nếu còn sót
+        text = re.sub(r'(?i)khoa học tự nhiên|khoa học kỹ thuật và công nghệ|khoa học y - dược|khoa học nông nghiệp|khoa học xã hội và nhân văn', '', text)
+
+        # Xóa Header/Footer lặp lại theo trang (DOI và số trang đứng riêng)
+        text = re.sub(r'DOI:\s*10\.\d+/[^\n]+\n?\s*\d+\s*\n', '', text)
+
+        # Xóa khối metadata tiếng Anh
+        if re.search(r'(?i)abstract\s*:', text):
+            text = re.sub(
+                r'(?is)(?:[^\n]{15,}\n){0,3}Abstract:.*?Key\s*words?:[^\n]+\n(?:Classification numbers:[^\n]+\n)?',
+                '', text
+            )
+
+        # Xóa Tài liệu tham khảo
+        text = re.sub(r'(?is)\n*TÀI LIỆU THAM KHẢO.*', '', text)
+        text = re.sub(r'(?is)\n*REFERENCES.*', '', text)
+
+        # Xóa ký tự lạ / artifact PDF
+        text = text.replace('\\*', '').replace('\\|', '')
+        text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', text)
+
+        # Chuẩn hố xuống dòng & khoảng trắng (GIỮ NGUYÊN LOGIC CỦA BẠN)
+        text = re.sub(r'\n{2,}', '\n\n', text)
+        text = re.sub(r'\n', ' ', text)
+        text = re.sub(r'\s+', ' ', text).strip()
+
+        # Unicode Normalization
+        text = unicodedata.normalize('NFC', text)
+
+        return {
+            "content": text,
+            "metadata": {
+                "word_count": len(text.split()),
+                "char_count": len(text),
+                "paragraph_count": len([p for p in text.split('\n\n') if p.strip()])
+            }
+        }
+
+def strong_clean(text):
+    if not text:
+        return ""
+
+    # XÓA CÁC DÒNG HEADER/FOOTER PHỨC TẠP
+    # Regex này sẽ quét từ chữ "Khoa học" cho đến hết các con số ngày tháng cuối dòng
+    pattern_complex_header = r'(?i)Khoa học\s+[^/]+/[^;]+;\s*Khoa học\s+[^\n]+\d+\s+\d+\(\d+\)\s+\d+\.\d{4}'
+    text = re.sub(pattern_complex_header, '', text)
+
+    # Xử lý các cụm chuyên mục đứng riêng lẻ hoặc biến thể ngắn hơn
+    text = re.sub(r'(?i)/Hóa học;\s*/Kỹ thuật vật liệu và luyện kim.*?\d+\.\d{4}', '', text)
+    text = re.sub(r'(?i)khoa học tự nhiên|khoa học kỹ thuật và công nghệ|khoa học y - dược|khoa học nông nghiệp|khoa học xã hội và nhân văn', '', text)
+
+    # Xóa Header/Footer lặp lại theo trang (DOI và số trang) 
+    text = re.sub(r'DOI:\s*10\.\d+/[^\n]+\n?\s*\d+\s*\n', '', text)
+
+    # Xóa phần Tóm tắt / Abstract / Tác giả liên hệ
+
+    # Xóa Abstract tiếng Anh
+    text = re.sub(
+        r'(?is)abstract\s*:.*?(?:key\s*words?|keywords?)\s*:[^\n]+',
+        '',
+        text
+    )
+
+    # Xóa Tóm tắt tiếng Việt
+    text = re.sub(
+        r'(?is)tóm\s*tắt\s*:.*?(?:từ\s*khóa|từ khóa)\s*:[^\n]+',
+        '',
+        text
+    )
+
+    # Xóa dòng tác giả liên hệ
+    text = re.sub(
+        r'(?im)^.*?(?:tác\s*giả\s*liên\s*hệ|corresponding\s*author).*?$',
+        '',
+        text
+    )
+
+    # Xóa email liên hệ
+    text = re.sub(
+        r'(?im)^.*?email\s*:\s*[\w\.-]+@[\w\.-]+\.\w+.*?$',
+        '',
+        text
+    )
+
+    match = re.search(
+      r'(?is)(đặt\s*vấn\s*đề|mở\s*đầu|introduction)',
+      text
+    )
+
+    if match:
+      text = text[match.start():]
+
+
+    # Xóa Tài liệu tham khảo
+    text = re.sub(r'(?is)\n*TÀI LIỆU THAM KHẢO.*', '', text)
+    text = re.sub(r'(?is)\n*REFERENCES.*', '', text)
+
+    # Xóa ký tự lạ / artifact PDF
+    text = text.replace('\\*', '').replace('\\|', '')
+    text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', text)
+
+    # Chuẩn hóa xuống dòng & khoảng trắng 
+    text = re.sub(r'\n{2,}', '\n\n', text)
+    text = re.sub(r'\n', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    # Unicode Normalization
+    text = unicodedata.normalize('NFC', text)
+
+    return text
+
+# PHẦN THỰC THI CẬP NHẬT DATABASE
+
+conn = sqlite3.connect("khoahoc_vn.db")
+df = pd.read_sql("SELECT id, content FROM articles", conn)
+
+df["content"] = df["content"].apply(strong_clean)
+
+cur = conn.cursor()
+
+for _, row in df.iterrows():
+    cur.execute("""
+        UPDATE articles
+        SET content = ?
+        WHERE id = ?
+    """, (row["content"], row["id"]))
+
+conn.commit()
+conn.close()
+
 
 # Kết nối và đọc dữ liệu
 conn = sqlite3.connect("khoahoc_vn.db")
