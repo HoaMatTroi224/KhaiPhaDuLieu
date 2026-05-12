@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     PG_CONNECTION_STRING: str
 
     EMBEDDING_MODEL: str = "gemini-embedding-2"
-    LARGE_LANGUAGE_MODEL: str = "gemini-1.5-flash"
+    LARGE_LANGUAGE_MODEL: str = "gemini-2.0-flash"
 
     MAX_FILE_SIZE: int = 10 * 1024 * 1024  # 10MB
     ALLOWED_MIME_TYPES: list[str] = ["application/pdf"]

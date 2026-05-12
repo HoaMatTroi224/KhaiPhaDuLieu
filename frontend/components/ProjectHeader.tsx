@@ -36,10 +36,10 @@ export default function ProjectHeader({ title = "Untitled Project" }: ProjectHea
             </div> */}
 
             {/* Right: Placeholder for future actions */}
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3"> */}
                 {/* Future action buttons can go here */}
                 
-                <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-2xl transition-colors">
+                {/* <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-2xl transition-colors">
                     <Share2 size={18} />
                     Share
                 </button>
@@ -55,7 +55,7 @@ export default function ProjectHeader({ title = "Untitled Project" }: ProjectHea
                     </button>
                 </Link>
 
-            </div>
+            </div> */}
         </div>
     );
 }

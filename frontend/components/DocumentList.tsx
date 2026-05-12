@@ -1,14 +1,57 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { FilePen, BookOpenText, PlusCircle } from "lucide-react";
+import { supabase } from '@/lib/supabase/client';
+import { useAuth } from '@/lib/hooks/useAuth';
 
 // Mock data
-const documents = [
-    { id: 1, name: "Trứng rán cần mỡ.pdf", active: true },
-    { id: 2, name: "Bắp cần bơ.docx", active: false },
-    { id: 3, name: "Yêu không cần cớ.txt", active: false },
-];
-export default function DocumentList() {
+// const documents = [
+//     { id: 1, name: "Trứng rán cần mỡ.pdf", active: true },
+//     { id: 2, name: "Bắp cần bơ.docx", active: false },
+//     { id: 3, name: "Yêu không cần cớ.txt", active: false },
+// ];
+// type Document = { id: string; name: string};
+
+export default function DocumentList({
+    projectId,
+    selectedDocId,
+    onSelectedDoc
+}: {
+    projectId: string;
+    selectedDocId: string | null;
+    onSelectedDoc: (id: string) => void;
+}) {
+    const [documents, setDocuments] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const { token, loading: authLoading } = useAuth();
+
+    useEffect(() => {
+        if (!projectId || !token || authLoading) return;
+
+        const fetchDocs = async () => {
+            try {
+
+                const res = await fetch(`http://localhost:8000/documents/?project_id=${projectId}`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+                if (!res.ok) throw new Error('Failed to fetch documents');
+                const data = await res.json();
+                setDocuments(data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchDocs();
+    }, [projectId, token, authLoading]);
+
+    if (authLoading || loading) return <div className="p-6 text-sm text-gray-500">Loading documents...</div>;
+
     return (
         <div className="p-6">
             <div className="uppercase text-xs font-semibold text-gray-400 tracking-widest mb-4">
@@ -19,17 +62,24 @@ export default function DocumentList() {
                 {documents.map((doc) => (
                     <div 
                         key={doc.id} 
+                        onClick={() => onSelectedDoc(doc.id)}
+                        // className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl cursor-pointer transition
+                        //     ${doc.active
+                        //         ? 'bg-blue-50 text-blue-700'
+                        //         : 'text-gray-600 hover:bg-gray-100'
+                        //     }`
+                        // }
                         className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl cursor-pointer transition
-                            ${doc.active
-                                ? 'bg-blue-50 text-blue-700'
-                                : 'text-gray-600 hover:bg-gray-100'
-                            }`}
+                            ${selectedDocId === doc.id ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-100'}`}
                     >
-                        <FilePen size={16} />
 
-                        <div className="flex-1 min-w0">
+                        <div className='flex-shrink-0'>
+                            <FilePen size={16} />
+                        </div>
+
+                        <div className="flex-1 min-w-0 overflow-hidden">
                             <p className="text-sm truncate font-medium">
-                                {doc.name}
+                                {doc.file_name}
                             </p>
                         </div>
                         {/* <div className="w-8 h-8 flex items-center justify-center text-gray-500">
@@ -48,12 +98,12 @@ export default function DocumentList() {
             </div>
 
             {/* Divider + Add Document Button */}
-            <div className="p-6 pt-4 border-t border-gray-100 ">
+            {/* <div className="p-6 pt-4 border-t border-gray-100 ">
                 <button className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border border-gray-300 shadow-sm text-sm text-gray-600 hover:border-blue-400 hover:text-blue-600 transition">
                     <PlusCircle size={16} />
                     Add Document
                 </button>
-            </div>
+            </div> */}
 
 
             {/* Add Document Button */}

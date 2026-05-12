@@ -260,7 +260,7 @@ class FileExtractor:
 
         self.grobid_client = GrobidClient(
             config_path=None,
-            grobid_server="http://localhost:8070",
+            grobid_server="http://grobid:8070",
         )
 
         self.temp_dir = tempfile.TemporaryDirectory()

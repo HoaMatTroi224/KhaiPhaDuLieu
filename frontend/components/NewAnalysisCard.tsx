@@ -9,8 +9,6 @@ import TextPasteArea from "./TextPasteArea";
 import ProjectSettings, { ProjectSettingsData } from "./ProjectSettings";
 
 import { supabase } from '@/lib/supabase/client';
-import { fail } from "assert";
-import path from "path";
 
 export default function NewAnalysisCard() {
     const router = useRouter();
@@ -158,13 +156,26 @@ export default function NewAnalysisCard() {
                 }),
             });
 
+
             if (!response.ok) {
-                const error = await response.json();
                 // Cleanup files if fail
-                const paths = uploadedFiles.map(f => f.file_path)
-                await supabase.storage.from('documents').remove(paths);
-                throw new Error(error.detail || 'Failed to finalize project');
+                await supabase.storage.from('documents').remove(uploadedFiles.map(f => f.file_path));
+                throw new Error('Failed to finalize project');
             }
+
+            // const result = await response.json();
+            // const documentIds = result.documents.map((doc: any) => doc.id);
+
+            // await fetch(`http://localhost:8000/summaries/generate`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer${access_token}`
+            //     },
+            //     body: JSON.stringify({
+            //         document_ids: documentIds,
+            //     })
+            // })
 
             // setProjectSettings(prev => ({
             //     ...prev,
@@ -175,7 +186,7 @@ export default function NewAnalysisCard() {
             // dispatch
             
             router.refresh()
-            router.push(`/project/${projectId}`)
+            router.push(`/projects/${projectId}`)
         } catch (error: any) {
             console.error('Error occured while trying to finalize project:', error);
             alert(error.message || 'Failed to finalize project');

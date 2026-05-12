@@ -1,9 +1,16 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ChevronDown, CheckCircle2 } from "lucide-react";
+import { supabase } from '@/lib/supabase/client';
+import { useAuth } from "@/lib/hooks/useAuth";
 
-export default function DocumentViewer() {
+
+export default function DocumentViewer({ selectedDocId }: { selectedDocId: string | null }) {
+    const { token, loading: authLoading } = useAuth();
+    const [summary, setSummary] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null); 
     const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -70,6 +77,67 @@ export default function DocumentViewer() {
         };
     }, []);
 
+    useEffect(() => {
+        if (!selectedDocId || !token || authLoading) return;
+
+        let isMounted = true;
+        let retryCount = 0;
+        const MAX_RETRIES = 10; // Tối đa 10 lần
+
+        const fetchSummary = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const res = await fetch(`http://localhost:8000/summaries?document_id=${selectedDocId}`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+                if (!res.ok) throw new Error('Failed to fetch summary');
+                const data = await res.json();
+                if (isMounted) {
+                    if (data.length > 0) {
+                        setSummary(data[0]);
+                    } else if (retryCount < MAX_RETRIES) {
+                        retryCount++;
+                        setTimeout(fetchSummary, 3600);
+                        return
+                    }
+                }
+            } catch (err: any) {
+                if (isMounted) setError(err.message || 'Error occured while trying to load summaries');
+            } finally {
+                if (isMounted) setLoading(false);
+            }
+        };
+
+        fetchSummary();
+        return () => { isMounted = false; };
+    }, [selectedDocId, token, authLoading]);
+
+    if (!selectedDocId) {
+        return <div className="flex items-center justify-center h-full text-gray-400">Select a document to view summary</div>;
+    }
+    if (loading) {
+        return <div className="flex items-center justify-center h-full text-gray-500">Loading summary...</div>;
+    }
+
+    if (error || !summary) {
+        return (
+            <div className="flex flex-col items-center justify-center h-full text-gray-500 gap-4">
+                <p>Summary not available yet.</p>
+                <p className="text-sm">Please generate summary first.</p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition"
+                >
+                    Refresh
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-3xl">
             {/* Source Information */}
@@ -88,7 +156,7 @@ export default function DocumentViewer() {
             >
                 {/* Title */}
                 <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-8">
-                    Synthesis of Multi-Modal Neural Pathways
+                    {summary.title}
                 </h1>
 
                 {/* Badges */}
@@ -101,7 +169,7 @@ export default function DocumentViewer() {
                 <div className="mb-10">
                     <h2 className="text-blue-600 font-semibold mb-3">Executive Summary</h2>
                     <p className="text-gray-700 leading-relaxed">
-                        The shift toward unified multi-modal architectures marks a significant evolution in artificial intelligence. This document synthesizes the core breakthroughs in bridging visual and textual semantic layers, focusing on the "Stitch" methodology which allows for seamless data integration across disparate modalities.
+                        {summary.summary_text}
                     </p>
                 </div>
 

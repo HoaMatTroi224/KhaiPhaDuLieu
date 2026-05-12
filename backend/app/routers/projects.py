@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from ..dependencies import get_current_user_id
@@ -8,6 +8,7 @@ from ..schemas import ProjectInitialize, ProjectUpdate, ProjectResponse, Project
 from typing import List
 from uuid import UUID, uuid4
 from datetime import datetime
+from ..services.processor import process_document
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 
@@ -61,6 +62,7 @@ async def initialize_project(
 async def finalize_project(
     project_id: UUID,
     payload: ProjectFinalize,  
+    background_tasks: BackgroundTasks,
     user_id: UUID = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
@@ -92,10 +94,23 @@ async def finalize_project(
         documents.append(document)
 
     db.add_all(documents)
-
     await db.commit()
+    for doc in documents:
+        await db.refresh(doc)
+
+    for doc in documents:
+        background_tasks.add_task(
+            process_document,
+            doc.id,
+            user_id
+        )
+        
     await db.refresh(project)
-    return project
+    
+    return {
+        "project": project,
+        "documents": documents
+    }
 
 @router.get("/{project_id}", response_model=ProjectResponse)
 async def get_project(

@@ -35,6 +35,8 @@ services:
       - "8000:8000"
     depends_on:
       - grobid
+    env_file:
+      - ./backend/.env
     environment:
       - GROBID_SERVER=http://grobid:8070
     restart: unless-stopped

@@ -12,6 +12,22 @@ from ..dependencies import get_current_user_id
 
 router = APIRouter(prefix="/documents", tags=["Documents"])
 
+@router.get("/", response_model=List[DocumentResponse])
+async def list_documents(
+    project_id: UUID,
+    user_id: UUID = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db)
+):
+    result = await db.execute(
+        select(Document)
+        .where(
+            Document.user_id == user_id,
+            Document.project_id == project_id
+        )
+    )
+    
+    return result.scalars().all()
+
 # @router.post("/", response_model=DocumentResponse, status_code=status.HTTP_201_CREATED)
 # async def create_document(
 #     payload: DocumentCreate,
@@ -75,19 +91,5 @@ router = APIRouter(prefix="/documents", tags=["Documents"])
 #     return documents
     
 
-@router.get("/", response_model=List[DocumentResponse])
-async def list_documents(
-    project_id: UUID,
-    user_id: UUID = Depends(get_current_user_id),
-    db: AsyncSession = Depends(get_db)
-):
-    result = await db.execute(
-        select(Document)
-        .where(
-            Document.user_id == user_id,
-            Document.project_id == project_id
-        )
-    )
-    
-    return result.scalars().all()
+
 

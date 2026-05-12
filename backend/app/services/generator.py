@@ -13,7 +13,7 @@ class SummaryGenerator:
     def __init__(self):
         self.llm = ChatGoogleGenerativeAI(
             model=settings.LARGE_LANGUAGE_MODEL,
-            google_api_key=settings.GOOGLE_API_KEY.get_secret_value(),
+            google_api_key=settings.GOOGLE_API_KEY,
             temperature=0.2,
             request_timeout=30
         )

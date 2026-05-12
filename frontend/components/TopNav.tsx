@@ -100,7 +100,7 @@ export default function TopNav() {
                 </div>
 
                 {/* Search Bar */}
-                <div className="relative w-[420px]">
+                {/* <div className="relative w-[420px]">
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                         <Search size={18} />
                     </div>
@@ -109,7 +109,7 @@ export default function TopNav() {
                         placeholder="Search papers, authors, topics..."
                         className="w-full bg-gray-100 border border-gray-200 focus:border-blue-300 pl-12 py-3 rounded-3xl text-sm focus:outline-none transition"
                     />
-                </div>
+                </div> */}
             </div>
 
             {/* Right: New Project + Avatar */}

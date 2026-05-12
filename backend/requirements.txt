@@ -20,4 +20,5 @@ pymupdf4llm
 PyJWT>=2.8.0
 markdown
 beautifulsoup4
-lxml
+supabase
+google-api-core

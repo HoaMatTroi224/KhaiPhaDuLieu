@@ -1,5 +1,60 @@
+'use client';
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import DocumentViewer from '@/components/DocumentViewer';
+import DocumentList from '@/components/DocumentList';
+import ProjectHeader from '@/components/ProjectHeader';
+import { useAuth } from '@/lib/hooks/useAuth';
 
 export default function ProjectDetailPage() {
-  return <DocumentViewer />;
+  const params = useParams();
+  const projectId = typeof params.id === 'string' ? params.id : '';
+  const { token, loading: authLoading } = useAuth();
+  const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
+  const [projectTitle, setProjectTitle] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (!projectId || !token || authLoading) return;
+    const fetchProject = async () => {
+      try {
+        const res = await fetch(`http://localhost:8000/projects/${projectId}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+        if (!res.ok) throw new Error('Failed to fetch project');
+        const data = await res.json();
+        setProjectTitle(data.name)
+      } catch (err) {
+        console.error('Error occured while trying to fetch project:', err);
+        setProjectTitle('Untitled Project')
+      }
+    };
+
+    fetchProject();
+  }, [projectId, token, authLoading])
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Project Topbar */}
+      <ProjectHeader title={projectTitle} />
+      
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left Sidebar - Document List */}
+        <aside className="w-72 border-r border-gray-200 bg-white overflow-y-auto shrink-0">
+          <DocumentList 
+            projectId={projectId} 
+            selectedDocId={selectedDocId} 
+            onSelectedDoc={setSelectedDocId} 
+          />
+        </aside>
+
+        {/* Main Viewer - Document Viewer */}
+        <div className="flex-1 p-8 overflow-y-auto">
+          <DocumentViewer selectedDocId={selectedDocId} />
+        </div>
+      </div>
+    </div>
+  );
 }
