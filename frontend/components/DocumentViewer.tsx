@@ -166,7 +166,7 @@ export default function DocumentViewer({
 
                 {/* Executive Summary */}
                 <div className="mb-10">
-                    <h2 className="text-blue-600 font-semibold mb-3">Executive Summary</h2>
+                    {/* <h2 className="text-blue-600 font-semibold mb-3">Executive Summary</h2> */}
                     <p className="text-gray-700 leading-relaxed">
                         {summary.summary_text}
                     </p>
