@@ -1,12 +1,10 @@
 import jwt
 from jwt import PyJWKClient
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
 from .config import settings
-from .database import get_db
 from .models import User
+from .services_chat.chat_generator import ChatGenerator
 from uuid import UUID
 
 security = HTTPBearer()
@@ -43,18 +41,6 @@ async def verify_token(
         raise HTTPException(status_code=401, detail=str(e))
     
 
-# async def get_current_user(
-#     payload: dict = Depends(verify_token),
-#     db: AsyncSession = Depends(get_db)
-# ) -> User:
-#     result = await db.execute(select(User).where(User.id == payload["user_id"]))
-#     user = result.scalar_one_or_none()
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User not found")
-    
-#     return user
-      
-
 async def get_current_user_id(
     payload: dict = Depends(verify_token)
 ) -> User:
@@ -63,3 +49,8 @@ async def get_current_user_id(
         raise HTTPException(status_code=401, detail="Invalid toke: missing user ID")
     
     return UUID(user_id)
+
+
+def get_chat_generator(request: Request) -> ChatGenerator:
+    """Lấy singleton ChatGenerator từ app.state (tạo 1 lần khi app start)"""
+    return request.app.state.chat_generator

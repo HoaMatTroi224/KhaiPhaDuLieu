@@ -1,31 +1,54 @@
-# from pydantic_settings import BaseSettings
-
-# class Settings(BaseSettings):
-#     DATABASE_URL: str
-#     SUPABASE_URL: str
-
-#     class Config:
-#         env_file = ".env"
-
-# settings = Settings()
-
+from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    GOOGLE_API_KEY: str
+    GROQ_API_KEY: str
     DATABASE_URL: str
     SUPABASE_URL: str
     SUPABASE_KEY: str
+    SUPABASE_SERVICE_KEY: str 
+    SUPABASE_JWT_SECRET: str 
     PG_CONNECTION_STRING: str
+    FACTCHECK_SERVICE_URL: str
 
-    EMBEDDING_MODEL: str = "gemini-embedding-2"
-    LARGE_LANGUAGE_MODEL: str = "gemini-2.0-flash"
+    # ViT5 tóm tắt qua Cloud Run (thay cho model local)
+    VIT5_SUMMARIZE_API_URL: str = "https://vit5-summarize-954130532427.us-central1.run.app"
+    VIT5_SUMMARIZE_TIMEOUT_S: float = 180.0
+
+    EMBEDDING_MODEL: str = "intfloat/multilingual-e5-base"
+    LARGE_LANGUAGE_MODEL: str = "llama-3.3-70b-versatile"
+
+    # ADAPTER_PATH: str = str(Path(__file__).parent / "ai_model" / "vit5-lora-adapter")
+    # BASE_MODEL_NAME: str = "VietAI/vit5-base"
 
     MAX_FILE_SIZE: int = 10 * 1024 * 1024  # 10MB
     ALLOWED_MIME_TYPES: list[str] = ["application/pdf"]
 
+    MAX_INPUT_LENGTH: int = 1024
+    MIN_TARGET_LENGTH: int = 80 
+    MAX_TARGET_LENGTH: int = 512 
+    NUM_BEAMS: int = 2
+    NO_REPEAT_NGRAM_SIZE: int = 3
+
+    # Map-Reduce: số token mỗi chunk khi text vượt context window
+    # MAX_INPUT_LENGTH=1024, để ~150 token headroom → chunk=874
+    MAP_REDUCE_CHUNK_TOKENS: int = 874  # 700→874: ít chunk hơn (~11 thay vì 15)
+    MAP_REDUCE_OVERLAP_TOKENS: int = 50
+
+    # Dùng GPU nếu có, fallback về CPU
+    DEVICE: str = "auto"
+
+    # Chunking 
+    CHUNK_SIZE: int = 400
+    CHUNK_OVERLAP: int = 120
+
+    # RAG retrieval
+    TOP_K_CHUNKS: int = 20
+    MIN_SIMILARITY_SCORE: float = 0.45  # lọc chunks không liên quan (0.0-1.0)
+
     model_config = SettingsConfigDict(
         env_file=".env",
+        env_file_encoding = "utf-8",
         protected_namespaces=()
     )
 

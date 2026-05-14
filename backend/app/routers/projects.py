@@ -1,16 +1,47 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, update
 from ..dependencies import get_current_user_id
-from ..database import get_db
-from ..models import Project, Document, DocumentType, DocumentStatus
-from ..schemas import ProjectInitialize, ProjectUpdate, ProjectResponse, ProjectFinalize
+from ..database import get_db, AsyncSessionLocal
+from ..models import Project, Document, DocumentStatus
+from ..schemas import ProjectResponse, ProjectFinalize
 from typing import List
 from uuid import UUID, uuid4
 from datetime import datetime
-from ..services.processor import process_document
+from ..services_summary.file_processor import process_document
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/projects", tags=["projects"])
+
+
+async def process_document_wrapper(document_id: UUID, user_id: UUID) -> None:
+    """
+    Starlette chạy background tasks tuần tự; nếu một task ném exception thì các task sau
+    không được gọi. Wrapper này bắt lỗi để mỗi PDF trong finalize vẫn được xử lý độc lập.
+    """
+    try:
+        await process_document(document_id, user_id)
+    except Exception:
+        logger.exception(
+            "Background processing failed for document_id=%s user_id=%s",
+            document_id,
+            user_id,
+        )
+        try:
+            async with AsyncSessionLocal() as db:
+                await db.execute(
+                    update(Document)
+                    .where(Document.id == document_id)
+                    .values(status=DocumentStatus.failed)
+                )
+                await db.commit()
+        except Exception:
+            logger.exception(
+                "Could not mark document_id=%s as failed",
+                document_id,
+            )
 
 @router.get("/", response_model=List[ProjectResponse])
 async def list_projects(
@@ -58,6 +89,7 @@ async def initialize_project(
     await db.refresh(project)
     return project
 
+
 @router.put("/{project_id}/finalize")
 async def finalize_project(
     project_id: UUID,
@@ -100,9 +132,9 @@ async def finalize_project(
 
     for doc in documents:
         background_tasks.add_task(
-            process_document,
+            process_document_wrapper,
             doc.id,
-            user_id
+            user_id,
         )
         
     await db.refresh(project)
@@ -130,54 +162,4 @@ async def get_project(
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
     return project
-
-@router.patch("/{project_id}", response_model=ProjectResponse)
-async def update_project(
-    project_id: UUID,
-    payload: ProjectUpdate,
-    user_id: UUID = Depends(get_current_user_id),
-    db: AsyncSession = Depends(get_db)
-):
-    result = await db.execute(
-        select(Project)
-        .where(
-            Project.user_id == user_id,
-            Project.id == project_id
-        )
-    )
-    
-    project = result.scalar_one_or_none()
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
-    
-    update_data = payload.model_dump(exclude_unset=True)
-    for key, value in update_data.items():
-        setattr(project, key, value)
-
-    project.updated_at = datetime.utcnow()
-    await db.commit()
-    await db.refresh(project)
-    return project
-
-
-@router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_project(
-    project_id: UUID,
-    user_id: UUID = Depends(get_current_user_id),
-    db: AsyncSession = Depends(get_db)
-):
-    result = await db.execute(
-        select(Project)
-        .where(
-            Project.user_id == user_id,
-            Project.id == project_id
-        )
-    )
-
-    project = result.scalar_one_or_none()
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
-    
-    await db.delete(project)
-    await db.commit()
 

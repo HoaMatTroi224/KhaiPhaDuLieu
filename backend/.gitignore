@@ -1,0 +1,21 @@
+# env
+.env
+venv/
+.venv/
+
+# python cache
+__pycache__/
+*.py[cod]
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store

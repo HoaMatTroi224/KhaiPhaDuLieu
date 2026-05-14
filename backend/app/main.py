@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .routers import projects, documents, summaries, chat
+from .core import lifespan
 
-from .routers import projects, documents, auth, summaries
+app = FastAPI(title="AI Paper Summarizer", version="1.0.0", lifespan=lifespan)
 
-app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,10 +17,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router)
 app.include_router(projects.router)
 app.include_router(documents.router)
 app.include_router(summaries.router)
+app.include_router(chat.router)
 
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
 
 
