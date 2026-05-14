@@ -62,7 +62,7 @@ export default function TopNav() {
         const access_token = session?.access_token
 
         try {
-            const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/projects/initialize', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/initialize`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${access_token}`,
