@@ -12,6 +12,12 @@ import { useAuth } from '@/lib/hooks/useAuth';
 // ];
 // type Document = { id: string; name: string};
 
+type DocumentListItem = {
+    id: string;
+    title?: string | null;
+    file_name?: string | null;
+};
+
 export default function DocumentList({
     projectId,
     selectedDocId,
@@ -19,7 +25,7 @@ export default function DocumentList({
 }: {
     projectId: string;
     selectedDocId: string | null;
-    onSelectedDoc: (id: string) => void;
+    onSelectedDoc: (doc: DocumentListItem) => void;
 }) {
     const [documents, setDocuments] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -61,7 +67,7 @@ export default function DocumentList({
                 {documents.map((doc) => (
                     <div 
                         key={doc.id} 
-                        onClick={() => onSelectedDoc(doc.id)}
+                        onClick={() => onSelectedDoc(doc)}
                         // className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl cursor-pointer transition
                         //     ${doc.active
                         //         ? 'bg-blue-50 text-blue-700'

@@ -12,6 +12,7 @@ export default function ProjectDetailPage() {
   const projectId = typeof params.id === 'string' ? params.id : '';
   const { token, loading: authLoading } = useAuth();
   const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
+  const [selectedDocTitle, setSelectedDocTitle] = useState<string>('');
   const [projectTitle, setProjectTitle] = useState<string>('Untitled Project');
   const [threadId] = useState<string>(crypto.randomUUID());
   useEffect(() => {
@@ -47,13 +48,17 @@ export default function ProjectDetailPage() {
           <DocumentList 
             projectId={projectId} 
             selectedDocId={selectedDocId} 
-            onSelectedDoc={setSelectedDocId} 
+            onSelectedDoc={(doc) => {
+              setSelectedDocId(doc.id);
+              const label = (doc.title && doc.title.trim()) || '';
+              setSelectedDocTitle(label);
+            }} 
           />
         </aside>
 
         {/* Main Viewer - Document Viewer */}
         <main className="flex-1 p-8 overflow-y-auto">
-          <DocumentViewer selectedDocId={selectedDocId} />
+          <DocumentViewer selectedDocId={selectedDocId} documentTitle={selectedDocTitle} />
         </main>
 
         {/* Right Panel - Chat Box */}
@@ -61,7 +66,6 @@ export default function ProjectDetailPage() {
           <ChatBox 
             projectId={projectId}
             threadId={threadId}
-            token={token}
           />
         </aside>
       </div>

@@ -5,7 +5,13 @@ import { ChevronDown, CheckCircle2 } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 
-export default function DocumentViewer({ selectedDocId }: { selectedDocId: string | null }) {
+export default function DocumentViewer({
+    selectedDocId,
+    documentTitle,
+}: {
+    selectedDocId: string | null;
+    documentTitle?: string;
+}) {
     const { token, loading: authLoading } = useAuth();
     const [summary, setSummary] = useState<any>(null);
     const [loading, setLoading] = useState(false);
@@ -125,14 +131,8 @@ export default function DocumentViewer({ selectedDocId }: { selectedDocId: strin
     if (error || !summary) {
         return (
             <div className="flex flex-col items-center justify-center h-full text-gray-500 gap-4">
-                <p>Summary not available yet.</p>
-                <p className="text-sm">Please generate summary first.</p>
-                <button
-                    onClick={() => window.location.reload()}
-                    className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition"
-                >
-                    Refresh
-                </button>
+                <p>Summary is not available yet. This may take a few minutes.</p>
+                <p className="text-sm">Please wait for the summary to be generated.</p>
             </div>
         );
     }
@@ -155,7 +155,7 @@ export default function DocumentViewer({ selectedDocId }: { selectedDocId: strin
             >
                 {/* Title */}
                 <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-8">
-                    {summary.title}
+                    {documentTitle?.trim()}
                 </h1>
 
                 {/* Badges */}
