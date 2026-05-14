@@ -93,7 +93,7 @@ export default function DocumentViewer({
             setLoading(true);
             setError(null);
             try {
-                const res = await fetch(`http://localhost:8000/summaries?document_id=${selectedDocId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/summaries?document_id=${selectedDocId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`

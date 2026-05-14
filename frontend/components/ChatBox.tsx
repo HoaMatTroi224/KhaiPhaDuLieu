@@ -48,7 +48,7 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
         const fetchHistory = async () => {
             try {
                 setError(null);
-                const res = await fetch(`http://localhost:8000/chat/history?project_id=${projectId}`, { headers });
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/history?project_id=${projectId}`, { headers });
                 if (!res.ok) throw new Error('Failed to fetch chat history');
                 const data = await res.json();
 
@@ -148,7 +148,7 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
         setMessages(prev => [...prev, newUserMessage]);
 
         try {
-            const url = `http://localhost:8000/chat/answer?project_id=${projectId}&thread_id=${threadId}&question=${encodeURIComponent(question)}`;
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/chat/answer?project_id=${projectId}&thread_id=${threadId}&question=${encodeURIComponent(question)}`;
             const res = await fetch(url, { method: 'POST', headers });
 
             if (!res.ok) throw new Error('Failed to answer the question');

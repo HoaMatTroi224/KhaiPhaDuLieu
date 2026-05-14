@@ -37,7 +37,7 @@ export default function DocumentList({
         const fetchDocs = async () => {
             try {
 
-                const res = await fetch(`http://localhost:8000/documents/?project_id=${projectId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/documents/?project_id=${projectId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`

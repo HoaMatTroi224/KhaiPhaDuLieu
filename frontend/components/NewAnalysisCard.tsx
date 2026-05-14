@@ -115,7 +115,7 @@ export default function NewAnalysisCard() {
             const { data: { session } } = await supabase.auth.getSession();
             const access_token = session?.access_token
 
-            const response = await fetch(`http://localhost:8000/projects/${projectId}/finalize`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/finalize`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
