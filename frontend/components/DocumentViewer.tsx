@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from "react";
 import { ChevronDown, CheckCircle2 } from "lucide-react";
-import { supabase } from '@/lib/supabase/client';
 import { useAuth } from "@/lib/hooks/useAuth";
 
 

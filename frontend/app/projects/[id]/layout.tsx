@@ -14,11 +14,6 @@ export default function ProjectDetailLayout({
         <div className="flex-1 flex flex-col overflow-hidden bg-white">
           {children}
         </div>
-
-        {/* Right Sidebar */}
-        <aside className="w-96 border-l border-gray-200 bg-white overflow-y-auto hidden xl:block">
-          <ChatBox />
-        </aside>
       </main>
 
       {/* Bottom Toolbar */}

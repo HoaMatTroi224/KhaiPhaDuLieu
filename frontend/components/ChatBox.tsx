@@ -1,27 +1,111 @@
 'use client';
 
-import { useState, useRef, useEffect, use } from "react";
-import { Bot, Send, Loader2 } from "lucide-react";
+import { useState, useRef, useEffect, ReactNode } from "react";
+import { Bot, Send, Loader2, AlertCircle, Info } from "lucide-react";
+import { parse } from "path";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 // Define the structure of a chat message
+type Citation = {
+    file_name: string;
+    chunk_index: number;
+    document_id: string;
+    relevance_score: number
+}
+
 type Message = {
-    id: number;
+    id: string;
     text: string;
     sender: 'user' | 'assistant';
     time: string;
+    citations?: Citation[];
+    warning?: string;
+    disclaimer?: string;
 };
 
-export default function ChatBox() {
+type ChatBoxProps = {
+    projectId: string;
+    threadId: string;
+}
+
+export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
     // State to hold the current input value
+    const { token, loading: authLoading } = useAuth();
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [error, setError] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    
 
-    // State to hold the list of messages
-    const [messages, setMessages] = useState<Message[]>([
-        { id: 1, text: "What does the paper say about thermal imaging?", sender: 'assistant', time: "10:00 AM" },
-        { id: 2, text: "The paper notes in the Scalability section that the architecture can integrate thermal modalities without needing to retrain the core transformer block.", sender: 'assistant', time: "10:01 AM" }
-    ]);
+    const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+
+    useEffect(() => {
+        if (!projectId || !token || authLoading) return;
+        const fetchHistory = async () => {
+            try {
+                setError(null);
+                const res = await fetch(`http://localhost:8000/chat/history?project_id=${projectId}`, { headers });
+                if (!res.ok) throw new Error('Failed to fetch chat history');
+                const data = await res.json();
+
+                const formatted: Message[] = data.map((msg: any, idx: number) => ({
+                    id: msg.id || `hist-${idx}`,
+                    text: msg.content,
+                    sender: msg.role === 'user' ? 'user' : 'assistant',
+                    time: new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})
+                }));
+                setMessages(formatted);
+            } catch (err: any) {
+                setError(err.message);
+            }
+        };
+        
+        fetchHistory();
+    }, [projectId, token, authLoading]);
+
+
+    const renderTextWithCitations = (text: string, citations: Citation[] = []): ReactNode => {
+        const parts: ReactNode[] = [];
+        const regex = /\[S(\d+)\]/g;
+        let lastIndex = 0;
+        let match;
+
+        while ((match = regex.exec(text)) != null) {
+            if (match.index > lastIndex) {
+                parts.push(text.slice(lastIndex, match.index));
+            }
+
+            const idx = parseInt(match[1], 10) - 1;
+            const citation = citations[idx];
+
+            if (citation) {
+                parts.push(
+                    <span key={`cite-${match.index}`} className="relative group inline-block cursor-pointer align-middle">
+                        <span className="text-blue-600 font-medium hover:text-blue-800 transition-colors px-0.5">
+                            [S{idx + 1}]
+                        </span>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                            <p className="font-semibold truncate">{citation.file_name || 'Unknown File'}</p>
+                            <div className="grid grid-cols-2 gap-x-2 gap-y-1 mt-2 text-gray-300 border-t border-gray-700 pt-2">
+                                <span>Chunk:</span><span>#{citation.chunk_index + 1}</span>
+                                <span>Relevance:</span><span>{(citation.relevance_score * 100).toFixed(1)}%</span>
+                            </div>
+                            <span className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></span>
+                        </div>
+                    </span>
+                );
+            } else {
+                parts.push(match[0]);
+            }
+            lastIndex = regex.lastIndex;
+        }
+        parts.push(text.slice(lastIndex));
+        return parts
+    }
 
     // Function to scroll to the bottom of the message container
     const scrollToBottom = () => {
@@ -33,34 +117,63 @@ export default function ChatBox() {
     }, [messages, isTyping]);
 
     // Handler for sending a message
-    const handleSendMessage = (e?: React.FormEvent<HTMLFormElement>) => {
+    const handleSendMessage = async (e?: React.FormEvent<HTMLFormElement>) => {
         e?.preventDefault(); // Prevent form submission
-        if (inputValue.trim() === '') return;
+        if (!inputValue.trim() || isTyping || !threadId) return;
+
+        const question = inputValue.trim();
+        setInputValue('');
+        setIsTyping(true);
+        setError(null);
 
         // Create a new message object for the user's message
         const newUserMessage: Message = {
-            id: messages.length + 1,
-            text: inputValue,
+            id: `user-${Date.now()}`,
+            text: question,
             sender: 'user',
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
+        setMessages(prev => [...prev, newUserMessage]);
 
-        setMessages([...messages, newUserMessage]);
-        setInputValue('');
-        setIsTyping(true); // Simulate assistant typing
+        try {
+            const url = `http://localhost:8000/chat/answer?project_id=${projectId}&thread_id=${threadId}&question=${encodeURIComponent(question)}`;
+            const res = await fetch(url, { method: 'POST', headers });
+
+            if (!res.ok) throw new Error('Failed to q&a');
+
+            const result = await res.json();
+            const newAssistantMessage: Message = {
+                id: `assistant-${Date.now()}`,
+                text: result.answer,
+                sender: 'assistant',
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'}),
+                citations: result.citations || [],
+                warning: result.warning,
+                disclaimer: result.disclaimer
+            };
+
+            setMessages(prev => [...prev, newAssistantMessage]);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setIsTyping(false);
+        }
+
+    };
+    
 
         // Simulate assistant response after a delay
-        setTimeout(() => {
-            const newAssistantMessage: Message = {
-                id: messages.length + 2,
-                text: "This is a simulated response from the assistant.",
-                sender: 'assistant',
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            };
-            setMessages(prevMessages => [...prevMessages, newAssistantMessage]);
-            setIsTyping(false);
-        }, 3618);
-    };
+        // setTimeout(() => {
+        //     const newAssistantMessage: Message = {
+        //         id: messages.length + 2,
+        //         text: "This is a simulated response from the assistant.",
+        //         sender: 'assistant',
+        //         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        //     };
+        //     setMessages(prevMessages => [...prevMessages, newAssistantMessage]);
+        //     setIsTyping(false);
+        // }, 3618);
+
 
     // Handler for clearing the chat history
     const handleClearChat = () => {
@@ -89,6 +202,13 @@ export default function ChatBox() {
 
             {/* Chat History */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-50/30">
+                {error && (
+                    <div className="flex items-center gap-2 p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100">
+                        <AlertCircle size={16} />
+                        <span>{error}</span>
+                    </div>
+                )}
+                     
                 {messages.length === 0 ? (
                     <div className="h-full flex items-center justify-center text-sm text-gray-400 italic text-center">
                         No messages yet. Ask me anything about the document!
@@ -108,8 +228,17 @@ export default function ChatBox() {
                                     }
                                 `}
                             >
-                                {message.text}
+                                {message.sender === 'assistant'
+                                ? renderTextWithCitations(message.text, message.citations)
+                                : message.text}
                             </div>
+
+                            {message.sender === 'assistant' && message.disclaimer && (
+                                <div className="mt-2 flex items-start gap-1.5 text-xs text-gray-500 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200 max-w-[85%]">
+                                    <Info size={14} className="mt-0.5 shrink-0" />
+                                    <span>{message.disclaimer}</span>
+                                </div>
+                            )}
 
                             <span className="text-[10px] text-gray-400 mt-2">
                                 {message.sender === 'assistant' ? 'Assistant' : ''}, {message.time}
@@ -141,7 +270,7 @@ export default function ChatBox() {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         placeholder="Ask a question..."
-                        disabled={isTyping}
+                        disabled={isTyping || !threadId} 
                         className="w-full bg-gray-100 border-none rounded-2xl pl-5 pr-12 py-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none placeholder:text-gray-500 disabled:opacity-50"
                     />
                     <button

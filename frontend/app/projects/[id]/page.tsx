@@ -5,14 +5,15 @@ import DocumentViewer from '@/components/DocumentViewer';
 import DocumentList from '@/components/DocumentList';
 import ProjectHeader from '@/components/ProjectHeader';
 import { useAuth } from '@/lib/hooks/useAuth';
+import ChatBox from '@/components/ChatBox';
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const projectId = typeof params.id === 'string' ? params.id : '';
   const { token, loading: authLoading } = useAuth();
   const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
-  const [projectTitle, setProjectTitle] = useState<string | undefined>(undefined);
-
+  const [projectTitle, setProjectTitle] = useState<string>('Untitled Project');
+  const [threadId] = useState<string>(crypto.randomUUID());
   useEffect(() => {
     if (!projectId || !token || authLoading) return;
     const fetchProject = async () => {
@@ -51,9 +52,18 @@ export default function ProjectDetailPage() {
         </aside>
 
         {/* Main Viewer - Document Viewer */}
-        <div className="flex-1 p-8 overflow-y-auto">
+        <main className="flex-1 p-8 overflow-y-auto">
           <DocumentViewer selectedDocId={selectedDocId} />
-        </div>
+        </main>
+
+        {/* Right Panel - Chat Box */}
+        <aside className="w-96 border-l border-gray-200 bg-white overflow-y-auto hidden xl:block">
+          <ChatBox 
+            projectId={projectId}
+            threadId={threadId}
+            token={token}
+          />
+        </aside>
       </div>
     </div>
   );

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { FilePen, BookOpenText, PlusCircle } from "lucide-react";
-import { supabase } from '@/lib/supabase/client';
 import { useAuth } from '@/lib/hooks/useAuth';
 
 // Mock data

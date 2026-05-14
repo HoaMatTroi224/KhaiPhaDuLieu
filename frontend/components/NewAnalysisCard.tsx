@@ -51,34 +51,6 @@ export default function NewAnalysisCard() {
         setSelectedFiles(prev => [...prev, ...validFiles]);
     };
 
-    // const handleUploadedFiles = (files: File[]) => {
-    //     const MAX_SIZE = 50 * 1024 * 1024; // 50MB
-
-    //     const validFiles: File[] = [];
-    //     const invalidFiles: string[] = [];
-
-    //     files.forEach(file => {
-    //         if (file.size <= MAX_SIZE) {
-    //             validFiles.push(file);
-    //         } else {
-    //             invalidFiles.push(file.name);
-    //         }
-    //     });
-
-    //     if (invalidFiles.length > 0) {
-    //         alert(`The following files exceed the 50MB limit:\n${invalidFiles.join('\n')}`);
-    //     }
-
-    //     if (validFiles.length > 0) {
-    //         setIsUploading(true);
-
-    //         // Giả lập upload
-    //         setTimeout(() => {
-    //             setUploadedFiles(prev => [...prev, ...validFiles]);
-    //             setIsUploading(false);
-    //         }, 1836);
-    //     }
-    // };
 
     const removeFile = (index: number) => {
         // setUploadedFiles(prev => prev.filter((_, i) => i !== index));
@@ -163,28 +135,7 @@ export default function NewAnalysisCard() {
                 throw new Error('Failed to finalize project');
             }
 
-            // const result = await response.json();
-            // const documentIds = result.documents.map((doc: any) => doc.id);
 
-            // await fetch(`http://localhost:8000/summaries/generate`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': `Bearer${access_token}`
-            //     },
-            //     body: JSON.stringify({
-            //         document_ids: documentIds,
-            //     })
-            // })
-
-            // setProjectSettings(prev => ({
-            //     ...prev,
-            //     title: settings.title,
-            //     tag: settings.tag
-            // }))
-
-            // dispatch
-            
             router.refresh()
             router.push(`/projects/${projectId}`)
         } catch (error: any) {
