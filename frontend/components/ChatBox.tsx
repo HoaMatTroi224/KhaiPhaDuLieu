@@ -85,11 +85,23 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
             if (citation) {
                 parts.push(
                     <span key={`cite-${match.index}`} className="relative group inline-block cursor-pointer align-middle">
-                        <span className="text-blue-600 font-medium hover:text-blue-800 transition-colors px-0.5">
+                        {/* <span className="text-blue-600 font-medium hover:text-blue-800 transition-colors px-0.5">
                             [S{idx + 1}]
-                        </span>
+                        </span> */}
+                        <span
+                            className="
+                                align-super
+                                text-[10px]
+                                font-medium
+                                text-blue-500
+                                hover:text-blue-700
+                                transition-colors
+                            "
+                        >
+                            {idx + 1}
+                        </span>               
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-                            <p className="font-semibold truncate">{citation.file_name || 'Unknown File'}</p>
+                            <p className="font-semibold truncate">{citation.file_name}</p>
                             <div className="grid grid-cols-2 gap-x-2 gap-y-1 mt-2 text-gray-300 border-t border-gray-700 pt-2">
                                 <span>Chunk:</span><span>#{citation.chunk_index + 1}</span>
                                 <span>Relevance:</span><span>{(citation.relevance_score * 100).toFixed(1)}%</span>
@@ -139,7 +151,7 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
             const url = `http://localhost:8000/chat/answer?project_id=${projectId}&thread_id=${threadId}&question=${encodeURIComponent(question)}`;
             const res = await fetch(url, { method: 'POST', headers });
 
-            if (!res.ok) throw new Error('Failed to q&a');
+            if (!res.ok) throw new Error('Failed to answer the question');
 
             const result = await res.json();
             const newAssistantMessage: Message = {
@@ -231,7 +243,16 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
                                 {message.sender === 'assistant'
                                 ? renderTextWithCitations(message.text, message.citations)
                                 : message.text}
+                                {/* {message.text} */}
                             </div>
+
+                            {/* Hiển thị warining/disclaimer nếu có */}
+                            {message.sender === 'assistant' && message.warning && (
+                                <div className="mt-2 flex items-start gap-1.5 text-xs text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-100 max-w-[85%]">
+                                    <AlertCircle size={14} className="mt-0.5 shrink-0" />
+                                    <span>{message.warning}</span>
+                                </div>
+                            )}
 
                             {message.sender === 'assistant' && message.disclaimer && (
                                 <div className="mt-2 flex items-start gap-1.5 text-xs text-gray-500 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200 max-w-[85%]">
