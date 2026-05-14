@@ -374,7 +374,6 @@ class PDFExtractor:
             # Thử decode để xem có phải HTML/JSON error không
             try:
                 preview = file_bytes[:200].decode('utf-8', errors='ignore')
-                print(f"[ERROR] File content preview: {preview[:200]}")
             except:
                 pass
             raise ValueError(
