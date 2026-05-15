@@ -2,6 +2,7 @@ import os
 import re
 import tempfile
 import unicodedata  # <-- mới thêm
+import logging
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -10,6 +11,8 @@ import markdown
 from bs4 import BeautifulSoup
 from supabase import create_client, Client
 from ..config import settings
+
+logger = logging.getLogger(__name__)
 
 
 # =============================================================================
@@ -1075,12 +1078,22 @@ class PDFExtractor:
         self.download_from_supabase()
 
         body_text = self.extract_body_text()
+        try:
+            metadata = self.extract_metadata()
+        except Exception as exc:
+            logger.warning(
+                "Metadata extraction failed for %s: %s",
+                self.storage_path,
+                exc,
+                exc_info=True,
+            )
+            metadata = {}
 
         return {
-            "title": "",
-            "authors": "",
-            "abstract": "",
-            "keywords": "",
+            "title": metadata.get("title", ""),
+            "authors": metadata.get("authors", ""),
+            "abstract": metadata.get("abstract", ""),
+            "keywords": metadata.get("keywords", ""),
             "content": body_text,
             "storage_path": self.storage_path,
         }
