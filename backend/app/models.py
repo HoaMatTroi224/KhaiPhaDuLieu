@@ -115,7 +115,7 @@ class DocumentChunk(Base):
     project_id = Column(UUID(as_uuid=True), ForeignKey("projects.id"), nullable=False)
     chunk_text = Column(Text, nullable=False)
     chunk_index = Column(Integer, nullable=False)
-    embedding = Column(Vector(768))  # intfloat/multilingual-e5-base có dimension = 768
+    embedding = Column(Vector(384))  # paraphrase-multilingual-MiniLM-L12-v2 có dimension = 384
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships

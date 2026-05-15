@@ -111,10 +111,8 @@ class PGVectorStore:
 
         k = k or settings.TOP_K_CHUNKS
 
-        prefixed_query = f"query: {query}"
-
         query_embedding = self.embeddings.embed_query(
-            prefixed_query
+            query
         )
 
         score = (

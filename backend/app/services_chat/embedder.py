@@ -6,7 +6,7 @@ from ..config import settings
 @lru_cache(maxsize=1)
 def get_embedding_model() -> HuggingFaceEmbeddings:
     """
-    Model: intfloat/multilingual-e5-base
+    Model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
     """
     return HuggingFaceEmbeddings(
         model_name=settings.EMBEDDING_MODEL,
