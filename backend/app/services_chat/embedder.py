@@ -1,15 +1,30 @@
-from functools import lru_cache
+from threading import Lock
+from typing import Optional
+
 from langchain_huggingface import HuggingFaceEmbeddings
 from ..config import settings
 
 
-@lru_cache(maxsize=1)
+_embedding_model: Optional[HuggingFaceEmbeddings] = None
+_embedding_model_lock = Lock()
+
+
 def get_embedding_model() -> HuggingFaceEmbeddings:
     """
-    Model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+    Lazy singleton embedding model per backend process.
+
+    HuggingFace sentence-transformer models are heavy, so every PGVectorStore
+    instance must reuse the same object instead of loading another copy into RAM.
     """
-    return HuggingFaceEmbeddings(
-        model_name=settings.EMBEDDING_MODEL,
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
-    )
+    global _embedding_model
+
+    if _embedding_model is None:
+        with _embedding_model_lock:
+            if _embedding_model is None:
+                _embedding_model = HuggingFaceEmbeddings(
+                    model_name=settings.EMBEDDING_MODEL,
+                    model_kwargs={"device": "cpu"},
+                    encode_kwargs={"normalize_embeddings": True},
+                )
+
+    return _embedding_model
