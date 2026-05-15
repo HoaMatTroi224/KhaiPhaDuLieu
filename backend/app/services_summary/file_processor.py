@@ -1,7 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from pydantic import BaseModel
-from ..models import Project, Document, Summary
+from ..models import Project, Document, Summary, DocumentStatus
 from uuid import UUID
 from datetime import datetime
 import logging
@@ -50,17 +49,21 @@ async def _extract_and_update_document(
         extracted = await asyncio.to_thread(extractor.extract)
 
         content = extracted.get("content") or ""
+        content_preview = " ".join(content.split())[:300]
 
         # FIX 2: normalize data source (single source of truth)
         document.title = extracted.get("title") or ""
         document.authors = extracted.get("authors") or ""
         document.abstract = extracted.get("abstract") or ""
         document.extracted_content = content
-        document.is_processed = True
+        document.status = DocumentStatus.processing
         document.updated_at = datetime.utcnow()
 
         logger.info(
-            f"Extracted document {document.id}."
+            "Extracted document %s with %s body chars. Preview: %r",
+            document.id,
+            len(content.strip()),
+            content_preview,
         )
 
         await db.commit()
@@ -112,6 +115,14 @@ async def _generate_summary_for_document(
     return summary, result
 
 
+async def _ensure_summary_not_exists(db: AsyncSession, document_id: UUID) -> None:
+    existing = await db.execute(
+        select(Summary).where(Summary.document_id == document_id)
+    )
+    if existing.scalar_one_or_none():
+        raise ValueError("Summary already exists for this document")
+
+
 # =========================
 # MAIN PIPELINE (FIXED)
 # =========================
@@ -159,31 +170,63 @@ async def process_document(document_id: UUID, user_id: UUID) -> dict:
             if not context.strip():
                 raise ValueError("Empty extracted content")
 
-            _, gen_result = await _generate_summary_for_document(
-                db=db,
-                document=document,
-                generator=generator,
-                user_id=user_id,
-                context=context,
+            if len(context.strip()) < 50:
+                preview = " ".join(context.split())[:300]
+                raise ValueError(
+                    "No sufficient content available for summary generation "
+                    f"(body_chars={len(context.strip())}, preview={preview!r})"
+                )
+
+            await _ensure_summary_not_exists(db, document.id)
+
+            summary_task = asyncio.create_task(
+                generator.generate_summary(text=context)
             )
+            embedding_task = asyncio.create_task(
+                vector_store.build_chunk_objects(
+                    documents=langchain_docs,
+                    document_id=document.id,
+                )
+            )
+
+            try:
+                gen_result, chunk_objects = await asyncio.gather(
+                    summary_task,
+                    embedding_task,
+                )
+            except Exception:
+                for task in (summary_task, embedding_task):
+                    if not task.done():
+                        task.cancel()
+                await asyncio.gather(
+                    summary_task,
+                    embedding_task,
+                    return_exceptions=True,
+                )
+                raise
+
+            summary = Summary(
+                user_id=user_id,
+                document_id=document.id,
+                summary_text=gen_result["summary"],
+                created_at=datetime.utcnow(),
+            )
+            db.add(summary)
+
+            chunks_count = len(chunk_objects)
+            if chunk_objects:
+                db.add_all(chunk_objects)
 
             logger.info(
                 f"Generated summary for document {document_id} with {gen_result['input_tokens']} input tokens and {gen_result['output_tokens']} output tokens"
             )
 
-
-            # 4. chunk + embed
-            chunks_count = await vector_store.add_documents(
-                documents=langchain_docs,
-                document_id=document.id
-            )
-
             logger.info(f"Embedded {chunks_count} chunks for document {document.id}")
 
+            document.status = DocumentStatus.indexed
+            document.updated_at = datetime.utcnow()
 
-            document.status = "indexed"
-
-            # 5. commit ALL changes
+            # 4. commit summary + chunks + status after both background tasks finish
             await db.commit()
             await db.refresh(document)
 

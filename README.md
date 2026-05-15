@@ -5,7 +5,7 @@ Một ứng dụng web để quản lý, phân tích và tóm tắt tài liệu 
 ## Tính năng chính
 
 - 📚 **Quản lý dự án**: Tổ chức và quản lý các dự án nghiên cứu
-- 📄 **Xử lý tài liệu**: Tải lên và xử lý file PDF với GROBID
+- 📄 **Xử lý tài liệu**: Tải lên và xử lý file PDF với GROBID và PyMuPDF4LLM
 - 🤖 **Chat AI**: Tương tác với AI để hỏi đáp về nội dung tài liệu
 - 📊 **Tóm tắt thông minh**: Tự động tạo tóm tắt từ tài liệu
 - 🔍 **Tìm kiếm**: Tìm kiếm thông minh qua tài liệu dựa trên vector embeddings
@@ -31,8 +31,8 @@ Một ứng dụng web để quản lý, phân tích và tóm tắt tài liệu 
            │              │
            ↓              ↓
     ┌────────────┐   ┌──────────────┐
-    │ GROBID     │   │ PostgreSQL   │
-    │ (PDF Parse)│   │ (Database)   │
+    |PyMuPDF4LLM │   │ PostgreSQL   │
+    |(PDF Parse) |   | (Supabase)   |
     └────────────┘   └──────────────┘
 ```
 
@@ -49,8 +49,8 @@ Một ứng dụng web để quản lý, phân tích và tóm tắt tài liệu 
 
 Clone repository:
 ```bash
-git clone <repository-url>
-cd KPDL
+git clone <repository-url> <branch-name>
+cd Khaiphadulieu
 ```
 
 ### 2. Khởi động Backend và Services
@@ -133,54 +133,6 @@ KPDL/
 └── README.md                 # This file
 ```
 
-## Các lệnh hữu ích
-
-### Backend
-
-```bash
-# Xem logs backend
-docker-compose logs backend -f
-
-# Chỉ khởi động backend
-docker-compose up backend
-
-# Rebuild backend image
-docker-compose build --no-cache backend
-```
-
-### Frontend
-
-```bash
-# Cài đặt dependencies
-cd frontend
-npm install
-
-# Build cho production
-npm run build
-
-# Start production build
-npm start
-
-# Lint code
-npm run lint
-```
-
-### Docker Compose
-
-```bash
-# Dừng tất cả services
-docker-compose down
-
-# Xóa volumes (dữ liệu)
-docker-compose down -v
-
-# Xem status services
-docker-compose ps
-
-# Xem logs
-docker-compose logs -f
-```
-
 ## Luồng hoạt động chính
 
 1. **Người dùng** đăng nhập/đăng ký trên Frontend
@@ -193,37 +145,3 @@ docker-compose logs -f
    - AI trả lời dựa trên nội dung tài liệu
 6. **Tóm tắt** - Tự động hoặc thủ công tóm tắt tài liệu
 
-## Troubleshooting
-
-### Backend không khởi động
-- Kiểm tra port 8000 có bị chiếm không: `netstat -ano | findstr :8000`
-- Xem logs: `docker-compose logs backend`
-
-### Frontend không kết nối được backend
-- Kiểm tra Backend API URL trong [proxy.ts](frontend/proxy.ts)
-- Đảm bảo Backend đang chạy: http://localhost:8000/health
-
-### GROBID không xử lý PDF
-- Kiểm tra GROBID service: `docker-compose logs grobid`
-- Port 8070 có bị chiếm không
-
-### Database connection error
-- Kiểm tra DATABASE_URL trong backend/.env
-- Đảm bảo PostgreSQL container đang chạy
-
-## Cấu hình môi trường
-
-Tạo file `.env` trong thư mục `backend/` nếu cần thiết:
-
-```env
-DATABASE_URL=postgresql://user:password@postgres:5432/kpdl
-GROBID_SERVER=http://grobid:8070
-```
-
-## Đóng góp
-
-Vui lòng tạo issue hoặc pull request để đóng góp.
-
-## License
-
-[Thêm license information nếu cần]

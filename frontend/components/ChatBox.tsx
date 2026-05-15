@@ -193,7 +193,7 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
     };
 
     return (
-        <div className="w-[380px] bg-white border-l border-gray-200 flex flex-col h-full shrink-0">
+        <div className="w-full bg-white border-l border-gray-200 flex flex-col h-full shrink-0">
 
             {/* Chat Header */}
             <div className="p-6 border-b border-gray-100 flex-shrink-0">

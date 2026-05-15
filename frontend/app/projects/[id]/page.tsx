@@ -62,7 +62,7 @@ export default function ProjectDetailPage() {
         </main>
 
         {/* Right Panel - Chat Box */}
-        <aside className="w-96 border-l border-gray-200 bg-white overflow-y-auto hidden xl:block">
+        <aside className="w-[440px] shrink-0 border-l border-gray-200 bg-white overflow-y-auto hidden xl:block">
           <ChatBox 
             projectId={projectId}
             threadId={threadId}

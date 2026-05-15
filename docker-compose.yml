@@ -1,49 +1,24 @@
 version: "3.9"
 
 services:
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #   container_name: frontend
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - backend
-  #   environment:
-  #     - NEXT_PUBLIC_API_URL=http://backend:8000
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   networks:
-  #     - app-network  
-
-  grobid:
-    image: lfoppiano/grobid:0.8.0
-    container_name: grobid
-    ports:
-      - "8070:8070"
-    restart: unless-stopped
-    networks:
-      - app-network  
-
   backend:
     build:
       context: ./backend
     container_name: backend
+
     ports:
       - "8000:8000"
-    depends_on:
-      - grobid
+
     env_file:
       - ./backend/.env
-    environment:
-      - GROBID_SERVER=http://grobid:8070
+
     restart: unless-stopped
+
     volumes:
       - ./backend:/app
+
     networks:
-      - app-network  
+      - app-network
 
 networks:
   app-network:

@@ -1,11 +1,13 @@
+import asyncio
 from typing import List, Dict, Any
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from langchain_core.documents import Document
+from langchain_core.documents import Document as LangchainDocument
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from ..config import settings
-from ..models import DocumentChunk, Document
+from ..models import DocumentChunk, Document as DbDocument
 from .embedder import get_embedding_model
 
 
@@ -15,15 +17,13 @@ class PGVectorStore:
         self.project_id = project_id
         self.embeddings = get_embedding_model()
 
-    async def add_documents(
+    def _split_documents(
         self,
-        documents: List[Document],
-        document_id: str,
-    ) -> int:
+        documents: List[LangchainDocument],
+    ) -> List[LangchainDocument]:
         """
-        Chunk + embedding + lưu vào pgvector bằng SQLAlchemy async.
+        Chunk tài liệu bằng cùng cấu hình đang dùng cho pgvector.
         """
-
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=settings.CHUNK_SIZE,
             chunk_overlap=settings.CHUNK_OVERLAP,
@@ -38,12 +38,28 @@ class PGVectorStore:
             if len(c.page_content.strip()) > 20
         ]
 
+        return chunks
+
+    async def build_chunk_objects(
+        self,
+        documents: List[LangchainDocument],
+        document_id: str,
+    ) -> List[DocumentChunk]:
+        """
+        Chunk + embedding nhưng chưa ghi DB, để caller có thể chạy song song
+        với các tác vụ khác và commit trong một transaction riêng.
+        """
+        chunks = self._split_documents(documents)
+
         if not chunks:
-            return 0
+            return []
 
         texts = [chunk.page_content for chunk in chunks]
 
-        embeddings_list = self.embeddings.embed_documents(texts)
+        embeddings_list = await asyncio.to_thread(
+            self.embeddings.embed_documents,
+            texts,
+        )
 
         chunk_objects = []
 
@@ -59,6 +75,24 @@ class PGVectorStore:
                     embedding=embedding,
                 )
             )
+
+        return chunk_objects
+
+    async def add_documents(
+        self,
+        documents: List[LangchainDocument],
+        document_id: str,
+    ) -> int:
+        """
+        Chunk + embedding + lưu vào pgvector bằng SQLAlchemy async.
+        """
+        chunk_objects = await self.build_chunk_objects(
+            documents=documents,
+            document_id=document_id,
+        )
+
+        if not chunk_objects:
+            return 0
 
         self.db.add_all(chunk_objects)
 
@@ -92,12 +126,12 @@ class PGVectorStore:
                 DocumentChunk.chunk_text,
                 DocumentChunk.document_id,
                 DocumentChunk.chunk_index,
-                Document.file_name,
+                DbDocument.file_name,
                 score,
             )
             .join(
-                Document,
-                DocumentChunk.document_id == Document.id,
+                DbDocument,
+                DocumentChunk.document_id == DbDocument.id,
             )
             .where(
                 DocumentChunk.project_id == self.project_id

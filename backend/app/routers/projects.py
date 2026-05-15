@@ -16,12 +16,23 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/projects", tags=["projects"])
 
 
+async def _mark_document_status(document_id: UUID, status_value: DocumentStatus) -> None:
+    async with AsyncSessionLocal() as db:
+        await db.execute(
+            update(Document)
+            .where(Document.id == document_id)
+            .values(status=status_value)
+        )
+        await db.commit()
+
+
 async def process_document_wrapper(document_id: UUID, user_id: UUID) -> None:
     """
     Starlette chạy background tasks tuần tự; nếu một task ném exception thì các task sau
     không được gọi. Wrapper này bắt lỗi để mỗi PDF trong finalize vẫn được xử lý độc lập.
     """
     try:
+        await _mark_document_status(document_id, DocumentStatus.processing)
         await process_document(document_id, user_id)
     except Exception:
         logger.exception(
@@ -30,13 +41,7 @@ async def process_document_wrapper(document_id: UUID, user_id: UUID) -> None:
             user_id,
         )
         try:
-            async with AsyncSessionLocal() as db:
-                await db.execute(
-                    update(Document)
-                    .where(Document.id == document_id)
-                    .values(status=DocumentStatus.failed)
-                )
-                await db.commit()
+            await _mark_document_status(document_id, DocumentStatus.failed)
         except Exception:
             logger.exception(
                 "Could not mark document_id=%s as failed",
@@ -117,10 +122,12 @@ async def finalize_project(
 
     documents = []
     for doc_meta in payload.documents:
+        doc_data = doc_meta.model_dump()
+        doc_data["status"] = DocumentStatus.uploaded
         document = Document(
             user_id=user_id,
             project_id=project_id,
-            **doc_meta.model_dump()
+            **doc_data
         )
 
         documents.append(document)

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Loading AI generators...")
+    logger.info("Loading AI model...")
     app.state.chat_generator = ChatGenerator()
 
     logger.info("Recovering stuck documents...")
