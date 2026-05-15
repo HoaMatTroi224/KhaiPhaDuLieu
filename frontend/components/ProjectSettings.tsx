@@ -1,8 +1,6 @@
 'use client';
 
-import { supabase } from '@/lib/supabase/client';
 import { Plus, X, Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const DEFAULT_TAGS = [
@@ -23,13 +21,9 @@ interface ProjectSettingsProps {
 }
 
 export default function ProjectSettings({value, onChange, onGenerate, disabled = false}: ProjectSettingsProps) {
-    const router = useRouter();
-    const [selectedTag, setSelectedTag] = useState<string>();
-    const [projectTitle, setProjectTitle] = useState('');
     const [customTags, setCustomTags] = useState<string[]>([]);
     const [isAddingTag, setIsAddingTag] = useState(false);
     const [newTagValue, setNewTagValue] = useState('')
-    const [loading, setLoading] = useState(false);
 
     const allTags = [...DEFAULT_TAGS, ...customTags];
     
@@ -51,53 +45,25 @@ export default function ProjectSettings({value, onChange, onGenerate, disabled =
     }
 
     const handleSubmit = async () => {
-        if (!value.title.trim()) {
-            alert('Please enter a project title');
+        const hasTitle = Boolean(value.title.trim());
+        const hasTag = Boolean(value.tag.trim());
+
+        if (!hasTitle && !hasTag) {
+            alert('Please enter a project title and select an academic tag before generating summary.');
             return;
         }
-        if (!value.tag) {
-            alert('Please select an academic tag');
+        if (!hasTitle) {
+            alert('Please enter a project title before generating summary.');
+            return;
+        }
+        if (!hasTag) {
+            alert('Please select an academic tag before generating summary.');
             return;
         }
 
         // Callback to parent to upload file and generate summary
         await onGenerate(value);
     }
-
-    // const handleGenerateSummary = async () => {
-    //     if (!projectTitle.trim()) {
-    //         alert('Please enter a project title');
-    //         return;
-    //     }
-    //     if (!selectedTag) {
-    //         alert('Please select a academic tag');
-    //         return;
-    //     }
-    //     setLoading(true);
-    //     try {
-    //         const { data: { session } } = await supabase.auth.getSession();
-    //         const token = session?.access_token;
-    //         if (!token) throw new Error('Not authenticated');
-
-    //         const formData = new FormData();
-    //         formData.append('name', projectTitle);
-    //         formData.append('domain', selectedTag);
-    //         formData.append('description', '');
-
-    //         const res = await fetch(``, {
-    //             method: 'POST',
-    //             headers: { Authorization: `Bearer ${token}` },
-    //             body: formData,
-    //         });
-    //         if (!res.ok) throw new Error('Failed to create project');
-    //         const project = await res.json();
-    //         router.push(`/project/${project.id}`);
-    //     } catch (err: any) {
-    //         alert(err.message);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
 
     return (
         <div className="w-full lg:w-[380px] flex flex-col gap-6">
@@ -123,6 +89,7 @@ export default function ProjectSettings({value, onChange, onGenerate, disabled =
                 <div className="flex flex-wrap gap-2">
                     {allTags.map(tag => (
                         <button 
+                            type="button"
                             key={tag}
                             onClick={() => toggleTag(tag)}
                             className={`px-4 py-2 text-sm rounded-2xl transition-colors ${
@@ -151,12 +118,14 @@ export default function ProjectSettings({value, onChange, onGenerate, disabled =
                                 autoFocus
                             />
                             <button 
+                                type="button"
                                 onClick={addCustomTag}
                                 className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-full"
                             >
                                 <Plus size={16} />
                             </button>
                             <button 
+                                type="button"
                                 onClick={() => {
                                     setNewTagValue('');
                                     setIsAddingTag(false);
@@ -168,6 +137,7 @@ export default function ProjectSettings({value, onChange, onGenerate, disabled =
                         </div>
                     ) : (
                         <button 
+                            type="button"
                             onClick={() => setIsAddingTag(true)}
                             className="flex items-center gap-1 px-4 py-2 bg-white border border-dashed border-gray-400 hover:border-blue-400 text-gray-500 hover:text-blue-500 text-sm rounded-2xl transition-colors"
                         >
@@ -182,9 +152,10 @@ export default function ProjectSettings({value, onChange, onGenerate, disabled =
             {/* Generate Button */}
             <div className="mt-auto">
                 <button 
+                    type="button"
                     onClick={handleSubmit}
                     // disabled={loading}
-                    disabled={disabled || !value.title.trim() || !value.tag}
+                    disabled={disabled}
                     className="w-full flex items-center justify-center gap-2 px-5 py-4 bg-blue-600 text-white text-base font-medium rounded-2xl hover:bg-blue-700 transition-colors"
                 >
                     {/* {loading ? <Loader2 className="animate-spin" size={20} /> : null} */}

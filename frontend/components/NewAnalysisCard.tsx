@@ -5,7 +5,6 @@ import { X, File, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import FileUploadArea from "./FileUploadArea";
-import TextPasteArea from "./TextPasteArea";
 import ProjectSettings, { ProjectSettingsData } from "./ProjectSettings";
 
 import { supabase } from '@/lib/supabase/client';
@@ -91,8 +90,19 @@ export default function NewAnalysisCard() {
 
     const handleGenerateSummary = async (settings: ProjectSettingsData) => {
         if (!projectId) return alert('Missing project ID');
-        if (selectedFiles.length == 0) return alert('Please upload at least one file');
-        if (!settings.title?.trim()) return alert('Please enter a project name');
+        const projectTitle = settings.title?.trim() ?? '';
+        const projectTag = settings.tag?.trim() ?? '';
+
+        if (!projectTitle && !projectTag) {
+            return alert('Please enter a project title and select an academic tag before generating summary.');
+        }
+        if (!projectTitle) {
+            return alert('Please enter a project title before generating summary.');
+        }
+        if (!projectTag) {
+            return alert('Please select an academic tag before generating summary.');
+        }
+        if (selectedFiles.length === 0) return alert('Please upload at least one file');
 
         setIsSubmitting(true);
 
@@ -122,8 +132,8 @@ export default function NewAnalysisCard() {
                     'Authorization': `Bearer ${access_token}`
                 },
                 body: JSON.stringify({
-                    name: settings.title,
-                    domain: settings.tag,
+                    name: projectTitle,
+                    domain: projectTag,
                     documents: uploadedFiles,
                 }),
             });
@@ -138,9 +148,9 @@ export default function NewAnalysisCard() {
 
             router.refresh()
             router.push(`/projects/${projectId}`)
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error occured while trying to finalize project:', error);
-            alert(error.message || 'Failed to finalize project');
+            alert(error instanceof Error ? error.message : 'Failed to finalize project');
         } finally {
             setIsSubmitting(false);
         }
