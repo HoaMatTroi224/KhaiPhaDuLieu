@@ -17,7 +17,7 @@ export default async function Dashboard() {
 
     let recentProjects: any[] = [];
     try {
-        const res = await fetch('http://localhost:8000/projects/recent', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/recent`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${access_token}`

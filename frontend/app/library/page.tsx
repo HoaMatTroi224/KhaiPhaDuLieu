@@ -32,7 +32,7 @@ export default function ResearchLibrary() {
                 const { data: { session } } = await supabase.auth.getSession();
                 const access_token = session?.access_token
 
-                const res = await fetch('http://localhost:8000/projects/', {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${access_token}`
