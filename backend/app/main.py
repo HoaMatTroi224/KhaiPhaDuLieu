@@ -29,5 +29,3 @@ app.include_router(chat.router)
 @app.get("/health")
 def health_check():
     return {"status": "ok", "service": "Academic Paper Summary AI System"}
-
-
