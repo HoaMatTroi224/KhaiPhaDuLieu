@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 import pymupdf4llm
+import pymupdf
 import markdown
 from bs4 import BeautifulSoup
 from supabase import create_client, Client
@@ -189,6 +190,10 @@ def _contains_any(normalized_text: str, terms: List[str]) -> bool:
 
 
 HEADING_TAG_NAMES = ["h1", "h2", "h3", "h4", "h5", "h6"]
+ABSTRACT_LABEL_TERMS = ["tom tat"]
+KEYWORD_LABEL_TERMS = ["tu khoa"]
+RE_ABSTRACT_LABEL = re.compile(r"(?is)T[oó]m\s*t[aăắ]t\s*:?\s*")
+RE_KEYWORD_LABEL = re.compile(r"(?is)T(?:ừ|u)\s*kh(?:[oó]a|oá)\s*:?\s*")
 
 BODY_START_TERM_FAMILIES = [
     "mo dau",
@@ -491,9 +496,133 @@ def _preclean_markdown(markdown_text: str) -> str:
     return text.strip()
 
 
+def _extract_plain_text_with_pymupdf(local_path: str) -> str:
+    pages: List[str] = []
+    with pymupdf.open(local_path) as doc:
+        for page in doc:
+            page_text = page.get_text("text")
+            if page_text:
+                pages.append(page_text)
+    return "\n\n".join(pages)
+
+
 # =============================================================================
 # HTML METADATA EXTRACTOR (mới)
 # =============================================================================
+
+def _clean_metadata_text(text: str) -> str:
+    text = strip_markdown(unicodedata.normalize("NFC", text or ""))
+    text = re.sub(r"\s+([,.;:!?])", r"\1", text)
+    return normalize_whitespace(text)
+
+
+def _find_metadata_label_match(
+    text: str,
+    label_pattern: re.Pattern,
+    label_terms: List[str],
+):
+    cleaned = _clean_metadata_text(text)
+    if not cleaned or not _contains_any(_normalize_for_match(cleaned), label_terms):
+        return None
+
+    label_match = label_pattern.search(cleaned)
+    if not label_match:
+        return None
+
+    prefix = cleaned[:label_match.start()].strip()
+    suffix = cleaned[label_match.end():].strip()
+    matched_label = label_match.group(0)
+    has_colon = ":" in matched_label
+    starts_text = not prefix
+    label_only = starts_text and not suffix
+
+    return label_match if (has_colon or starts_text or label_only) else None
+
+
+def _tag_contains_metadata_label(
+    tag,
+    label_pattern: re.Pattern,
+    label_terms: List[str],
+) -> bool:
+    if not tag or tag.name in ["script", "style"]:
+        return False
+    return _find_metadata_label_match(
+        tag.get_text(" ", strip=True),
+        label_pattern,
+        label_terms,
+    ) is not None
+
+
+def _find_tags_containing_label(
+    soup: BeautifulSoup,
+    label_pattern: re.Pattern,
+    label_terms: List[str],
+) -> List:
+    return [
+        tag
+        for tag in soup.find_all(True)
+        if _tag_contains_metadata_label(tag, label_pattern, label_terms)
+    ]
+
+
+def _strip_metadata_label(
+    text: str,
+    label_pattern: re.Pattern,
+    label_terms: List[str],
+) -> str:
+    cleaned = _clean_metadata_text(text)
+    if not cleaned or not _contains_any(_normalize_for_match(cleaned), label_terms):
+        return ""
+
+    label_match = _find_metadata_label_match(cleaned, label_pattern, label_terms)
+    if label_match:
+        return cleaned[label_match.end():].strip(" :.-–—")
+
+    return ""
+
+
+def _extract_labeled_metadata_value(
+    tag,
+    label_pattern: re.Pattern,
+    label_terms: List[str],
+    stop_label_pattern: Optional[re.Pattern] = None,
+    stop_terms: Optional[List[str]] = None,
+) -> str:
+    candidates = [tag]
+    parent = getattr(tag, "parent", None)
+    while parent and getattr(parent, "name", None) not in [None, "[document]", "html", "body"]:
+        candidates.append(parent)
+        parent = getattr(parent, "parent", None)
+
+    for candidate in candidates:
+        text = candidate.get_text(" ", strip=True)
+        if candidate is not tag and _word_count(text) > 220:
+            continue
+
+        value = _strip_metadata_label(text, label_pattern, label_terms)
+        if not value:
+            continue
+
+        if stop_label_pattern:
+            value = stop_label_pattern.split(value, maxsplit=1)[0].strip(" :.-–—")
+        if value and stop_terms and _contains_any(_normalize_for_match(value), stop_terms):
+            value = re.split(stop_label_pattern, value, maxsplit=1)[0].strip(" :.-–—") if stop_label_pattern else value
+
+        if value:
+            return value
+
+    for next_tag in tag.find_all_next(True):
+        next_text = _clean_metadata_text(next_tag.get_text(" ", strip=True))
+        if not next_text:
+            continue
+        if stop_terms and _contains_any(_normalize_for_match(next_text), stop_terms):
+            break
+        if _find_metadata_label_match(next_text, label_pattern, label_terms):
+            continue
+        return next_text
+
+    return ""
+
 
 def _extract_metadata_from_html(html_content: str) -> Dict:
     """
@@ -502,10 +631,10 @@ def _extract_metadata_from_html(html_content: str) -> Dict:
 
     Cấu trúc kỳ vọng (xem ví dụ từ các bài báo mẫu):
       - Tiêu đề: thẻ Heading đầu tiên (<h1> hoặc <h2>)
-      - Tác giả: thẻ ngay sau tiêu đề, chứa dấu ngoặc vuông ([1], [*], …)
-      - Tóm tắt: tìm thẻ Heading chứa "Tóm tắt" (có thể viết sai chính tả)
-                 rồi lấy thẻ <p> kế tiếp
-      - Từ khóa: thẻ <p> chứa "Từ khóa"/"Từ khoá", loại bỏ nhãn
+      - Tác giả: thẻ ngay sau tiêu đề
+      - Tóm tắt: tìm mọi tag có text chứa "Tóm tắt", rồi lấy phần sau nhãn
+                 hoặc tag text kế tiếp nếu nhãn đứng riêng
+      - Từ khóa: tìm mọi tag có text chứa "Từ khóa"/"Từ khoá", loại bỏ nhãn
     """
     soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -513,37 +642,67 @@ def _extract_metadata_from_html(html_content: str) -> Dict:
     title_tag = soup.find(['h1', 'h2'])
     title = title_tag.get_text(strip=True) if title_tag else ""
 
-    # 2. Authors: sibling ngay sau title, chứa dấu ngoặc vuông
+    # 2. Authors: sibling ngay sau title
     author_tag = None
     if title_tag:
         for sibling in title_tag.find_next_siblings():
-            if sibling.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']:
-                text = sibling.get_text(strip=True)
-                if re.search(r'\[.*?\]', text):
-                    author_tag = sibling
+            if sibling.name in ["script", "style", "table", "thead", "tbody", "tr", "td", "th", "img", "figure", "figcaption"]:
+                continue
+
+            child_tags = [
+                tag
+                for tag in sibling.find_all(True)
+                if tag.name not in ["script", "style", "table", "thead", "tbody", "tr", "td", "th", "img", "figure", "figcaption"]
+            ]
+            candidates = child_tags or [sibling]
+            should_stop_author_scan = False
+
+            for candidate in candidates:
+                text = candidate.get_text(" ", strip=True)
+                if not text:
+                    continue
+
+                # Dừng nếu gặp abstract/keywords/affiliation
+                if _is_front_matter_text(text) or _contains_any(
+                    _normalize_for_match(text), AFFILIATION_TERM_FAMILIES
+                ):
+                    should_stop_author_scan = True
+                    continue
+
+                # Nhận dạng chuỗi tên: tối thiểu 2 token viết hoa, không phải tiêu đề
+                tokens = [token.strip() for token in re.split(r"[,;]", text) if token.strip()]
+                if 2 <= len(tokens) <= 8 and all(
+                    token[0].isupper() for token in tokens
+                ):
+                    author_tag = candidate
                     break
+
+            if author_tag or should_stop_author_scan:
+                break
+
     authors = clean_authors(author_tag.get_text(strip=True)) if author_tag else ""
 
-    # 3. Abstract: heading chứa "Tóm tắt" (chấp nhận lỗi chính tả)
-    abstract_heading = soup.find(
-        lambda tag: tag.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-        and re.search(r'T[oó]m\s*t[ắă]t', tag.get_text(), re.I)
-    )
     abstract = ""
-    if abstract_heading:
-        abstract_p = abstract_heading.find_next('p')
-        if abstract_p:
-            abstract = abstract_p.get_text(strip=True)
+    for tag in _find_tags_containing_label(soup, RE_ABSTRACT_LABEL, ABSTRACT_LABEL_TERMS):
+        abstract = _extract_labeled_metadata_value(
+            tag,
+            RE_ABSTRACT_LABEL,
+            ABSTRACT_LABEL_TERMS,
+            stop_label_pattern=RE_KEYWORD_LABEL,
+            stop_terms=KEYWORD_LABEL_TERMS,
+        )
+        if abstract:
+            break
 
-    # 4. Keywords: thẻ <p> chứa nhãn "Từ khóa"/"Từ khoá"
-    kw_tag = soup.find(
-        lambda tag: tag.name == 'p'
-        and re.search(r'Từ\s*kh[oó]a', tag.get_text(), re.I)
-    )
     keywords = ""
-    if kw_tag:
-        full = kw_tag.get_text(strip=True)
-        keywords = re.sub(r'^.*?Từ\s*kh[oó]a\s*:?\s*', '', full, flags=re.I).strip()
+    for tag in _find_tags_containing_label(soup, RE_KEYWORD_LABEL, KEYWORD_LABEL_TERMS):
+        keywords = _extract_labeled_metadata_value(
+            tag,
+            RE_KEYWORD_LABEL,
+            KEYWORD_LABEL_TERMS,
+        )
+        if keywords:
+            break
 
     return {
         'title': title,
@@ -661,9 +820,8 @@ def clean_body_text(raw_body: str) -> str:
         if re.match(r"^\s*#{1,6}\s", line):
             heading_match = re.match(r"^(\s*#{1,6}\s+)(.*)", line)
             if heading_match:
-                marker = heading_match.group(1)
                 content = clean_line(heading_match.group(2))
-                line = marker + content
+                line = content
         else:
             line = normalize_whitespace(line)
 
@@ -729,31 +887,6 @@ class PDFExtractor:
     # SUPABASE
     # =========================================================================
 
-    # def download_from_supabase(self) -> str:
-    #     """Download file từ Supabase Storage về thư mục tạm."""
-    #     file_bytes = (
-    #         self.supabase
-    #         .storage
-    #         .from_(self.bucket_name)
-    #         .download(self.storage_path)
-    #     )
-
-    #     # Kiểm tra magic number của PDF
-    #     if not file_bytes[:5] == b'%PDF':
-    #         raise ValueError(
-    #             f"File '{self.storage_path}' không phải là PDF hợp lệ "
-    #             f"(thiếu header %PDF)."
-    #         )
-
-    #     file_name = Path(self.storage_path).name
-    #     local_path = os.path.join(self.temp_dir.name, file_name)
-
-    #     with open(local_path, "wb") as f:
-    #         f.write(file_bytes)
-
-    #     self.local_path = local_path
-    #     return local_path
-
     def download_from_supabase(self) -> str:
         """Download file từ Supabase Storage về thư mục tạm."""
         try:
@@ -816,10 +949,31 @@ class PDFExtractor:
         try:
             raw_markdown = pymupdf4llm.to_markdown(self.local_path, **to_markdown_options)
         except ValueError as exc:
-            if "Images and text on images cannot both be suppressed" not in str(exc):
-                raise
-            to_markdown_options["force_text"] = True
-            raw_markdown = pymupdf4llm.to_markdown(self.local_path, **to_markdown_options)
+            if "Images and text on images cannot both be suppressed" in str(exc):
+                to_markdown_options["force_text"] = True
+                try:
+                    raw_markdown = pymupdf4llm.to_markdown(self.local_path, **to_markdown_options)
+                except Exception as fallback_exc:
+                    logger.warning(
+                        "PyMuPDF4LLM force_text extraction failed for %s: %s. Falling back to plain PyMuPDF text.",
+                        self.storage_path,
+                        fallback_exc,
+                    )
+                    raw_markdown = _extract_plain_text_with_pymupdf(self.local_path)
+            else:
+                logger.warning(
+                    "PyMuPDF4LLM extraction failed for %s: %s. Falling back to plain PyMuPDF text.",
+                    self.storage_path,
+                    exc,
+                )
+                raw_markdown = _extract_plain_text_with_pymupdf(self.local_path)
+        except Exception as exc:
+            logger.warning(
+                "PyMuPDF4LLM extraction failed for %s: %s. Falling back to plain PyMuPDF text.",
+                self.storage_path,
+                exc,
+            )
+            raw_markdown = _extract_plain_text_with_pymupdf(self.local_path)
 
         if isinstance(raw_markdown, list):
             raw_markdown = "\n\n".join(

@@ -4,20 +4,27 @@ import * as Icons from 'lucide-react';
 import { getIconName, getCategoryColor } from '@/lib/fields/icons';
 
 interface ProjectCardProps {
-    id: number;
-    title: string;
-    description: string;
-    category: string;
+    id: string;
+    title?: string | null;
+    description?: string | null;
+    category?: string | null;
     createdAt: string;
+    isDraft?: boolean;
 }
 
-export default function ProjectCard({ id, title, description, category, createdAt }: ProjectCardProps) {
-    const categoryColor = getCategoryColor(category);
-    const iconName = getIconName(category);
-    const Icon = (Icons[iconName as keyof typeof Icons] || Icons.FileText) as React.ElementType;
+export default function ProjectCard({ id, title, description, category, createdAt, isDraft = false }: ProjectCardProps) {
+    const displayTitle = title?.trim() || 'Untitled Project';
+    const displayCategory = isDraft ? 'Draft' : category?.trim() || 'Uncategorized';
+    const displayDescription = isDraft
+        ? 'Continue adding files, title, and tag to finish this project.'
+        : description?.trim() || 'No description yet.';
+    const href = isDraft ? `/projects/new?project_id=${id}` : `/projects/${id}`;
+    const categoryColor = isDraft ? 'bg-green-50 text-green-600' : getCategoryColor(displayCategory);
+    const iconName = getIconName(displayCategory);
+    const Icon = (isDraft ? Icons.PencilLine : Icons[iconName as keyof typeof Icons] || Icons.FileText) as React.ElementType;
 
     return (
-        <Link href={`/projects/${id}`} className="block h-full group">
+        <Link href={href} className="block h-full group">
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-pointer group h-[260px] flex flex-col">
                 {/* Header: Icon + Category + Title + Description */}
                 <div className="flex items-start justify-between mb-3">
@@ -25,14 +32,14 @@ export default function ProjectCard({ id, title, description, category, createdA
                         <Icon size={18} />
                     </div>
                     <span className={`text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider ${categoryColor}`}>
-                        {category}
+                        {displayCategory}
                     </span>
                 </div>
                 <h3 className="font-bold text-lg leading-snug mb-2 text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-                    {title}
+                    {displayTitle}
                 </h3>
                 <p className="text-gray-500 text-sm italic line-clamp-3">
-                    {description}
+                    {displayDescription}
                 </p>
 
         
@@ -42,7 +49,7 @@ export default function ProjectCard({ id, title, description, category, createdA
                         {createdAt}
                     </span>
                     <span className="bg-gray-50 group-hover:bg-blue-600 group-hover:text-white text-gray-600 px-4 py-2 rounded-full text-xs font-semibold transition-colors">
-                        Open 
+                        {isDraft ? 'Continue' : 'Open'}
                     </span>
                 </div>
             </div>

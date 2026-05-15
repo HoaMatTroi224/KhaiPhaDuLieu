@@ -9,7 +9,8 @@ export default function NewProjectPage() {
                     Start New Analysis
                 </h2>
                 <p className="text-gray-500 max-w-2xl">
-                    Upload your research papers or paste your notes to begin the synthesis.
+                    {/* Upload your research papers or paste your notes to begin the synthesis. */}
+                    Upload your research papers to begin the synthesis.
                 </p>
             </div>
             <Suspense fallback={<div>Im lặng đi Gobi</div>}>

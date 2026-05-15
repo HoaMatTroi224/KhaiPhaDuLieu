@@ -40,8 +40,8 @@ export default function NewAnalysisCard() {
                 return false;
             }
             // Validate file type
-            if (!['application/pdf', 'text/plain'].includes(file.type)) {
-                alert(`${file.name} is not PDF or TXT`);
+            if (file.type !== 'application/pdf') {
+                alert(`${file.name} is not PDF`);
                 return false;
             }
             return true;
@@ -147,6 +147,7 @@ export default function NewAnalysisCard() {
 
 
             router.refresh()
+            await new Promise(resolve => setTimeout(resolve, 36180)); //delay một chút trước khi chuyển trang
             router.push(`/projects/${projectId}`)
         } catch (error: unknown) {
             console.error('Error occured while trying to finalize project:', error);
@@ -175,6 +176,7 @@ export default function NewAnalysisCard() {
                         <FileUploadArea 
                             onFilesSelected={handleSelectedFiles} 
                             isUploading={isSubmitting} 
+                            selectedFileCount={selectedFiles.length}
                         />
 
                         {/* <TextPasteArea /> */}

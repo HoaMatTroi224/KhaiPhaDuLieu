@@ -1,15 +1,16 @@
 'use client';
 import Link from 'next/link';
-import { Plus, User, Settings, LogOut, Search, Loader2 } from 'lucide-react';
+import { Plus, User, Settings, LogOut, Loader2 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 export default function TopNav() {
     const router = useRouter();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<SupabaseUser | null>(null);
     const [isCreatingProject, setIsCreatingProject] = useState(false);
 
     useEffect(() => {
@@ -75,9 +76,9 @@ export default function TopNav() {
             const projectId = data.id
             
             router.push(`/projects/new?project_id=${projectId}`);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.log('Error occured while trying to initialize project:', error);
-            alert(error.message || 'Failed to initialize project');
+            alert(error instanceof Error ? error.message : 'Failed to initialize project');
         } finally {
             setIsCreatingProject(false);
         }
@@ -88,7 +89,11 @@ export default function TopNav() {
             {/* Left: Logo + Search */}
             <div className="flex items-center gap-8">
                 {/* Logo */}
-                <div className="flex items-center gap-3">
+                <Link
+                    href="/dashboard"
+                    aria-label="Go to dashboard"
+                    className="flex items-center gap-3 rounded-2xl transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                >
                     <div className="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl leading-none">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 3V4M12 20V21M4 12H3M6.5 6.5L5.5 5.5M17.5 6.5L18.5 5.5M21 12H20M12 7C9.23858 7 7 9.23858 7 12C7 13.5 7.5 15 8.5 16C9 16.5 9.5 17 9.5 18H14.5C14.5 17 15 16.5 15.5 16C16.5 15 17 13.5 17 12C17 9.23858 14.7614 7 12 7Z"
@@ -97,7 +102,7 @@ export default function TopNav() {
                         </svg>    
                     </div>
                     <span className="font-semibold text-3xl tracking-tighter text-gray-900">Lumen</span>
-                </div>
+                </Link>
 
                 {/* Search Bar */}
                 {/* <div className="relative w-[420px]">

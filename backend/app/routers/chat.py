@@ -48,7 +48,7 @@ async def answer_question(
     chunks = await retrieve_chunks(project_id, question, db)  # dùng TOP_K_CHUNKS từ config
 
     if not chunks:
-        answer_text = "Tôi không tìm thấy tài liệu nào trong dự án này. Vui lòng tải lên tài liệu."
+        answer_text = "Tài liệu của bạn chưa được tải lên hoặc xử lý thành công. Vui lòng thử lại sau nhé."
         assistant_msg = ChatHistory(
             project_id=project_id,
             thread_id=thread_id,

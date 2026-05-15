@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/hooks/useAuth";
 
 // Define the structure of a chat message
 type Citation = {
+    source_marker: string;
     file_name: string;
     chunk_index: number;
     document_id: string;
@@ -68,56 +69,105 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
     }, [projectId, token, authLoading]);
 
 
-    const renderTextWithCitations = (text: string, citations: Citation[] = []): ReactNode => {
-        const parts: ReactNode[] = [];
-        const regex = /\[S(\d+)\]/g;
-        let lastIndex = 0;
-        let match;
+    // const renderTextWithCitations = (text: string, citations: Citation[] = []): ReactNode => {
+    //     const parts: ReactNode[] = [];
+    //     const regex = /\[S(\d+)\]/gi;
+    //     let lastIndex = 0;
+    //     let match;
 
-        while ((match = regex.exec(text)) != null) {
-            if (match.index > lastIndex) {
-                parts.push(text.slice(lastIndex, match.index));
-            }
+    //     while ((match = regex.exec(text)) != null) {
+    //         if (match.index > lastIndex) {
+    //             const cleanText = text
+    //                             .slice(lastIndex, match.index)
+    //                             .replace(/\s+/g, ' ');
+    //             parts.push(cleanText);
+    //         }
 
-            const idx = parseInt(match[1], 10) - 1;
-            const citation = citations[idx];
+    //         const idx = parseInt(match[1], 10) - 1;
+    //         const citation = citations[idx];
 
-            if (citation) {
-                parts.push(
-                    <span key={`cite-${match.index}`} className="relative group inline-block cursor-pointer align-middle">
-                        {/* <span className="text-blue-600 font-medium hover:text-blue-800 transition-colors px-0.5">
-                            [S{idx + 1}]
-                        </span> */}
-                        <span
-                            className="
-                                align-super
-                                text-[10px]
-                                font-medium
-                                text-blue-500
-                                hover:text-blue-700
-                                transition-colors
-                            "
-                        >
-                            {idx + 1}
-                        </span>               
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-                            <p className="font-semibold truncate">{citation.file_name}</p>
-                            <div className="grid grid-cols-2 gap-x-2 gap-y-1 mt-2 text-gray-300 border-t border-gray-700 pt-2">
-                                <span>Chunk:</span><span>#{citation.chunk_index + 1}</span>
-                                <span>Relevance:</span><span>{(citation.relevance_score * 100).toFixed(1)}%</span>
-                            </div>
-                            <span className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></span>
-                        </div>
-                    </span>
-                );
-            } else {
-                parts.push(match[0]);
-            }
-            lastIndex = regex.lastIndex;
+    //         if (citation) {
+    //             parts.push(
+    //                 <span key={`cite-${match.index}`} className="relative group inline-block cursor-pointer align-middle">
+    //                     {/* <span className="text-blue-600 font-medium hover:text-blue-800 transition-colors px-0.5">
+    //                         [S{idx + 1}]
+    //                     </span> */}
+    //                     <span
+    //                         className="
+    //                             align-super
+    //                             text-[10px]
+    //                             font-medium
+    //                             text-blue-500
+    //                             hover:text-blue-700
+    //                             transition-colors
+    //                         "
+    //                     >
+    //                         {idx + 1}
+    //                     </span>               
+    //                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+    //                         <p className="font-semibold truncate">{citation.file_name}</p>
+    //                         <div className="grid grid-cols-2 gap-x-2 gap-y-1 mt-2 text-gray-300 border-t border-gray-700 pt-2">
+    //                             <span>Chunk:</span><span>#{citation.chunk_index + 1}</span>
+    //                             <span>Relevance:</span><span>{(citation.relevance_score * 100).toFixed(1)}%</span>
+    //                         </div>
+    //                         <span className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></span>
+    //                     </div>
+    //                 </span>
+    //             );
+    //         } else {
+    //             parts.push(match[0]);
+    //         }
+    //         lastIndex = regex.lastIndex;
+    //     }
+    //     parts.push(text.slice(lastIndex));
+    //     return parts
+    // }
+
+    const renderTextWithCitations = (
+    text: string,
+    citations: Citation[] = []
+    ): ReactNode => {
+    const parts: ReactNode[] = [];
+    const regex = /\[s(\d+)\]/gi;
+
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+        parts.push(text.slice(lastIndex, match.index));
+
+        const sourceMarker = `S${match[1]}`;
+        const citation = citations.find(
+        (c: any) => c.source_marker === sourceMarker
+        );
+
+        if (citation) {
+        parts.push(
+            <span
+            key={`cite-${match.index}`}
+            className="relative group inline-block cursor-pointer align-super text-[10px] font-medium text-blue-500 hover:text-blue-700"
+            >
+            {match[1]}
+
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                <p className="font-semibold truncate">{citation.file_name}</p>
+                <div className="grid grid-cols-2 gap-x-2 gap-y-1 mt-2 text-gray-300 border-t border-gray-700 pt-2">
+                <span>Chunk:</span>
+                <span>#{citation.chunk_index + 1}</span>
+                <span>Relevance:</span>
+                <span>{(citation.relevance_score * 100).toFixed(1)}%</span>
+                </div>
+            </div>
+            </span>
+        );
         }
-        parts.push(text.slice(lastIndex));
-        return parts
+
+        lastIndex = regex.lastIndex;
     }
+
+    parts.push(text.slice(lastIndex));
+    return parts;
+    };
 
     // Function to scroll to the bottom of the message container
     const scrollToBottom = () => {
@@ -151,12 +201,21 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
             const url = `${process.env.NEXT_PUBLIC_API_URL}/chat/answer?project_id=${projectId}&thread_id=${threadId}&question=${encodeURIComponent(question)}`;
             const res = await fetch(url, { method: 'POST', headers });
 
-            if (!res.ok) throw new Error('Failed to answer the question');
+            if (!res.ok) {
+                const errorData = await res.json().catch(() => null);
+                throw new Error(errorData?.error || 'Failed to answer the question');
+            }
 
             const result = await res.json();
+
+            const cleanedAnswer = result.answer
+            .replace(/\[s(\d+)\]/gi, "[S$1]")
+            .replace(/\s+([.,!?;:])/g, "$1")
+            .trim();
+
             const newAssistantMessage: Message = {
                 id: `assistant-${Date.now()}`,
-                text: result.answer,
+                text: cleanedAnswer,
                 sender: 'assistant',
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'}),
                 citations: result.citations || [],

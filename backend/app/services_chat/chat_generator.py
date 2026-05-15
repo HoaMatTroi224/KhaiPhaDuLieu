@@ -4,6 +4,7 @@ from ..config import settings
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception
 from typing import List, Dict, Any
 import logging
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -68,10 +69,17 @@ class ChatGenerator:
             }
 
         # --- Format chunks thành numbered sources [S1], [S2],... ---
+        # sources_block = ""
+        # for i, chunk in enumerate(filtered_chunks, start=1):
+        #     sources_block += (
+        #         f"[S{i}] (Tài liệu: {chunk['file_name']}, Đoạn #{chunk['chunk_index']}):\n"
+        #         f"{chunk['text'].strip()}\n\n"
+        #     )
+
         sources_block = ""
         for i, chunk in enumerate(filtered_chunks, start=1):
             sources_block += (
-                f"[S{i}] (Tài liệu: {chunk['file_name']}, Đoạn #{chunk['chunk_index']}):\n"
+                f"[S{i}]\n"
                 f"{chunk['text'].strip()}\n\n"
             )
 
@@ -82,21 +90,43 @@ class ChatGenerator:
         ]) or "(Chưa có)"
 
         # --- Prompt template tiếng Việt (theo chuẩn từ tài liệu RAG) ---
+        # prompt = f"""Bạn là trợ lý AI phân tích tài liệu tiếng Việt chuyên nghiệp.
+
+        # [TÀI LIỆU]:
+        # {sources_block}
+        # [LỊCH SỬ HỘI THOẠI]:
+        # {history_str}
+
+        # [CÂU HỎI]:
+        # {question}
+
+        # Hãy trả lời dựa trên tài liệu. Nếu tài liệu không có thông tin, nói rõ "Không có thông tin".
+        # Trả lời đầy đủ những gì bạn tìm được trong tài liệu, không thêm bất kỳ chi tiết nào ngoài tài liệu.
+        # Sau mỗi thông tin trích dẫn, ghi ngay nhãn nguồn tương ứng: [S1], [S2],... Nếu nhiều nguồn cùng hỗ trợ một ý, liệt kê tất cả: [S1][S3].
+
+        # [TRẢ LỜI]:"""
+
         prompt = f"""Bạn là trợ lý AI phân tích tài liệu tiếng Việt chuyên nghiệp.
 
-        [TÀI LIỆU]:
+        [TÀI LIỆU]
         {sources_block}
-        [LỊCH SỬ HỘI THOẠI]:
+
+        [LỊCH SỬ HỘI THOẠI]
         {history_str}
 
-        [CÂU HỎI]:
+        [CÂU HỎI]
         {question}
 
-        Hãy trả lời dựa trên tài liệu. Nếu tài liệu không có thông tin, nói rõ "Không có thông tin".
-        Trả lời đầy đủ những gì bạn tìm được trong tài liệu, không thêm bất kỳ chi tiết nào ngoài tài liệu.
-        Sau mỗi thông tin trích dẫn, ghi ngay nhãn nguồn tương ứng: [S1], [S2],... Nếu nhiều nguồn cùng hỗ trợ một ý, liệt kê tất cả: [S1][S3].
+        QUY TẮC BẮT BUỘC:
+        - Chỉ trả lời dựa trên nội dung trong [TÀI LIỆU].
+        - Không được nhắc tên file, chunk, đoạn, relevance score, metadata.
+        - Không được copy lại nhãn nguồn thành một dòng riêng.
+        - Citation chỉ được dùng inline dạng [S1], [S2], [S3],...
+        - Mỗi ý quan trọng phải có citation ngay sau ý đó.
+        - Nếu không có thông tin, trả lời đúng: "Không có thông tin trong tài liệu."
 
-        [TRẢ LỜI]:"""
+        [TRẢ LỜI]:
+        """
 
         llm = _get_llm()
         response = await llm.ainvoke(prompt)
@@ -105,6 +135,14 @@ class ChatGenerator:
         # Tách phần sau "[TRẢ LỜI]:" nếu LLM lặp lại template
         if "[TRẢ LỜI]:" in answer_text:
             answer_text = answer_text.split("[TRẢ LỜI]:")[-1].strip()
+
+        answer_text = re.sub(r"\(Tài liệu:.*?\)", "", answer_text)
+        answer_text = re.sub(r"Tài liệu:\s*.*?\.pdf", "", answer_text, flags=re.I)
+        answer_text = re.sub(r"Chunk:\s*#?\d+", "", answer_text, flags=re.I)
+        answer_text = re.sub(r"Đoạn\s*#?\d+", "", answer_text, flags=re.I)
+        answer_text = re.sub(r"Relevance:\s*\d+(\.\d+)?%?", "", answer_text, flags=re.I)
+        answer_text = re.sub(r"\[s(\d+)\]", r"[S\1]", answer_text, flags=re.I)
+        answer_text = re.sub(r"\n{3,}", "\n\n", answer_text).strip()
 
         # --- Xác định các nguồn được LLM thực sự trích dẫn ---
         citations = []

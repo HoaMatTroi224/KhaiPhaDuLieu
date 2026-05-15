@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import DocumentViewer from '@/components/DocumentViewer';
 import DocumentList from '@/components/DocumentList';
 import ProjectHeader from '@/components/ProjectHeader';
@@ -8,6 +8,7 @@ import { useAuth } from '@/lib/hooks/useAuth';
 import ChatBox from '@/components/ChatBox';
 
 export default function ProjectDetailPage() {
+  const router = useRouter();
   const params = useParams();
   const projectId = typeof params.id === 'string' ? params.id : '';
   const { token, loading: authLoading } = useAuth();
@@ -27,6 +28,10 @@ export default function ProjectDetailPage() {
         });
         if (!res.ok) throw new Error('Failed to fetch project');
         const data = await res.json();
+        if (data.is_draft) {
+          router.replace(`/projects/new?project_id=${projectId}`);
+          return;
+        }
         setProjectTitle(data.name)
       } catch (err) {
         console.error('Error occured while trying to fetch project:', err);
@@ -35,7 +40,7 @@ export default function ProjectDetailPage() {
     };
 
     fetchProject();
-  }, [projectId, token, authLoading])
+  }, [projectId, token, authLoading, router])
 
   return (
     <div className="flex flex-col h-full">

@@ -71,6 +71,7 @@ export default async function Dashboard() {
                         description={project.description}
                         category={project.domain}
                         createdAt={project.created_at}
+                        isDraft={project.is_draft}
                         // {...project} 
                     />
                 ))}

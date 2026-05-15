@@ -6,11 +6,26 @@ import { useState, useRef } from 'react';
 interface FileUploadAreaProps {
   onFilesSelected: (file: File[]) => void;
   isUploading: boolean;
+  selectedFileCount?: number;
 }
 
-export default function FileUploadArea({ onFilesSelected, isUploading }: FileUploadAreaProps) {
+const MAX_FILE_COUNT = 10;
+const FILE_LIMIT_MESSAGE = `You can upload a maximum of ${MAX_FILE_COUNT} files. Note: the more files you upload, the lower accuracy may be.`;
+
+export default function FileUploadArea({ onFilesSelected, isUploading, selectedFileCount = 0 }: FileUploadAreaProps) {
     const [isDragging, setIsDragging] = useState(false);
+    const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFiles = (files: File[]) => {
+        if (selectedFileCount + files.length > MAX_FILE_COUNT) {
+            setError(FILE_LIMIT_MESSAGE);
+            return;
+        }
+
+        setError('');
+        onFilesSelected(files);
+    };
 
     // Handler for drag and drop
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -28,17 +43,17 @@ export default function FileUploadArea({ onFilesSelected, isUploading }: FileUpl
         setIsDragging(false);
 
         const files = Array.from(e.dataTransfer.files).filter(file => 
-            file.type === 'application/pdf' ||
-            file.type === 'text/plain' // ||
+            file.type === 'application/pdf'
+            // file.type === 'text/plain'
             // file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         );
         
         if (files.length > 0) {
-            onFilesSelected(files);
+            handleFiles(files);
         }
         else {
             // alert('Please upload files in PDF, TXT, or DOCX format.');
-            alert('Please upload files in PDF and TXT format.');
+            alert('Please upload files in PDF format.');
         }
     };
 
@@ -54,7 +69,8 @@ export default function FileUploadArea({ onFilesSelected, isUploading }: FileUpl
     const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const files = Array.from(e.target.files);
-            onFilesSelected(files);
+            handleFiles(files);
+            e.target.value = '';
         }
     };
 
@@ -93,12 +109,18 @@ export default function FileUploadArea({ onFilesSelected, isUploading }: FileUpl
                     Support for PDF, TXT and DOCX formats
                 </p> */}
                 <p className="text-gray-500 mb-8 max-w-md">
-                    Support for PDF and TXT formats
+                    Support only for PDF format
                 </p>
+
+                {error && (
+                    <div className="mb-6 max-w-md rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {error}
+                    </div>
+                )}
 
                 <button
                     // onClick={() => openFileDialog('.pdf,.txt,.docx')}
-                    onClick={() => openFileDialog('.pdf,.txt')}
+                    onClick={() => openFileDialog('.pdf')}
                     className="flex items-center gap-2 px-8 py-3.5 bg-white border border-gray-300 hover:border-blue-400 hover:text-blue-600 rounded-2xl text-sm font-medium transition-all active:scale-95"
                 >
                     <FileText size={20} />
