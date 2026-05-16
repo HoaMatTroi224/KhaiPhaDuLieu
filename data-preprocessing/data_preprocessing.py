@@ -7,14 +7,13 @@ Original file is located at
     https://colab.research.google.com/drive/1FbJ4lM44HCNXXFQzXWBUMN8u5i3c9yIx
 """
 
-import sqlite3
-import pandas as pd
 import re
-from google.colab import files
 import fitz
 import unicodedata
 import logging
 from typing import Dict
+import sqlite3
+import pandas as pd
 
 # Sửa lỗi cú pháp hệ thống: __name__
 logger = logging.getLogger(__name__)
@@ -34,55 +33,14 @@ class FileProcessor:
 
         text = raw_text
 
-        # GIỮ NGUYÊN LOGIC VÀ CẬP NHẬT BƯỚC XÓA HEADER 
 
-        # Xóa dòng Header chuyên mục phức tạp (Ví dụ: Khoa học Tự nhiên /Hóa học... 3.2026)
-        # Regex này nhận diện: Chữ + "/" + Chữ + ";" + các số/ngày tháng ở cuối dòng
-        text = re.sub(r'(?i)Khoa học [^/]+/[^;]+; Khoa học [^\n]+\d+\.\d{4}', '', text)
 
-        # Bổ sung xóa các cụm chuyên mục đơn lẻ nếu còn sót
-        text = re.sub(r'(?i)khoa học tự nhiên|khoa học kỹ thuật và công nghệ|khoa học y - dược|khoa học nông nghiệp|khoa học xã hội và nhân văn', '', text)
-
-        # Xóa Header/Footer lặp lại theo trang (DOI và số trang đứng riêng)
-        text = re.sub(r'DOI:\s*10\.\d+/[^\n]+\n?\s*\d+\s*\n', '', text)
-
-        # Xóa khối metadata tiếng Anh
-        if re.search(r'(?i)abstract\s*:', text):
-            text = re.sub(
-                r'(?is)(?:[^\n]{15,}\n){0,3}Abstract:.*?Key\s*words?:[^\n]+\n(?:Classification numbers:[^\n]+\n)?',
-                '', text
-            )
-
-        # Xóa Tài liệu tham khảo
-        text = re.sub(r'(?is)\n*TÀI LIỆU THAM KHẢO.*', '', text)
-        text = re.sub(r'(?is)\n*REFERENCES.*', '', text)
-
-        # Xóa ký tự lạ / artifact PDF
-        text = text.replace('\\*', '').replace('\\|', '')
-        text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', text)
-
-        # Chuẩn hố xuống dòng & khoảng trắng (GIỮ NGUYÊN LOGIC CỦA BẠN)
-        text = re.sub(r'\n{2,}', '\n\n', text)
-        text = re.sub(r'\n', ' ', text)
-        text = re.sub(r'\s+', ' ', text).strip()
-
-        # Unicode Normalization
-        text = unicodedata.normalize('NFC', text)
-
-        return {
-            "content": text,
-            "metadata": {
-                "word_count": len(text.split()),
-                "char_count": len(text),
-                "paragraph_count": len([p for p in text.split('\n\n') if p.strip()])
-            }
-        }
 
 def strong_clean(text):
     if not text:
         return ""
 
-    # XÓA CÁC DÒNG HEADER/FOOTER PHỨC TẠP
+    # Xử lý mẫu: "Khoa học Tự nhiên /Hóa học; Khoa học Kỹ thuật và Công nghệ /Kỹ thuật vật liệu và luyện kim 9 68(3) 3.2026"
     # Regex này sẽ quét từ chữ "Khoa học" cho đến hết các con số ngày tháng cuối dòng
     pattern_complex_header = r'(?i)Khoa học\s+[^/]+/[^;]+;\s*Khoa học\s+[^\n]+\d+\s+\d+\(\d+\)\s+\d+\.\d{4}'
     text = re.sub(pattern_complex_header, '', text)
@@ -91,10 +49,8 @@ def strong_clean(text):
     text = re.sub(r'(?i)/Hóa học;\s*/Kỹ thuật vật liệu và luyện kim.*?\d+\.\d{4}', '', text)
     text = re.sub(r'(?i)khoa học tự nhiên|khoa học kỹ thuật và công nghệ|khoa học y - dược|khoa học nông nghiệp|khoa học xã hội và nhân văn', '', text)
 
-    # Xóa Header/Footer lặp lại theo trang (DOI và số trang) 
+    # Xóa Header/Footer lặp lại theo trang (DOI và số trang)
     text = re.sub(r'DOI:\s*10\.\d+/[^\n]+\n?\s*\d+\s*\n', '', text)
-
-    # Xóa phần Tóm tắt / Abstract / Tác giả liên hệ
 
     # Xóa Abstract tiếng Anh
     text = re.sub(
@@ -125,8 +81,8 @@ def strong_clean(text):
     )
 
     match = re.search(
-      r'(?is)(đặt\s*vấn\s*đề|mở\s*đầu|introduction)',
-      text
+        r'(?is)(đặt\s*vấn\s*đề|mở\s*đầu|giới\s*thiệu|introduction)',
+        text
     )
 
     if match:
@@ -137,7 +93,7 @@ def strong_clean(text):
     text = re.sub(r'(?is)\n*TÀI LIỆU THAM KHẢO.*', '', text)
     text = re.sub(r'(?is)\n*REFERENCES.*', '', text)
 
-    # Xóa ký tự lạ / artifact PDF
+    # Xóa ký tự lạ
     text = text.replace('\\*', '').replace('\\|', '')
     text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', text)
 
@@ -146,12 +102,13 @@ def strong_clean(text):
     text = re.sub(r'\n', ' ', text)
     text = re.sub(r'\s+', ' ', text).strip()
 
-    # Unicode Normalization
+    # 6Unicode Normalization
     text = unicodedata.normalize('NFC', text)
 
     return text
 
-# PHẦN THỰC THI CẬP NHẬT DATABASE
+
+# --- PHẦN THỰC THI CẬP NHẬT DATABASE (GIỮ NGUYÊN VÒNG LẶP FOR) ---
 
 conn = sqlite3.connect("khoahoc_vn.db")
 df = pd.read_sql("SELECT id, content FROM articles", conn)
@@ -192,41 +149,8 @@ def clean_author_col(df):
     # bỏ dấu phẩy đầu, cuối
     .str.strip(',')
     .str.strip())
-
-
   return df
 
-def clean_content_col(df, col="content"):
-    if col not in df.columns:
-        return df
-
-    new_col = []
-
-    for text in df[col]:
-        if pd.isna(text):
-            new_col.append("N/A")
-            continue
-
-        text = str(text)
-        low = text.lower()
-
-        pos = -1
-        for kw in ["tóm tắt", "abstract", "summary"]:
-            p = low.find(kw)
-            if p != -1:
-                pos = p
-                break
-
-        if pos != -1:
-            text = text[pos:]
-
-        # cắt phần tài liệu tham khảo
-        text = re.split(r'tài liệu tham khảo', text, flags=re.IGNORECASE)[0]
-
-        new_col.append(text)
-
-    df[col] = new_col
-    return df
 
 # xóa ký tự lạ (tránh lỗi IllegalCharacterError)
 def clean_illegal_chars(val):
@@ -234,8 +158,7 @@ def clean_illegal_chars(val):
         return re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', val)
     return val
 
-df = clean_author_col(df)
-df = clean_content_col(df)
+df = clean_author_col(df) 
 df = df.map(clean_illegal_chars)
 
 # xuất file csv
