@@ -10,10 +10,9 @@ class Settings(BaseSettings):
     SUPABASE_JWT_SECRET: str 
     PG_CONNECTION_STRING: str
     FACTCHECK_SERVICE_URL: str
-    FACTCHECK_SERVICE_HOST: str
 
     # ViT5 tóm tắt qua Cloud Run (thay cho model local)
-    VIT5_SUMMARIZE_API_URL: str = "https://vit5-summarize-954130532427.us-central1.run.app"
+    VIT5_SUMMARIZE_API_URL: str
     VIT5_SUMMARIZE_TIMEOUT_S: float = 180.0
 
     EMBEDDING_MODEL: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
