@@ -119,7 +119,7 @@ class PGVectorStore:
             1 - DocumentChunk.embedding.cosine_distance(query_embedding)
         ).label("score")
 
-        stmt = (
+        base_stmt = (
             select(
                 DocumentChunk.chunk_text,
                 DocumentChunk.document_id,
@@ -134,9 +134,6 @@ class PGVectorStore:
             .where(
                 DocumentChunk.project_id == self.project_id
             )
-            .where(
-                score >= settings.MIN_SIMILARITY_SCORE
-            )
             .order_by(
                 DocumentChunk.embedding.cosine_distance(
                     query_embedding
@@ -145,9 +142,17 @@ class PGVectorStore:
             .limit(k)
         )
 
+        stmt = base_stmt.where(
+            score >= settings.MIN_SIMILARITY_SCORE
+        )
+
         result = await self.db.execute(stmt)
 
         rows = result.all()
+
+        if not rows:
+            fallback_result = await self.db.execute(base_stmt)
+            rows = fallback_result.all()
 
         return [
             {

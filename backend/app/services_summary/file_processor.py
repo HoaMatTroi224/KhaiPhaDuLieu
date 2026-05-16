@@ -214,8 +214,12 @@ async def process_document(document_id: UUID, user_id: UUID) -> dict:
             db.add(summary)
 
             chunks_count = len(chunk_objects)
-            if chunk_objects:
-                db.add_all(chunk_objects)
+            if chunks_count == 0:
+                raise ValueError(
+                    "Embedding produced 0 chunks"
+                )
+
+            db.add_all(chunk_objects)
 
             logger.info(
                 f"Generated summary for document {document_id} with {gen_result['input_tokens']} input tokens and {gen_result['output_tokens']} output tokens"

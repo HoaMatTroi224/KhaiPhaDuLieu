@@ -125,10 +125,18 @@ CREATE TABLE public.chat_history (
   
   role varchar(20) NOT NULL CHECK (role IN ('user', 'assistant', 'system')),
   content text NOT NULL,
+  citations jsonb,
+  chunks_retrieved integer,
+  fact_check jsonb,
   created_at timestamptz DEFAULT now()
 );
 
 CREATE INDEX idx_chat_history_thread ON public.chat_history(thread_id);
+
+ALTER TABLE public.chat_history
+ADD COLUMN IF NOT EXISTS citations jsonb,
+ADD COLUMN IF NOT EXISTS chunks_retrieved integer,
+ADD COLUMN IF NOT EXISTS fact_check jsonb;
 
 -- =====================================================
 -- 7. NOTES

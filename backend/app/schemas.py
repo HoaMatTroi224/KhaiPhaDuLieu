@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Optional, Literal, List
+from typing import Any, Optional, Literal, List
 from datetime import date, datetime
 from uuid import UUID
 from .models import DocumentStatus, DocumentType
@@ -141,6 +141,9 @@ class ChatMessageResponse(BaseModel):
     thread_id: UUID
     role: str
     content: str
+    citations: Optional[List[dict[str, Any]]] = None
+    chunks_retrieved: Optional[int] = None
+    fact_check: Optional[dict[str, Any]] = None
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)

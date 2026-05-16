@@ -1,14 +1,42 @@
+import json
+import logging
+
 from fastapi import APIRouter, Depends, Request
 from uuid import UUID
 from ..dependencies import get_current_user_id, get_chat_generator
 from ..database import get_db
 from ..services_chat.retrieval import call_factcheck, retrieve_chunks
 from ..services_chat.chat_generator import ChatGenerator
-from ..models import ChatHistory
+from ..models import ChatHistory, DocumentChunk
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, desc, asc
+from sqlalchemy import select, desc, asc, func
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
+logger = logging.getLogger(__name__)
+
+
+def _log_answer_response(
+    project_id: UUID,
+    thread_id: UUID,
+    user_id: UUID,
+    response: dict,
+) -> None:
+    debug_payload = {
+        "project_id": str(project_id),
+        "thread_id": str(thread_id),
+        "user_id": str(user_id),
+        "response": response,
+    }
+    debug_text = json.dumps(debug_payload, ensure_ascii=False, default=str)
+
+    logger.warning(
+        "answer_question response project_id=%s thread_id=%s user_id=%s response=%s",
+        project_id,
+        thread_id,
+        user_id,
+        response,
+    )
+    print(f"[DEBUG answer_question response] {debug_text}", flush=True)
 
 @router.post("/answer")
 async def answer_question(
@@ -48,21 +76,36 @@ async def answer_question(
     chunks = await retrieve_chunks(project_id, question, db)  # dùng TOP_K_CHUNKS từ config
 
     if not chunks:
-        answer_text = "Tài liệu của bạn chưa được tải lên hoặc xử lý thành công. Vui lòng thử lại sau nhé."
+        chunk_count = await db.scalar(
+            select(func.count(DocumentChunk.id))
+            .where(DocumentChunk.project_id == project_id)
+        )
+        if chunk_count:
+            answer_text = "Tôi chưa tìm thấy đoạn tài liệu phù hợp với câu hỏi này. Bạn hãy thử hỏi cụ thể hơn hoặc dùng từ khóa xuất hiện trong tài liệu nhé."
+        else:
+            answer_text = "Dự án này chưa có đoạn tài liệu nào được lập chỉ mục. Vui lòng kiểm tra lại trạng thái xử lý tài liệu."
         assistant_msg = ChatHistory(
             project_id=project_id,
             thread_id=thread_id,
             user_id=user_id,
             role="assistant",
-            content=answer_text
+            content=answer_text,
+            citations=[],
+            chunks_retrieved=0,
+            fact_check=None,
         )
         db.add(assistant_msg)
+        await db.commit()
 
-        return {
+        response = {
             "answer": answer_text,
             "citations": [],
-            "chunks_retrieved": 0
+            "chunks_retrieved": 0,
+            "fact_check": None,
         }
+        _log_answer_response(project_id, thread_id, user_id, response)
+
+        return response
 
     # 3. Lấy lịch sử chat để AI có ngữ cảnh hội thoại
     chat_history_query = await db.execute(
@@ -87,7 +130,10 @@ async def answer_question(
         project_id=project_id,
         thread_id=thread_id,
         role="assistant",
-        content=result["answer"]
+        content=result["answer"],
+        citations=result["citations"],
+        chunks_retrieved=len(chunks),
+        fact_check=factcheck_result,
     )
     db.add(assistant_msg)
 
@@ -109,6 +155,8 @@ async def answer_question(
         )
     elif factcheck_result and factcheck_result.get("label") == "NEI":
         response["disclaimer"] = "ℹ️ Thông tin chưa được kiểm chứng đầy đủ từ tài liệu."
+
+    _log_answer_response(project_id, thread_id, user_id, response)
 
     return response
 

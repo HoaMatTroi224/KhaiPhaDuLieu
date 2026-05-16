@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect, ReactNode } from "react";
-import { Bot, Send, Loader2, AlertCircle, Info } from "lucide-react";
-import { parse } from "path";
+import { useState, useRef, useEffect, useMemo, ReactNode } from "react";
+import { Bot, Send, Loader2, AlertCircle, Info, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 // Define the structure of a chat message
@@ -14,12 +13,42 @@ type Citation = {
     relevance_score: number
 }
 
+type FactCheckLabel = 'SUPPORTED' | 'REFUTED' | 'NEI';
+
+type FactCheck = {
+    label: FactCheckLabel | 'SUPORTED' | string;
+    confidence: number;
+    probs?: Partial<Record<FactCheckLabel, number>>;
+    needs_stage2?: boolean;
+    threshold?: number;
+};
+
 type Message = {
     id: string;
     text: string;
     sender: 'user' | 'assistant';
     time: string;
     citations?: Citation[];
+    factCheck?: FactCheck | null;
+    warning?: string;
+    disclaimer?: string;
+};
+
+type ChatHistoryItem = {
+    id?: string;
+    content: string;
+    role: string;
+    created_at?: string;
+    citations?: Citation[] | null;
+    fact_check?: FactCheck | null;
+    warning?: string;
+    disclaimer?: string;
+};
+
+type AnswerResponse = {
+    answer: string;
+    citations?: Citation[];
+    fact_check?: FactCheck | null;
     warning?: string;
     disclaimer?: string;
 };
@@ -39,10 +68,10 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     
 
-    const headers: HeadersInit = {
+    const headers: HeadersInit = useMemo(() => ({
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
+    }), [token]);
 
     useEffect(() => {
         if (!projectId || !token || authLoading) return;
@@ -51,22 +80,28 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
                 setError(null);
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/history?project_id=${projectId}`, { headers });
                 if (!res.ok) throw new Error('Failed to fetch chat history');
-                const data = await res.json();
+                const data = await res.json() as ChatHistoryItem[];
 
-                const formatted: Message[] = data.map((msg: any, idx: number) => ({
+                const formatted: Message[] = data.map((msg, idx) => ({
                     id: msg.id || `hist-${idx}`,
                     text: msg.content,
                     sender: msg.role === 'user' ? 'user' : 'assistant',
-                    time: new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})
+                    time: msg.created_at
+                        ? new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})
+                        : '',
+                    citations: msg.citations || [],
+                    factCheck: msg.fact_check || null,
+                    warning: msg.warning,
+                    disclaimer: msg.disclaimer,
                 }));
                 setMessages(formatted);
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'Failed to fetch chat history');
             }
         };
         
         fetchHistory();
-    }, [projectId, token, authLoading]);
+    }, [projectId, token, authLoading, headers]);
 
 
     // const renderTextWithCitations = (text: string, citations: Citation[] = []): ReactNode => {
@@ -138,7 +173,7 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
 
         const sourceMarker = `S${match[1]}`;
         const citation = citations.find(
-        (c: any) => c.source_marker === sourceMarker
+        (c) => c.source_marker === sourceMarker
         );
 
         if (citation) {
@@ -160,6 +195,8 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
             </div>
             </span>
         );
+        } else {
+            parts.push(match[0]);
         }
 
         lastIndex = regex.lastIndex;
@@ -167,6 +204,41 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
 
     parts.push(text.slice(lastIndex));
     return parts;
+    };
+
+    const normalizeFactCheckLabel = (label?: string): FactCheckLabel => {
+        const normalized = label?.toUpperCase() === 'SUPORTED' ? 'SUPPORTED' : label?.toUpperCase();
+        return normalized === 'REFUTED' || normalized === 'NEI' ? normalized : 'SUPPORTED';
+    };
+
+    const getFactCheckStyles = (label: FactCheckLabel) => {
+        if (label === 'REFUTED') {
+            return 'border-red-200 bg-red-50 text-red-700';
+        }
+        if (label === 'NEI') {
+            return 'border-amber-200 bg-amber-50 text-amber-700';
+        }
+        return 'border-emerald-200 bg-emerald-50 text-emerald-700';
+    };
+
+    const formatConfidence = (confidence?: number) => {
+        if (typeof confidence !== 'number' || Number.isNaN(confidence)) return 'N/A';
+        return `${(confidence * 100).toFixed(1)}%`;
+    };
+
+    const renderFactCheck = (factCheck?: FactCheck | null) => {
+        if (!factCheck) return null;
+
+        const label = normalizeFactCheckLabel(factCheck.label);
+        const styles = getFactCheckStyles(label);
+
+        return (
+            <div className={`mt-2 flex flex-wrap items-center gap-2 rounded-lg border px-3 py-1.5 text-xs max-w-[85%] ${styles}`}>
+                <ShieldCheck size={14} className="shrink-0" />
+                <span className="font-semibold">{label}</span>
+                <span className="text-current/75">Confidence {formatConfidence(factCheck.confidence)}</span>
+            </div>
+        );
     };
 
     // Function to scroll to the bottom of the message container
@@ -206,7 +278,7 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
                 throw new Error(errorData?.error || 'Failed to answer the question');
             }
 
-            const result = await res.json();
+            const result = await res.json() as AnswerResponse;
 
             const cleanedAnswer = result.answer
             .replace(/\[s(\d+)\]/gi, "[S$1]")
@@ -219,13 +291,14 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
                 sender: 'assistant',
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'}),
                 citations: result.citations || [],
+                factCheck: result.fact_check || null,
                 warning: result.warning,
                 disclaimer: result.disclaimer
             };
 
             setMessages(prev => [...prev, newAssistantMessage]);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to answer the question');
         } finally {
             setIsTyping(false);
         }
@@ -304,6 +377,8 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
                                 : message.text}
                                 {/* {message.text} */}
                             </div>
+
+                            {message.sender === 'assistant' && renderFactCheck(message.factCheck)}
 
                             {/* Hiển thị warining/disclaimer nếu có */}
                             {message.sender === 'assistant' && message.warning && (

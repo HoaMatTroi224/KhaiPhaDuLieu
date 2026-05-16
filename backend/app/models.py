@@ -5,7 +5,7 @@ from sqlalchemy import (
     Column, String, Boolean, DateTime, Text, Integer, BigInteger,
     ForeignKey, Enum
 )
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from pgvector.sqlalchemy import Vector
@@ -101,6 +101,9 @@ class ChatHistory(Base):
     thread_id = Column(UUID(as_uuid=True), nullable=False)
     role = Column(String(20), nullable=False)  # 'user' hoặc 'assistant'
     content = Column(Text, nullable=False)
+    citations = Column(JSONB)
+    chunks_retrieved = Column(Integer)
+    fact_check = Column(JSONB)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
     owner = relationship("User", back_populates="chat_history")
