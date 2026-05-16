@@ -13,18 +13,19 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "https://khai-pha-du-lieu-git-web-hoamattroi224s-projects.vercel.app",
         "https://khaiphadulieu-frontend.vercel.app",
-        "https://khai-pha-du-lieu-dusky.vercel.app",
-        "https://shampoo-pyramid-renter.ngrok-free.dev"
+        "https://khai-pha-du-lieu-dusky.vercel.app"
+        # "https://shampoo-pyramid-renter.ngrok-free.dev"
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=[
-        "Authorization",
-        "Content-Type",
-        "ngrok-skip-browser-warning",
-        "Accept",
-        "Origin",
-    ],
+    # allow_headers=[
+    #     "Authorization",
+    #     "Content-Type",
+    #     "ngrok-skip-browser-warning",
+    #     "Accept",
+    #     "Origin",
+    # ],
+    allow_headers=["*"],
 )
 
 app.include_router(projects.router)
