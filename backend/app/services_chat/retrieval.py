@@ -52,22 +52,38 @@ async def call_factcheck(answer: str, chunks: list) -> Optional[dict]:
     """
     Gọi service_factcheck để kiểm tra câu trả lời.
     Trả về None nếu service không sẵn sàng (graceful degradation).
+    Retry tối đa 2 lần để xử lý Cloud Run cold start (503).
     """
     if not FACTCHECK_SERVICE_URL:
         return None
-    try:
-        evidence = [c["text"] for c in chunks[:10]]  # top 10 chunks làm evidence
-        async with httpx.AsyncClient(timeout=20.0) as client:
-            resp = await client.post(
-                f"{FACTCHECK_SERVICE_URL}/verify",
-                json={"claim": answer, "evidence": evidence},
-            )
-            resp.raise_for_status()
-            return resp.json()
-        
-    except Exception as e:
-        logger.warning(f"Factcheck failed: {e}")
-        return None
+
+    evidence = [c["text"] for c in chunks[:10]]
+    last_exc: Exception | None = None
+
+    for attempt in range(3):
+        try:
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                resp = await client.post(
+                    f"{FACTCHECK_SERVICE_URL}/verify",
+                    json={"claim": answer, "evidence": evidence},
+                )
+                resp.raise_for_status()
+                return resp.json()
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 503 and attempt < 2:
+                logger.warning(f"Factcheck 503 (attempt {attempt + 1}/3), retrying...")
+                import asyncio
+                await asyncio.sleep(5 * (attempt + 1))
+                last_exc = e
+                continue
+            last_exc = e
+            break
+        except Exception as e:
+            last_exc = e
+            break
+
+    logger.warning(f"Factcheck failed: {last_exc}")
+    return None
     
 async def retrieve_chunks(
     project_id,
