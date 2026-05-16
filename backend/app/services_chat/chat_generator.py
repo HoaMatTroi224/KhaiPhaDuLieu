@@ -111,6 +111,8 @@ class ChatGenerator:
         [TÀI LIỆU]
         {sources_block}
 
+        
+
         [LỊCH SỬ HỘI THOẠI]
         {history_str}
 
@@ -152,6 +154,7 @@ class ChatGenerator:
                     "source_marker": f"S{i}",
                     "file_name": chunk["file_name"],
                     "chunk_index": chunk["chunk_index"],
+                    "chunk_text": chunk["text"].strip(),
                     "document_id": chunk["document_id"],
                     "relevance_score": round(chunk["score"], 4),
                 })

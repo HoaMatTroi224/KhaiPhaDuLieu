@@ -16,6 +16,7 @@ type DocumentListItem = {
     id: string;
     title?: string | null;
     file_name?: string | null;
+    status?: 'uploaded' | 'processing' | 'indexed' | 'failed';
 };
 
 export default function DocumentList({
@@ -34,6 +35,10 @@ export default function DocumentList({
     useEffect(() => {
         if (!projectId || !token || authLoading) return;
 
+        let isMounted = true;
+        let refreshTimer: ReturnType<typeof setTimeout> | null = null;
+        const REFRESH_DELAY_MS = 5_000;
+
         const fetchDocs = async () => {
             try {
 
@@ -45,19 +50,46 @@ export default function DocumentList({
                 });
                 if (!res.ok) throw new Error('Failed to fetch documents');
                 const data = await res.json() as DocumentListItem[];
+                if (!isMounted) return;
+
                 setDocuments(data);
+
+                const hasPendingMetadata = data.some((doc) =>
+                    doc.status === 'uploaded' ||
+                    doc.status === 'processing' ||
+                    !doc.title?.trim()
+                );
+                if (hasPendingMetadata) {
+                    refreshTimer = setTimeout(fetchDocs, REFRESH_DELAY_MS);
+                }
             } catch (err) {
                 console.error(err);
             } finally {
-                setLoading(false);
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         };
         fetchDocs();
+
+        return () => {
+            isMounted = false;
+            if (refreshTimer) clearTimeout(refreshTimer);
+        };
     }, [projectId, token, authLoading]);
 
     useEffect(() => {
         if (!selectedDocId && documents.length > 0) {
             onSelectedDoc(documents[0]);
+        }
+    }, [documents, selectedDocId, onSelectedDoc]);
+
+    useEffect(() => {
+        if (!selectedDocId) return;
+
+        const currentDoc = documents.find((doc) => doc.id === selectedDocId);
+        if (currentDoc) {
+            onSelectedDoc(currentDoc);
         }
     }, [documents, selectedDocId, onSelectedDoc]);
 
@@ -90,7 +122,7 @@ export default function DocumentList({
 
                         <div className="flex-1 min-w-0 overflow-hidden">
                             <p className="text-sm truncate font-medium">
-                                {doc.file_name}
+                                {doc.title?.trim() || doc.file_name}
                             </p>
                         </div>
                         {/* <div className="w-8 h-8 flex items-center justify-center text-gray-500">

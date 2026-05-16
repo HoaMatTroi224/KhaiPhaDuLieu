@@ -42,33 +42,39 @@ async def _extract_and_update_document(
     db: AsyncSession,
     document: Document,
     extractor: PDFExtractor
-) -> tuple[str, int]:
+) -> dict:
 
     try:
         # FIX 1: tránh block event loop
         extracted = await asyncio.to_thread(extractor.extract)
+        raw = await asyncio.to_thread(extractor.extract_raw_text)
 
-        content = extracted.get("content") or ""
-        content_preview = " ".join(content.split())[:300]
+        body_content = extracted.get("content") or ""
+        full_content = raw or ""
+        content_preview = " ".join(body_content.split())[:300]
 
         # FIX 2: normalize data source (single source of truth)
-        document.title = extracted.get("title") or ""
-        document.authors = extracted.get("authors") or ""
-        document.abstract = extracted.get("abstract") or ""
-        document.extracted_content = content
+        document.title = extracted.get("title") or document.title
+        document.authors = extracted.get("authors") or document.authors
+        document.abstract = extracted.get("abstract") or document.abstract
+        document.extracted_content = body_content or document.extracted_content
+        document.full_content = full_content or document.full_content
         document.status = DocumentStatus.processing
         document.updated_at = datetime.utcnow()
 
         logger.info(
             "Extracted document %s with %s body chars. Preview: %r",
             document.id,
-            len(content.strip()),
+            len(body_content.strip()),
             content_preview,
         )
 
         await db.commit()
 
-        return content
+        return {
+            "extracted_content": document.extracted_content,
+            "full_content": document.full_content
+        }
 
     except Exception as e:
         logger.error(f"Extraction failed for {document.id}: {e}", exc_info=True)
@@ -157,9 +163,11 @@ async def process_document(document_id: UUID, user_id: UUID) -> dict:
                 document=document,
                 extractor=extractor
             )
+            full = context["full_content"]
+            body = context["extracted_content"]
 
             langchain_docs = [LangchainDocument(
-                page_content=context,
+                page_content=full,
                 metadata={
                     "document_id": document.id,
                     "project_id": document.project_id,
@@ -167,20 +175,22 @@ async def process_document(document_id: UUID, user_id: UUID) -> dict:
                 }
             )]
 
-            if not context.strip():
+            if not body.strip():
                 raise ValueError("Empty extracted content")
+            if not full.strip():
+                raise ValueError("Empty full content")
 
-            if len(context.strip()) < 50:
-                preview = " ".join(context.split())[:300]
+            if len(body.strip()) < 50:
+                preview = " ".join(body.split())[:300]
                 raise ValueError(
                     "No sufficient content available for summary generation "
-                    f"(body_chars={len(context.strip())}, preview={preview!r})"
+                    f"(body_chars={len(body.strip())}, preview={preview!r})"
                 )
 
             await _ensure_summary_not_exists(db, document.id)
 
             summary_task = asyncio.create_task(
-                generator.generate_summary(text=context)
+                generator.generate_summary(text=body)
             )
             embedding_task = asyncio.create_task(
                 vector_store.build_chunk_objects(

@@ -74,6 +74,7 @@ class Document(Base):
     # keywords = Column(String)
     publication_date = Column(DateTime)
     extracted_content = Column(Text)
+    full_content = Column(Text)
 
     owner = relationship("User", back_populates="documents")
     project = relationship("Project", back_populates="documents")

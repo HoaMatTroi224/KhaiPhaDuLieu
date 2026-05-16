@@ -100,6 +100,8 @@ class PGVectorStore:
 
         return len(chunk_objects)
 
+        
+
     async def similarity_search(
         self,
         query: str,

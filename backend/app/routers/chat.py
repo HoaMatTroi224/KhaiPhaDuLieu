@@ -179,4 +179,19 @@ async def get_chat_history(
         # .limit(limit)
     )
 
-    return result.scalars().all()
+    messages = result.scalars().all()
+    return [
+        {
+            "id": message.id,
+            "user_id": message.user_id,
+            "project_id": message.project_id,
+            "thread_id": message.thread_id,
+            "role": message.role,
+            "content": message.content,
+            "citations": message.citations,
+            "chunks_retrieved": message.chunks_retrieved,
+            "fact_check": message.fact_check,
+            "created_at": message.created_at,
+        }
+        for message in messages
+    ]

@@ -10,7 +10,8 @@ type Citation = {
     file_name: string;
     chunk_index: number;
     document_id: string;
-    relevance_score: number
+    relevance_score: number;
+    chunk_text?: string;
 }
 
 type FactCheckLabel = 'SUPPORTED' | 'REFUTED' | 'NEI';
@@ -177,6 +178,7 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
         );
 
         if (citation) {
+        const chunkText = citation.chunk_text?.trim();
         parts.push(
             <span
             key={`cite-${match.index}`}
@@ -184,14 +186,20 @@ export default function ChatBox({ projectId, threadId }: ChatBoxProps) {
             >
             {match[1]}
 
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+            <div className="fixed right-8 top-1/2 z-[9999] w-96 max-w-[calc(100vw-2rem)] -translate-y-1/2 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 <p className="font-semibold truncate">{citation.file_name}</p>
-                <div className="grid grid-cols-2 gap-x-2 gap-y-1 mt-2 text-gray-300 border-t border-gray-700 pt-2">
-                <span>Chunk:</span>
-                <span>#{citation.chunk_index + 1}</span>
-                <span>Relevance:</span>
-                <span>{(citation.relevance_score * 100).toFixed(1)}%</span>
-                </div>
+                {chunkText ? (
+                    <p className="mt-2 max-h-48 overflow-y-auto whitespace-pre-wrap leading-relaxed text-gray-100 border-t border-gray-700 pt-2">
+                        {chunkText}
+                    </p>
+                ) : (
+                    <p className="mt-2 text-gray-300 border-t border-gray-700 pt-2">
+                        Chunk #{citation.chunk_index + 1}
+                    </p>
+                )}
+                <p className="mt-2 text-[10px] text-gray-400">
+                    Relevance {(citation.relevance_score * 100).toFixed(1)}%
+                </p>
             </div>
             </span>
         );

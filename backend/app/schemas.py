@@ -93,6 +93,7 @@ class DocumentResponse(BaseModel):
     # keywords: Optional[str]
     publication_date: Optional[date]
     extracted_content: Optional[str]
+    full_content: Optional[str]
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -103,6 +104,7 @@ class DocumentUpdate(BaseModel):
     # keywords: Optional[str]
     publication_date: Optional[date]
     extracted_content: Optional[str]
+    full_content: Optional[str]
 
 
 # ---------- Summary ----------

@@ -19,9 +19,9 @@ export default function ProjectDetailPage() {
   const [projectTitle, setProjectTitle] = useState<string>(initialProjectTitle);
   const [threadId] = useState<string>(crypto.randomUUID());
 
-  const handleSelectedDoc = useCallback((doc: { id: string; title?: string | null }) => {
+  const handleSelectedDoc = useCallback((doc: { id: string; title?: string | null; file_name?: string | null }) => {
     setSelectedDocId(doc.id);
-    const label = (doc.title && doc.title.trim()) || '';
+    const label = doc.title?.trim() || doc.file_name?.trim() || '';
     setSelectedDocTitle(label);
   }, []);
 

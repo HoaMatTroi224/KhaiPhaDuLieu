@@ -84,6 +84,7 @@ CREATE TABLE public.documents (
   authors text,
   publication_date date,
   extracted_content text,
+  full_content text,
   key_words text
 );
 

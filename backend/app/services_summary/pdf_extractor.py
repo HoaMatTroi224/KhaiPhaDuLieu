@@ -77,14 +77,23 @@ RE_EMAIL_OR_URL = re.compile(r"(?i)(?:[\w.+-]+@[\w-]+(?:\.[\w-]+)+|https?://|www
 # Vietnamese Unicode detector (dùng trong body cleaning nếu cần)
 RE_VIET_UNICODE = re.compile(r"[àáạảãăắặẳẵâấậẩẫèéẹẻẽêếệểễìíịỉĩòóọỏõôốộổỗơớợởỡùúụủũưứựửữỳýỵỷỹđ]", re.IGNORECASE)
 
-# Định dạng chỉ số liên kết tác giả: [1], [1,2], [1*], [*], [2,3,4*]...
-RE_AFFILIATION_MARKER = re.compile(r"\[\*?[\d,\s*]+\*?\]")
+# Thay RE_AFFILIATION_MARKER cũ bằng regex rộng hơn
+RE_AFFILIATION_MARKER = re.compile(r"\[[^\]]*\]")  # xóa mọi [...] bất kể nội dung
 # Đuôi số không nằm trong ngoặc: "Nguyễn Văn A1,2,3" → bỏ ",1,2,3"
 RE_TRAILING_SUPERSCRIPT = re.compile(r"[\d,\s]+$")
 
 # Regex loại bỏ ký tự điều khiển (trừ tab, newline)
 RE_CONTROL_CHARS = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]')
 
+RE_VIET_FULLNAME_LIST = re.compile(
+    r"^[A-ZĐÀÁẠẢÃĂẮẶẲẴÂẤẬẨẪÈÉẸẺẼÊẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỐỘỔỖƠỚỢỞỠÙÚỤỦŨƯỨỰỬỮỲÝỴỶỸ]"
+    r"[a-zđàáạảãăắặẳẵâấậẩẫèéẹẻẽêếệểễìíịỉĩòóọỏõôốộổỗơớợởỡùúụủũưứựửữỳýỵỷỹ]+"
+    r"(?:\s+"
+    r"[A-ZĐÀÁẠẢÃĂẮẶẲẴÂẤẬẨẪÈÉẸẺẼÊẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỐỘỔỖƠỚỢỞỠÙÚỤỦŨƯỨỰỬỮỲÝỴỶỸ]"
+    r"[a-zđàáạảãăắặẳẵâấậẩẫèéẹẻẽêếệểễìíịỉĩòóọỏõôốộổỗơớợởỡùúụủũưứựửữỳýỵỷỹ]+"
+    r"){1,4}$",
+    re.UNICODE,
+)
 
 # =============================================================================
 # SHARED NORMALIZATION HELPERS (giữ nguyên cho body text)
@@ -344,6 +353,23 @@ def _looks_like_section_boundary(text: str) -> bool:
     if re.match(r"^\s*#{1,6}\s+", text):
         return True
     return _word_count(cleaned) <= 14 and len(cleaned) <= 140
+
+def _looks_like_author_name(token: str) -> bool:
+    """Kiểm tra token có phải tên người (Việt/Hán/Latin) không."""
+    token = token.strip()
+    if not token or len(token) < 4:
+        return False
+    if not any(c.isalpha() for c in token):
+        return False
+    # Tên người: mỗi từ viết hoa chữ đầu, không chứa số
+    parts = token.split()
+    if not (2 <= len(parts) <= 5):
+        return False
+    return all(
+        p[0].isupper() and not any(c.isdigit() for c in p)
+        for p in parts
+        if p
+    )
 
 
 def _has_body_start_term(text: str) -> bool:
@@ -646,38 +672,48 @@ def _extract_metadata_from_html(html_content: str) -> Dict:
     author_tag = None
     if title_tag:
         for sibling in title_tag.find_next_siblings():
-            if sibling.name in ["script", "style", "table", "thead", "tbody", "tr", "td", "th", "img", "figure", "figcaption"]:
+            if sibling.name in ["script", "style", "table", "thead", "tbody",
+                                 "tr", "td", "th", "img", "figure", "figcaption"]:
                 continue
 
-            child_tags = [
-                tag
-                for tag in sibling.find_all(True)
-                if tag.name not in ["script", "style", "table", "thead", "tbody", "tr", "td", "th", "img", "figure", "figcaption"]
-            ]
-            candidates = child_tags or [sibling]
-            should_stop_author_scan = False
+            sibling_text = sibling.get_text(" ", strip=True)
+            if not sibling_text:
+                continue
 
-            for candidate in candidates:
+            # Dừng sớm nếu sibling rõ ràng là abstract/section body
+            if _is_body_start_text(sibling_text):
+                break
+
+            child_tags = [
+                tag for tag in sibling.find_all(True)
+                if tag.name not in ["script", "style", "table", "thead", "tbody",
+                                    "tr", "td", "th", "img", "figure", "figcaption"]
+            ] or [sibling]
+
+            for candidate in child_tags:
                 text = candidate.get_text(" ", strip=True)
                 if not text:
                     continue
 
-                # Dừng nếu gặp abstract/keywords/affiliation
-                if _is_front_matter_text(text) or _contains_any(
-                    _normalize_for_match(text), AFFILIATION_TERM_FAMILIES
-                ):
-                    should_stop_author_scan = True
+                # Bỏ qua affiliation rõ ràng
+                if _contains_any(_normalize_for_match(text), AFFILIATION_TERM_FAMILIES):
                     continue
 
-                # Nhận dạng chuỗi tên: tối thiểu 2 token viết hoa, không phải tiêu đề
-                tokens = [token.strip() for token in re.split(r"[,;]", text) if token.strip()]
-                if 2 <= len(tokens) <= 8 and all(
-                    token[0].isupper() for token in tokens
-                ):
+                # Bỏ qua publication metadata
+                if _is_publication_metadata_line(text):
+                    continue
+
+                # Bỏ qua nếu là abstract/keywords label
+                if _is_front_matter_text(text) and _looks_like_section_boundary(text):
+                    break
+
+                # Nhận dạng danh sách tên tác giả
+                tokens = [t.strip() for t in re.split(r"[,;]", text) if t.strip()]
+                if 1 <= len(tokens) <= 8 and all(_looks_like_author_name(t) for t in tokens):
                     author_tag = candidate
                     break
 
-            if author_tag or should_stop_author_scan:
+            if author_tag:
                 break
 
     authors = clean_authors(author_tag.get_text(strip=True)) if author_tag else ""
@@ -1251,6 +1287,118 @@ class PDFExtractor:
             "content": body_text,
             "storage_path": self.storage_path,
         }
+
+    def extract_raw_text(self) -> str:
+        """
+        Trích xuất toàn bộ nội dung bài báo dưới dạng plain text thuần —
+        không tách metadata/body, không markdown heading, không phân vùng.
+
+        Pipeline:
+        1. PDF → Markdown (pymupdf4llm) → _preclean_markdown (bỏ hình/bảng/code)
+        2. Markdown → HTML → BeautifulSoup (bỏ tag phi văn bản)
+        3. Tag → text sạch: heading dùng clean_line, p/list dùng _clean_body_paragraph
+        4. Gộp thành raw_body → clean_body_text (bỏ junk, citation, normalize)
+        5. Prepend "Tiêu đề" và "Tác giả" từ extract_metadata()
+
+        Khác extract_body_text:
+        - Không cắt front matter (abstract, keywords được giữ lại)
+        - Không dừng ở body-stop heading (references, appendix bị giữ lại)
+        - Output là plain text, heading KHÔNG có ký tự '#'
+        - Title và authors được format rõ ràng ở đầu output
+        """
+        html_content = self._ensure_markdown_and_html()
+        soup = BeautifulSoup(html_content, "html.parser")
+
+        # Loại bỏ tag phi văn bản
+        for non_text_tag in soup.find_all([
+            "img", "figure", "figcaption",
+            "table", "thead", "tbody", "tr", "td", "th",
+            "pre", "code",
+        ]):
+            non_text_tag.decompose()
+
+        tags = [
+            tag
+            for tag in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6", "p", "ul", "ol"])
+            if self._tag_text(tag)
+        ]
+
+        # Lấy metadata để xác định title tag cần bỏ qua khi render body
+        try:
+            metadata = self.extract_metadata()
+        except Exception as exc:
+            logger.warning(
+                "Metadata extraction failed for %s: %s",
+                self.storage_path,
+                exc,
+                exc_info=True,
+            )
+            metadata = {}
+
+        title = metadata.get("title", "")
+        authors = metadata.get("authors", "")
+
+        # Chuẩn hóa title để so khớp mềm với heading đầu tiên trong HTML
+        _title_normalized = _normalize_for_match(title) if title else None
+
+        parts: List[str] = []
+        _title_skipped = not bool(_title_normalized)  # Nếu không có title thì không cần skip
+
+        for tag in tags:
+            text = self._tag_text(tag)
+
+            # Bỏ artifact rõ ràng (hình placeholder, bảng sót, decorative line)
+            if _is_non_body_artifact_line(text):
+                continue
+
+            # Bỏ qua heading đầu tiên khớp với title (đã được prepend ở header)
+            if not _title_skipped and tag.name in ["h1", "h2", "h3", "h4", "h5", "h6"]:
+                if _normalize_for_match(text) == _title_normalized:
+                    _title_skipped = True
+                    continue
+
+            if tag.name in ["h1", "h2", "h3", "h4", "h5", "h6"]:
+                # Làm sạch đầy đủ nhưng KHÔNG thêm '#' — output là plain text
+                content = clean_line(text)
+                if content:
+                    parts.append(content)
+
+            elif tag.name == "p":
+                content = _clean_body_paragraph(text)
+                if content:
+                    parts.append(content)
+
+            elif tag.name in ["ul", "ol"]:
+                list_items = tag.find_all("li", recursive=False) or tag.find_all("li")
+                try:
+                    start = int(tag.get("start", 1))
+                except (TypeError, ValueError):
+                    start = 1
+                for offset, li in enumerate(list_items):
+                    item_text = _clean_body_paragraph(li.get_text(" ", strip=True))
+                    if not item_text or _is_non_body_artifact_line(item_text):
+                        continue
+                    marker = "-" if tag.name == "ul" else f"{start + offset}."
+                    parts.append(f"{marker} {item_text}")
+
+            else:
+                content = _clean_body_paragraph(text)
+                if content:
+                    parts.append(content)
+
+        raw_body = "\n\n".join(parts)
+        body_text = clean_body_text(raw_body)
+
+        # Tạo header block
+        header_lines: List[str] = []
+        if title:
+            header_lines.append(f"Tiêu đề: {title}")
+        if authors:
+            header_lines.append(f"Tác giả: {authors}")
+
+        if header_lines:
+            return "\n".join(header_lines) + "\n\n" + body_text
+        return body_text
 
     # =========================================================================
     # CLEANUP

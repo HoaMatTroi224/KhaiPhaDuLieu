@@ -208,7 +208,7 @@ export default function DocumentViewer({
                 <div className="min-h-[420px] flex flex-col items-center justify-center gap-3 text-center text-gray-500">
                     <Loader2 size={22} className="animate-spin text-blue-500" />
                     <p>This task may take a few minutes.</p>
-                    <p className="text-sm text-gray-400">Loading... ({retryAttempt}/10)</p>
+                    {/* <p className="text-sm text-gray-400">Loading... ({retryAttempt}/10)</p> */}
                 </div>
             );
         }
@@ -226,7 +226,7 @@ export default function DocumentViewer({
             return (
                 <>
                 <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-8">
-                    {documentTitle?.trim() || 'Executive Summary'}
+                    {documentTitle?.trim() || 'Document Summary'}
                 </h1>
 
                 <div className="mb-10">
