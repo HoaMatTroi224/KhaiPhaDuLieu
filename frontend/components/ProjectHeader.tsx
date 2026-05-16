@@ -1,13 +1,19 @@
 'use client';
 
-import { ArrowLeft, Pencil, Share2, Save } from "lucide-react";
+import { ArrowLeft, Download, Pencil } from "lucide-react";
 import Link from "next/link";
 
 interface ProjectHeaderProps {
     title?: string;
+    canDownloadSummary?: boolean;
+    onDownloadSummary?: () => void;
 }
 
-export default function ProjectHeader({ title = "Untitled Project" }: ProjectHeaderProps) {
+export default function ProjectHeader({
+    title = "Untitled Project",
+    canDownloadSummary = false,
+    onDownloadSummary,
+}: ProjectHeaderProps) {
     return (
         <div className="h-[60px] border-b border-gray-200 bg-white px-8 flex items-center justify-between sticky top-0 z-50">
             
@@ -35,27 +41,17 @@ export default function ProjectHeader({ title = "Untitled Project" }: ProjectHea
                 </button>
             </div> */}
 
-            {/* Right: Placeholder for future actions */}
-            {/* <div className="flex items-center gap-3"> */}
-                {/* Future action buttons can go here */}
-                
-                {/* <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-2xl transition-colors">
-                    <Share2 size={18} />
-                    Share
+            <div className="flex items-center gap-3">
+                <button
+                    onClick={onDownloadSummary}
+                    disabled={!canDownloadSummary}
+                    title={canDownloadSummary ? "Download summary" : "Select a loaded summary first"}
+                    className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-green-100 hover:text-green-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+                >
+                    <Download size={18} />
+                    Download
                 </button>
-
-                <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-2xl transition-colors">
-                    <Save size={18} />
-                    Save
-                </button>
-
-                <Link href="/projects/new">
-                    <button className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-full shadow-sm">
-                        New Project
-                    </button>
-                </Link>
-
-            </div> */}
+            </div>
         </div>
     );
 }

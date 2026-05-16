@@ -18,12 +18,17 @@ type ViewerState = {
     error: string | null;
 };
 
+const SUMMARY_POLL_INTERVAL_MS = 5_000;
+const SUMMARY_TIMEOUT_MS = 20 * 60 * 1000;
+
 export default function DocumentViewer({
     selectedDocId,
     documentTitle,
+    onLoadedSummary,
 }: {
     selectedDocId: string | null;
     documentTitle?: string;
+    onLoadedSummary?: (summary: Summary | null) => void;
 }) {
     const { token, loading: authLoading } = useAuth();
     const [viewerState, setViewerState] = useState<ViewerState>({
@@ -84,13 +89,44 @@ export default function DocumentViewer({
     useEffect(() => {
         if (!selectedDocId || !token || authLoading) return;
 
+        onLoadedSummary?.(null);
         let isMounted = true;
+        let timedOut = false;
         let retryCount = 0;
         let retryTimer: ReturnType<typeof setTimeout> | null = null;
-        const MAX_RETRIES = 72;
-        const RETRY_DELAY_MS = 5_000;
+        let timeoutTimer: ReturnType<typeof setTimeout> | null = null;
+        let abortController: AbortController | null = null;
+
+        const setFailedByTimeout = () => {
+            if (!isMounted) return;
+            timedOut = true;
+            if (retryTimer) clearTimeout(retryTimer);
+            abortController?.abort();
+            setViewerState({
+                docId: selectedDocId,
+                summary: null,
+                status: 'failed',
+                retryAttempt: retryCount,
+                error: 'Sorry, the summary could not be generated.',
+            });
+        };
+
+        const scheduleNextPoll = () => {
+            if (timedOut || !isMounted) return;
+            retryCount++;
+            setViewerState({
+                docId: selectedDocId,
+                summary: null,
+                status: 'processing',
+                retryAttempt: retryCount,
+                error: null,
+            });
+            retryTimer = setTimeout(fetchSummary, SUMMARY_POLL_INTERVAL_MS);
+        };
 
         const fetchSummary = async () => {
+            if (timedOut || !isMounted) return;
+
             try {
                 setViewerState({
                     docId: selectedDocId,
@@ -99,12 +135,15 @@ export default function DocumentViewer({
                     retryAttempt: retryCount,
                     error: null,
                 });
+
+                abortController = new AbortController();
                 
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/summaries?document_id=${selectedDocId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
+                    signal: abortController.signal,
                 });
                 if (!res.ok) throw new Error('Failed to fetch summary');
 
@@ -119,64 +158,31 @@ export default function DocumentViewer({
                         retryAttempt: retryCount,
                         error: null,
                     });
+                    onLoadedSummary?.(data[0]);
                     return;
                 }
 
-                if (retryCount < MAX_RETRIES) {
-                    retryCount++;
-                    setViewerState({
-                        docId: selectedDocId,
-                        summary: null,
-                        status: 'processing',
-                        retryAttempt: retryCount,
-                        error: null,
-                    });
-                    retryTimer = setTimeout(fetchSummary, RETRY_DELAY_MS);
-                    return;
-                }
-
-                setViewerState({
-                    docId: selectedDocId,
-                    summary: null,
-                    status: 'failed',
-                    retryAttempt: retryCount,
-                    error: 'Summary is not available yet. Please try again later.',
-                });
+                scheduleNextPoll();
             } catch (err: unknown) {
                 if (!isMounted) return;
-
-                if (retryCount < MAX_RETRIES) {
-                    retryCount++;
-                    setViewerState({
-                        docId: selectedDocId,
-                        summary: null,
-                        status: 'processing',
-                        retryAttempt: retryCount,
-                        error: null,
-                    });
-                    retryTimer = setTimeout(fetchSummary, RETRY_DELAY_MS);
+                if (timedOut || (err instanceof DOMException && err.name === 'AbortError')) {
                     return;
                 }
 
-                setViewerState({
-                    docId: selectedDocId,
-                    summary: null,
-                    status: 'failed',
-                    retryAttempt: retryCount,
-                    error: err instanceof Error
-                        ? err.message
-                        : 'Error occured while trying to load summaries',
-                });
+                scheduleNextPoll();
             }
         };
 
+        timeoutTimer = setTimeout(setFailedByTimeout, SUMMARY_TIMEOUT_MS);
         fetchSummary();
 
         return () => {
             isMounted = false;
             if (retryTimer) clearTimeout(retryTimer);
+            if (timeoutTimer) clearTimeout(timeoutTimer);
+            abortController?.abort();
         };
-    }, [selectedDocId, token, authLoading]);
+    }, [selectedDocId, token, authLoading, onLoadedSummary]);
 
     const renderContent = () => {
         const isCurrentDocState = viewerState.docId === selectedDocId;
@@ -184,7 +190,6 @@ export default function DocumentViewer({
         const status = isCurrentDocState ? viewerState.status : "uploaded"
         const summary = isCurrentDocState ? viewerState.summary : null;
         const error = isCurrentDocState ? viewerState.error : null;
-        const retryAttempt = isCurrentDocState ? viewerState.retryAttempt : 0;
 
         if (!selectedDocId) {
             return (

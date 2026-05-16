@@ -71,9 +71,8 @@ class ProjectFinalize(BaseModel):
 #     file_type: DocumentType
 #     file_size: int
 
-# class DocumentListCreate(BaseModel):
-#     project_id: UUID
-#     documents: List[DocumentMetaData]
+class DocumentListCreate(BaseModel):
+    documents: List[DocumentMeta] = Field(..., min_length=1, max_length=10)
 
 class DocumentResponse(BaseModel):
     id: UUID
