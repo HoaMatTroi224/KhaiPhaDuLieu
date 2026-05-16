@@ -87,8 +87,8 @@ export default function DocumentViewer({
         let isMounted = true;
         let retryCount = 0;
         let retryTimer: ReturnType<typeof setTimeout> | null = null;
-        const MAX_RETRIES = 10;
-        const RETRY_DELAY_MS = 36_000;
+        const MAX_RETRIES = 72;
+        const RETRY_DELAY_MS = 5_000;
 
         const fetchSummary = async () => {
             try {
@@ -180,7 +180,6 @@ export default function DocumentViewer({
 
     const renderContent = () => {
         const isCurrentDocState = viewerState.docId === selectedDocId;
-        const isAuthLoading = authLoading || !token;
         const isWaitingForCurrentDoc = Boolean(selectedDocId) && !isCurrentDocState;
         const status = isCurrentDocState ? viewerState.status : "uploaded"
         const summary = isCurrentDocState ? viewerState.summary : null;

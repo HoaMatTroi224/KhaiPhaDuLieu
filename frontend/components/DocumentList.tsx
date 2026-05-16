@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FilePen, BookOpenText, PlusCircle } from "lucide-react";
+import { FilePen } from "lucide-react";
 import { useAuth } from '@/lib/hooks/useAuth';
 
 // Mock data
@@ -27,7 +27,7 @@ export default function DocumentList({
     selectedDocId: string | null;
     onSelectedDoc: (doc: DocumentListItem) => void;
 }) {
-    const [documents, setDocuments] = useState<any[]>([]);
+    const [documents, setDocuments] = useState<DocumentListItem[]>([]);
     const [loading, setLoading] = useState(true);
     const { token, loading: authLoading } = useAuth();
 
@@ -44,7 +44,7 @@ export default function DocumentList({
                     },
                 });
                 if (!res.ok) throw new Error('Failed to fetch documents');
-                const data = await res.json();
+                const data = await res.json() as DocumentListItem[];
                 setDocuments(data);
             } catch (err) {
                 console.error(err);
@@ -54,6 +54,12 @@ export default function DocumentList({
         };
         fetchDocs();
     }, [projectId, token, authLoading]);
+
+    useEffect(() => {
+        if (!selectedDocId && documents.length > 0) {
+            onSelectedDoc(documents[0]);
+        }
+    }, [documents, selectedDocId, onSelectedDoc]);
 
     if (authLoading || loading) return <div className="p-6 text-sm text-gray-500">Loading documents...</div>;
 

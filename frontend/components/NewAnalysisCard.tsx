@@ -146,9 +146,7 @@ export default function NewAnalysisCard() {
             }
 
 
-            router.refresh()
-            await new Promise(resolve => setTimeout(resolve, 36180)); //delay một chút trước khi chuyển trang
-            router.push(`/projects/${projectId}`)
+            router.push(`/projects/${projectId}?title=${encodeURIComponent(projectTitle)}`)
         } catch (error: unknown) {
             console.error('Error occured while trying to finalize project:', error);
             alert(error instanceof Error ? error.message : 'Failed to finalize project');

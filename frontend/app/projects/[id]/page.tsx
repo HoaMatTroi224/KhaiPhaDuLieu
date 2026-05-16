@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useCallback, useState, useEffect } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import DocumentViewer from '@/components/DocumentViewer';
 import DocumentList from '@/components/DocumentList';
 import ProjectHeader from '@/components/ProjectHeader';
@@ -10,12 +10,21 @@ import ChatBox from '@/components/ChatBox';
 export default function ProjectDetailPage() {
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
   const projectId = typeof params.id === 'string' ? params.id : '';
+  const initialProjectTitle = searchParams.get('title')?.trim() || 'Untitled Project';
   const { token, loading: authLoading } = useAuth();
   const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
   const [selectedDocTitle, setSelectedDocTitle] = useState<string>('');
-  const [projectTitle, setProjectTitle] = useState<string>('Untitled Project');
+  const [projectTitle, setProjectTitle] = useState<string>(initialProjectTitle);
   const [threadId] = useState<string>(crypto.randomUUID());
+
+  const handleSelectedDoc = useCallback((doc: { id: string; title?: string | null }) => {
+    setSelectedDocId(doc.id);
+    const label = (doc.title && doc.title.trim()) || '';
+    setSelectedDocTitle(label);
+  }, []);
+
   useEffect(() => {
     if (!projectId || !token || authLoading) return;
     const fetchProject = async () => {
@@ -53,11 +62,7 @@ export default function ProjectDetailPage() {
           <DocumentList 
             projectId={projectId} 
             selectedDocId={selectedDocId} 
-            onSelectedDoc={(doc) => {
-              setSelectedDocId(doc.id);
-              const label = (doc.title && doc.title.trim()) || '';
-              setSelectedDocTitle(label);
-            }} 
+            onSelectedDoc={handleSelectedDoc}
           />
         </aside>
 
