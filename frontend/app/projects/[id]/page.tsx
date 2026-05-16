@@ -23,7 +23,7 @@ export default function ProjectDetailPage() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
         });
         if (!res.ok) throw new Error('Failed to fetch project');

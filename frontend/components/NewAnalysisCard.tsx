@@ -129,7 +129,7 @@ export default function NewAnalysisCard() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${access_token}`
+                    'Authorization': `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
                     name: projectTitle,

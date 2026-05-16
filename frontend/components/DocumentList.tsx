@@ -40,7 +40,7 @@ export default function DocumentList({
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/documents/?project_id=${projectId}`, {
                     method: 'GET',
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 if (!res.ok) throw new Error('Failed to fetch documents');

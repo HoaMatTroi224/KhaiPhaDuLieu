@@ -20,7 +20,7 @@ export default async function Dashboard() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/recent`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${access_token}`
+                Authorization: `Bearer ${access_token}`,
             },
             cache: 'no-store',
         });

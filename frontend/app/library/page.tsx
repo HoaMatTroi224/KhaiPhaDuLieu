@@ -35,7 +35,7 @@ export default function ResearchLibrary() {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/`, {
                     method: 'GET',
                     headers: {
-                        Authorization: `Bearer ${access_token}`
+                        Authorization: `Bearer ${access_token}`,
                     },
                     cache: 'no-store',
                 });

@@ -103,7 +103,7 @@ export default function DocumentViewer({
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/summaries?document_id=${selectedDocId}`, {
                     method: 'GET',
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 if (!res.ok) throw new Error('Failed to fetch summary');
