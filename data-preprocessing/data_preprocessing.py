@@ -33,6 +33,16 @@ class FileProcessor:
 
         text = raw_text
 
+        text = unicodedata.normalize('NFC', text)
+        
+        return { 
+            "content": text, 
+            "metadata": { 
+                "word_count": len(text.split()), 
+                "char_count": len(text), 
+                "paragraph_count": len([p for p in text.split('\n\n') if p.strip()]) 
+                } 
+            }
 
 
 
@@ -107,7 +117,6 @@ def strong_clean(text):
 
     return text
 
-
 # --- PHẦN THỰC THI CẬP NHẬT DATABASE (GIỮ NGUYÊN VÒNG LẶP FOR) ---
 
 conn = sqlite3.connect("khoahoc_vn.db")
@@ -126,6 +135,7 @@ for _, row in df.iterrows():
 
 conn.commit()
 conn.close()
+
 
 
 # Kết nối và đọc dữ liệu
