@@ -24,5 +24,3 @@ logs/
 # Temp files
 *.tmp
 tmp/
-
-.claude
