@@ -1,7 +1,7 @@
 import json
 import logging
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends
 from uuid import UUID
 from ..dependencies import get_current_user_id, get_chat_generator
 from ..database import get_db
@@ -40,7 +40,6 @@ def _log_answer_response(
 
 @router.post("/answer")
 async def answer_question(
-    request: Request,
     project_id: UUID,
     thread_id: UUID,
     question: str,
@@ -62,6 +61,15 @@ async def answer_question(
       - citations: các nguồn được trích dẫn (file_name, chunk_index, document_id, relevance_score)
       - chunks_retrieved: tổng số chunks đưa vào context
     """
+    question = question.strip()
+    if not question:
+        return {
+            "answer": "Empty question.",
+            "citations": [],
+            "chunks_retrieved": 0,
+            "fact_check": None,
+        }
+
     # 1. Lưu câu hỏi vào chat_history
     user_msg = ChatHistory(
         user_id=user_id,
