@@ -1,0 +1,9 @@
+TopNav cần api tìm kiếm theo chủ đề, tác giả, tên,...
+FileUploadArea trong backend cần đọc được pdf, txt và docx, cái nào khó quá thì bỏ
+ProjectCard cần một list các icon khớp với tag chủ đề
+ProjectSettings cần fetch api để generate summary và tạo tag, chọn tag thay vì chỉ là nút tĩnh như hiện tại
+ProjectHeader cần cho đổi tên dự án, chức năng chia sẻ
+BottomToolbar nếu có chức năng highlight thì trong database cần có trường lưu trữ các key words người đùng dã highlight
+cần được tổ chức (trong cả database và giao diện người dùng) gồm các thành phần: Tiêu đề chính, Nội dung chính, Các đề mục...
+DocumentList cần hiển thị các nguồn tài liệu trong dự án và có thể thêm được tài liệu
+Một dự án thì có thể có nhiều tài liệu nhưng mỗi tài liệu có phần tóm tắt và hội thoại trò chuyện khác nhau (tức là mỗi doc là một thực thể) 

@@ -1,0 +1,51 @@
+# ====================== Core & Web Framework ======================
+fastapi>=0.115.0,<0.116.0
+uvicorn[standard]>=0.30.6
+uvloop>=0.19.0
+
+# ====================== Config & Environment ======================
+pydantic>=2.8,<3.0
+pydantic-settings>=2.4.0
+python-dotenv>=1.0.1
+
+# ====================== Database & Vector Store ======================
+sqlalchemy>=2.0,<3.0
+asyncpg>=0.29,<1.0
+pgvector>=0.3.5
+supabase>=2.7.0
+redis>=5.0,<6.0
+
+# ====================== PDF Processing ======================
+pymupdf>=1.24.0
+pymupdf4llm>=0.0.17
+markdown>=3.7
+beautifulsoup4>=4.12.0
+
+# ====================== LangChain Ecosystem ======================
+# langchain>=0.3.20,<0.4.0
+langchain-core>=0.3.50,<0.4.0
+# langchain-community>=0.3.20,<0.4.0
+langchain-text-splitters>=0.3.5,<0.4.0
+langchain-huggingface>=0.1.0,<0.2.0
+langchain-groq>=0.2.0,<0.3.0
+# langchain-experimental>=0.3.0,<0.4.0
+
+# ====================== Embeddings & Local Models ======================
+sentence-transformers>=3.3.0,<4.0.0
+transformers>=4.45.0,<5.0.0   
+tokenizers>=0.20.0
+sentencepiece>=0.2.0
+
+# ====================== ML / CPU Support ======================
+# torch>=2.5.0,<2.7.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.6.0+cpu
+numpy>=1.24,<2.0  
+
+# ====================== Security & Auth ======================
+PyJWT>=2.9.0
+cryptography>=43.0.0
+
+# ====================== Utilities ======================
+tenacity>=8.5.0
+httpx>=0.27.0
