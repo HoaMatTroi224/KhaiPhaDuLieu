@@ -145,7 +145,7 @@ export default function NewAnalysisCard() {
                 throw new Error('Failed to finalize project');
             }
 
-            router.refresh()
+            // router.refresh()
             router.replace(`/projects/${projectId}?title=${encodeURIComponent(projectTitle)}`)
         } catch (error: unknown) {
             console.error('Error occured while trying to finalize project:', error);
