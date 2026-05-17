@@ -12,9 +12,29 @@ from .pdf_extractor import PDFExtractor
 from .summary_generator import SummaryGenerator
 from ..database import AsyncSessionLocal
 from ..services_chat.pgvector_store import PGVectorStore
+from ..cache import delete_keys
 from langchain_core.documents import Document as LangchainDocument
 
 logger = logging.getLogger(__name__)
+
+
+def _project_documents_cache_key(user_id: UUID, project_id: UUID) -> str:
+    return f"user:{user_id}:project:{project_id}:documents"
+
+
+def _document_summaries_cache_key(user_id: UUID, document_id: UUID) -> str:
+    return f"user:{user_id}:document:{document_id}:summaries"
+
+
+async def _invalidate_document_caches(
+    user_id: UUID,
+    project_id: UUID,
+    document_id: UUID,
+) -> None:
+    await delete_keys(
+        _project_documents_cache_key(user_id, project_id),
+        _document_summaries_cache_key(user_id, document_id),
+    )
 
 
 # =========================
@@ -70,6 +90,11 @@ async def _extract_and_update_document(
         )
 
         await db.commit()
+        await _invalidate_document_caches(
+            document.user_id,
+            document.project_id,
+            document.id,
+        )
 
         return {
             "extracted_content": document.extracted_content,
@@ -243,6 +268,11 @@ async def process_document(document_id: UUID, user_id: UUID) -> dict:
             # 4. commit summary + chunks + status after both background tasks finish
             await db.commit()
             await db.refresh(document)
+            await _invalidate_document_caches(
+                user_id,
+                document.project_id,
+                document.id,
+            )
 
             latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 

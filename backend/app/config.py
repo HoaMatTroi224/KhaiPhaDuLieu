@@ -11,6 +11,14 @@ class Settings(BaseSettings):
     PG_CONNECTION_STRING: str
     FACTCHECK_SERVICE_URL: str
 
+    REDIS_URL: str = "redis://localhost:6379/0"
+    CACHE_PROJECTS_TTL_SECONDS: int = 120
+    CACHE_PROJECT_DETAIL_TTL_SECONDS: int = 300
+    CACHE_DOCUMENTS_PENDING_TTL_SECONDS: int = 10
+    CACHE_DOCUMENTS_READY_TTL_SECONDS: int = 300
+    CACHE_SUMMARIES_TTL_SECONDS: int = 86400
+    CACHE_SUMMARIES_EMPTY_TTL_SECONDS: int = 5
+
     # ViT5 tóm tắt qua Cloud Run (thay cho model local)
     VIT5_SUMMARIZE_API_URL: str
     VIT5_SUMMARIZE_TIMEOUT_S: float = 180.0

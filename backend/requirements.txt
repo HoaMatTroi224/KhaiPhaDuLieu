@@ -1,7 +1,6 @@
 # ====================== Core & Web Framework ======================
 fastapi>=0.115.0,<0.116.0
 uvicorn[standard]>=0.30.6
-python-multipart>=0.0.9
 uvloop>=0.19.0
 
 # ====================== Config & Environment ======================
@@ -13,8 +12,8 @@ python-dotenv>=1.0.1
 sqlalchemy>=2.0,<3.0
 asyncpg>=0.29,<1.0
 pgvector>=0.3.5
-psycopg2-binary>=2.9.9
 supabase>=2.7.0
+redis>=5.0,<6.0
 
 # ====================== PDF Processing ======================
 pymupdf>=1.24.0
@@ -23,14 +22,13 @@ markdown>=3.7
 beautifulsoup4>=4.12.0
 
 # ====================== LangChain Ecosystem ======================
-langchain>=0.3.20,<0.4.0
+# langchain>=0.3.20,<0.4.0
 langchain-core>=0.3.50,<0.4.0
-langchain-community>=0.3.20,<0.4.0
+# langchain-community>=0.3.20,<0.4.0
 langchain-text-splitters>=0.3.5,<0.4.0
 langchain-huggingface>=0.1.0,<0.2.0
 langchain-groq>=0.2.0,<0.3.0
-langchain-google-genai>=2.0.0,<3.0.0
-langchain-experimental>=0.3.0,<0.4.0
+# langchain-experimental>=0.3.0,<0.4.0
 
 # ====================== Embeddings & Local Models ======================
 sentence-transformers>=3.3.0,<4.0.0
@@ -38,12 +36,11 @@ transformers>=4.45.0,<5.0.0
 tokenizers>=0.20.0
 sentencepiece>=0.2.0
 
-# ====================== ML / GPU Support ======================
-torch>=2.5.0,<2.7.0
-numpy>=1.24,<2.0               
-accelerate>=0.34.0
-peft>=0.13.0
-faiss-cpu>=1.9.0
+# ====================== ML / CPU Support ======================
+# torch>=2.5.0,<2.7.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.6.0+cpu
+numpy>=1.24,<2.0  
 
 # ====================== Security & Auth ======================
 PyJWT>=2.9.0

@@ -96,6 +96,26 @@ class DocumentResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+
+class DocumentListResponse(BaseModel):
+    id: UUID
+    user_id: UUID
+    project_id: UUID
+    file_url: Optional[str]
+    file_path: Optional[str]
+    file_name: Optional[str]
+    file_type: Optional[DocumentType]
+    file_size: Optional[int]
+    upload_time: datetime
+    status: DocumentStatus
+    title: Optional[str]
+    authors: Optional[str]
+    abstract: Optional[str]
+    publication_date: Optional[date]
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class DocumentUpdate(BaseModel):
     title: Optional[str]
     authors: Optional[str]

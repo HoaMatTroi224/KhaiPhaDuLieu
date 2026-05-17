@@ -1,11 +1,13 @@
 import logging
 from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy import select
 from ..dependencies import get_current_user_id
 from ..database import get_db, AsyncSessionLocal
 from ..models import Project, Document, DocumentStatus
 from ..schemas import ProjectResponse, ProjectFinalize
+from ..config import settings
+from ..cache import delete_keys, get_json, set_json
 from typing import List
 from uuid import UUID, uuid4
 from datetime import datetime
@@ -16,14 +18,54 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/projects", tags=["projects"])
 
 
+def _projects_cache_key(user_id: UUID) -> str:
+    return f"user:{user_id}:projects"
+
+
+def _recent_projects_cache_key(user_id: UUID) -> str:
+    return f"user:{user_id}:projects:recent"
+
+
+def _project_cache_key(user_id: UUID, project_id: UUID) -> str:
+    return f"user:{user_id}:project:{project_id}"
+
+
+def _project_documents_cache_key(user_id: UUID, project_id: UUID) -> str:
+    return f"user:{user_id}:project:{project_id}:documents"
+
+
+def _document_summaries_cache_key(user_id: UUID, document_id: UUID) -> str:
+    return f"user:{user_id}:document:{document_id}:summaries"
+
+
+async def _invalidate_project_caches(user_id: UUID, project_id: UUID | None = None) -> None:
+    keys = [
+        _projects_cache_key(user_id),
+        _recent_projects_cache_key(user_id),
+    ]
+    if project_id is not None:
+        keys.extend([
+            _project_cache_key(user_id, project_id),
+            _project_documents_cache_key(user_id, project_id),
+        ])
+    await delete_keys(*keys)
+
+
+def _project_payload(project: Project) -> dict:
+    return ProjectResponse.model_validate(project).model_dump(mode="json")
+
+
 async def _mark_document_status(document_id: UUID, status_value: DocumentStatus) -> None:
     async with AsyncSessionLocal() as db:
-        await db.execute(
-            update(Document)
-            .where(Document.id == document_id)
-            .values(status=status_value)
-        )
+        result = await db.execute(select(Document).where(Document.id == document_id))
+        document = result.scalar_one_or_none()
+        if not document:
+            return
+
+        document.status = status_value
         await db.commit()
+        await _invalidate_project_caches(document.user_id, document.project_id)
+        await delete_keys(_document_summaries_cache_key(document.user_id, document.id))
 
 
 async def process_document_wrapper(document_id: UUID, user_id: UUID) -> None:
@@ -53,6 +95,11 @@ async def list_projects(
     user_id: UUID = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
+    cache_key = _projects_cache_key(user_id)
+    cached = await get_json(cache_key)
+    if cached is not None:
+        return cached
+
     result = await db.execute(
         select(Project)
         .where(Project.user_id == user_id)
@@ -60,13 +107,20 @@ async def list_projects(
     )
 
     projects = result.scalars().all()
-    return projects
+    payload = [_project_payload(project) for project in projects]
+    await set_json(cache_key, payload, settings.CACHE_PROJECTS_TTL_SECONDS)
+    return payload
 
 @router.get("/recent", response_model=List[ProjectResponse])
 async def get_recent_projects(
     user_id: UUID = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
+    cache_key = _recent_projects_cache_key(user_id)
+    cached = await get_json(cache_key)
+    if cached is not None:
+        return cached
+
     result = await db.execute(
         select(Project)
         .where(Project.user_id == user_id)
@@ -75,7 +129,9 @@ async def get_recent_projects(
     )
 
     projects = result.scalars().all()
-    return projects
+    payload = [_project_payload(project) for project in projects]
+    await set_json(cache_key, payload, settings.CACHE_PROJECTS_TTL_SECONDS)
+    return payload
 
 @router.post("/initialize", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
 async def initialize_project(
@@ -92,6 +148,7 @@ async def initialize_project(
     db.add(project)
     await db.commit()
     await db.refresh(project)
+    await _invalidate_project_caches(user_id)
     return project
 
 
@@ -145,6 +202,7 @@ async def finalize_project(
         )
         
     await db.refresh(project)
+    await _invalidate_project_caches(user_id, project_id)
     
     return {
         "project": project,
@@ -157,6 +215,11 @@ async def get_project(
     user_id: UUID = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
+    cache_key = _project_cache_key(user_id, project_id)
+    cached = await get_json(cache_key)
+    if cached is not None:
+        return cached
+
     result = await db.execute(
         select(Project)
         .where(
@@ -168,5 +231,7 @@ async def get_project(
     project = result.scalar_one_or_none()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
-    return project
+    payload = _project_payload(project)
+    await set_json(cache_key, payload, settings.CACHE_PROJECT_DETAIL_TTL_SECONDS)
+    return payload
 

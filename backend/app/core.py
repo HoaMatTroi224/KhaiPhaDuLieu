@@ -4,12 +4,15 @@ import logging
 from .services_chat.retrieval import recover_stuck_documents
 from .services_chat.chat_generator import ChatGenerator
 from .database import AsyncSessionLocal
+from .cache import close_cache, init_cache
 
 logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    await init_cache()
+
     logger.info("Loading AI model...")
     app.state.chat_generator = ChatGenerator()
 
@@ -20,3 +23,4 @@ async def lifespan(app: FastAPI):
     yield
 
     logger.info("Shutting down...")
+    await close_cache()
