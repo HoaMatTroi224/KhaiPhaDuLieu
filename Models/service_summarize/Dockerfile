@@ -1,11 +1,13 @@
 FROM python:3.11-slim
 
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
-# Cài system deps (sentencepiece cần g++)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    curl && rm -rf /var/lib/apt/lists/*
 
 # Cài Python deps trước (layer caching)
 COPY requirements.txt .
@@ -24,5 +26,7 @@ ENV DEVICE=auto
 
 EXPOSE 8001
 
-# Khởi chạy uvicorn
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 \
+    CMD curl -f http://localhost:8001/health || exit 1
+
 CMD ["uvicorn", "serving.app:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "1"]

@@ -1,13 +1,11 @@
 # Virtual environment
 venv/
 .venv/
-env/
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
 
 # Environment variables (KHÔNG commit lên git)
 .env
@@ -19,14 +17,6 @@ __pycache__/
 
 # Logs
 *.log
-logs/
-
-# Jupyter checkpoints
-.ipynb_checkpoints/
-
-# Temp files
-*.tmp
-tmp/
 
 # Claude worktrees
 .claude/

@@ -18,7 +18,7 @@ langchain-community==0.2.6
 langchain-core==0.2.10
 langchain-text-splitters==0.2.2
 
-# Embedding — chạy hoàn toàn local, không cần API, không bao giờ thay đổi
+# Embedding - local, no API required
 sentence-transformers
 
 # PDF processing
@@ -35,5 +35,5 @@ tenacity==8.4.2
 # JWT Auth
 PyJWT==2.8.0
 
-# HTTP client (dùng cho giao tiếp giữa các microservice)
+# HTTP client
 httpx==0.27.0

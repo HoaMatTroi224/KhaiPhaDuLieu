@@ -2,8 +2,6 @@ from pydantic_settings import BaseSettings
 import os
 
 class Settings(BaseSettings):
-    # Đường dẫn đến LoRA adapter
-    # Có thể là local path hoặc HuggingFace repo ID
     ADAPTER_PATH: str = os.getenv(
         "ADAPTER_PATH",
         "./models/vit5-lora-adapter"
@@ -11,17 +9,18 @@ class Settings(BaseSettings):
     BASE_MODEL_NAME: str = "VietAI/vit5-base"
 
     MAX_INPUT_LENGTH: int = 1024
-    MAX_TARGET_LENGTH: int = 512        # 256→512: cho phép tóm tắt dài hơn
-    MIN_TARGET_LENGTH: int = 80         # ép model sinh ít nhất 80 token
-    NUM_BEAMS: int = 2                  # 4→2: nhanh ~2x, chất lượng giảm nhẹ
+    MAX_CHUNK_TARGET_LENGTH: int = 128   # Map phase: tóm tắt mỗi chunk
+    MAX_GROUP_TARGET_LENGTH: int = 200   # Hierarchical: tóm tắt mỗi group
+    MAX_FINAL_TARGET_LENGTH: int = 256   # Reduce phase: bản tóm tắt cuối
+    MIN_TARGET_LENGTH: int = 50
+    NUM_BEAMS: int = 2
+    LENGTH_PENALTY: float = 2.0
     NO_REPEAT_NGRAM_SIZE: int = 3
 
-    # Map-Reduce: số token mỗi chunk khi text vượt context window
-    # MAX_INPUT_LENGTH=1024, để ~150 token headroom → chunk=874
-    MAP_REDUCE_CHUNK_TOKENS: int = 874  # 700→874: ít chunk hơn (~11 thay vì 15)
+    MAP_REDUCE_CHUNK_TOKENS: int = 874
     MAP_REDUCE_OVERLAP_TOKENS: int = 50
+    MAP_REDUCE_GROUP_SIZE: int = 4       # Hierarchical: số chunks/group
 
-    # Dùng GPU nếu có, fallback về CPU
     DEVICE: str = "auto"
 
     class Config:

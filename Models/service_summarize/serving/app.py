@@ -5,16 +5,15 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from inference.summarize import generate_summary
+from inference.summarize import generate_summary, get_generator
 from inference.pdf_extractor import extract_text_from_pdf
-from models.model_loader import load_model
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    load_model()
+    get_generator()
     yield
 
 app = FastAPI(title="Summarize Service", version="1.0.0", lifespan=lifespan)

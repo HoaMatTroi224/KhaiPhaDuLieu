@@ -82,7 +82,7 @@ class AIContentGenerator:
             for msg in chat_history[-5:]
         ]) or "(Chưa có)"
 
-        # --- Prompt template tiếng Việt (theo chuẩn từ tài liệu RAG) ---
+        # --- Prompt template tiếng Việt---
         prompt = f"""Bạn là trợ lý AI phân tích tài liệu tiếng Việt chuyên nghiệp.
 
 [TÀI LIỆU]:

@@ -29,7 +29,6 @@ async def lifespan(app: FastAPI):
     db_client = SupabaseDB()
     logger.info("Đang khởi tạo AI Generator...")
     generator = AIContentGenerator()
-    # Tự động fix documents bị kẹt 'processing' do server crash lần trước
     _recover_stuck_documents()
     logger.info("Khởi tạo hoàn tất.")
     yield
@@ -273,11 +272,11 @@ async def ask_question(
     # Thêm cảnh báo nếu bị REFUTED
     if factcheck_result and factcheck_result.get("label") == "REFUTED":
         response["warning"] = (
-            f"⚠️ Câu trả lời này có thể không chính xác so với tài liệu. "
+            f"Câu trả lời này có thể không chính xác so với tài liệu. "
             f"{factcheck_result.get('explanation', '')}"
         )
     elif factcheck_result and factcheck_result.get("label") == "NEI":
-        response["disclaimer"] = "ℹ️ Thông tin chưa được kiểm chứng đầy đủ từ tài liệu."
+        response["disclaimer"] = "ℹThông tin chưa được kiểm chứng đầy đủ từ tài liệu."
 
     return response
 

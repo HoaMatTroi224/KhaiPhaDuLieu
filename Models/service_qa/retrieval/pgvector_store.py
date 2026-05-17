@@ -89,7 +89,6 @@ class CustomPGVectorStore:
         để đạt chất lượng retrieval tốt nhất.
         """
         k = k or settings.TOP_K_CHUNKS
-        # E5 models cần prefix "query: " khi embed câu hỏi
         prefixed_query = f"query: {query}"
         query_embedding = self.embeddings.embed_query(prefixed_query)
 
