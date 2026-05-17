@@ -82,7 +82,7 @@ export default function SignupPage() {
         password,
         options: {
           data: { full_name: fullName },
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/login`,
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/login`,
         },
       });
 
@@ -93,7 +93,7 @@ export default function SignupPage() {
 
       alert('Signup successful. Please check and confirm your email!');
       
-      window.location.href = '/login';
+      window.location.href = '/auth/login';
       
     } catch (err: any) {
       console.error('Unexpected signup error:', err);
@@ -104,15 +104,26 @@ export default function SignupPage() {
   };
 
   const handleGoogleSignup = async () => {
+    setLoading(true);
+    setError('');
+
     try {
-      await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
         },
       });
+
+      if (error) {
+        console.error('Google signup error:', error);
+        setError(error.message);
+        setLoading(false);
+      }
     } catch (err) {
+      console.error('Unexpected Google signup error:', err);
       setError('Can not signup with Google. Please try again later!');
+      setLoading(false);
     }
   };
 
@@ -132,7 +143,7 @@ export default function SignupPage() {
 
           {/* Tabs */}
           <div className="flex bg-gray-100 p-1 rounded-xl mb-8">
-            <Link href="/login" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 rounded-lg transition-all text-center">
+            <Link href="/auth/login" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 rounded-lg transition-all text-center">
               Log In
             </Link>
             <button className="flex-1 py-2 text-sm font-medium text-blue-700 bg-white rounded-lg shadow-sm transition-all">
@@ -306,7 +317,7 @@ export default function SignupPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <Link href="/login" className="font-semibold text-blue-700 hover:text-blue-800">
+              <Link href="/auth/login" className="font-semibold text-blue-700 hover:text-blue-800">
                 Log in
               </Link>
             </p>

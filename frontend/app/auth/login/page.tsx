@@ -1,7 +1,7 @@
 'use client';
 
 import { BookOpenCheck, Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase/client';
 
@@ -11,6 +11,16 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const oauthError = params.get('error');
+    const oauthMessage = params.get('message');
+
+    if (oauthError === 'oauth') {
+      setError(oauthMessage || 'Can not login with Google. Please check your OAuth configuration.');
+    }
+  }, []);
 
   // Helper: Validate email format
   const isValidEmail = (email: string) => {
@@ -76,15 +86,26 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError('');
+
     try {
-      await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
         },
       });
+
+      if (error) {
+        console.error('Google login error:', error);
+        setError(error.message);
+        setLoading(false);
+      }
     } catch (err) {
+      console.error('Unexpected Google login error:', err);
       setError('Can not login with Google. Please try again later!');
+      setLoading(false);
     }
   };
 
@@ -107,7 +128,7 @@ export default function LoginPage() {
             <button className="flex-1 py-2 text-sm font-medium text-blue-700 bg-white rounded-lg shadow-sm transition-all">
               Log In
             </button>
-            <Link href="/signup" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 rounded-lg transition-all text-center">
+            <Link href="/auth/signup" className="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 rounded-lg transition-all text-center">
               Sign Up
             </Link>
           </div>
@@ -225,7 +246,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
-              <Link href="/signup" className="font-semibold text-blue-700 hover:text-blue-800">
+              <Link href="/auth/signup" className="font-semibold text-blue-700 hover:text-blue-800">
                 Sign up
               </Link>
             </p>

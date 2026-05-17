@@ -202,7 +202,7 @@ export default function ResetPasswordPage() {
           {/* Back to Login */}
           <div className="mt-6 text-center">
             <Link
-              href="/login"
+              href="/auth/login"
               className="text-sm font-semibold text-blue-700 hover:text-blue-800 transition-colors"
             >
               Back to Log In
