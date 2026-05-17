@@ -33,7 +33,7 @@ export async function proxy(req: NextRequest) {
     } = await supabase.auth.getUser();
 
     const pathname = req.nextUrl.pathname;
-    const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
+    const isAuthPage = pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup');
     const isProtectedRoute =
       pathname.startsWith('/dashboard') ||
       pathname.startsWith('/projects') ||
@@ -41,7 +41,7 @@ export async function proxy(req: NextRequest) {
 
     // Redirect nếu chưa login vào route bảo vệ
     if (!user && isProtectedRoute) {
-      const url = new URL('/login', req.url);
+      const url = new URL('/auth/login', req.url);
       url.searchParams.set('next', pathname); // Lưu lại trang đích
       return NextResponse.redirect(url);
     }
@@ -55,7 +55,7 @@ export async function proxy(req: NextRequest) {
     console.error('Middleware auth error:', err);
     // Fail-safe: nếu lỗi auth, cho phép tiếp tục (tránh lock user)
     // Hoặc redirect về login nếu muốn strict:
-    // return NextResponse.redirect(new URL('/login', req.url));
+    // return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 
   return response;
@@ -67,8 +67,8 @@ export const config = {
     '/dashboard/:path*',
     '/projects/:path*',
     '/library/:path*',
-    '/login',
-    '/signup',
+    '/auth/login',
+    '/auth/signup',
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };

@@ -1,0 +1,26 @@
+
+> frontend@0.1.0 dev
+> next dev --port 3000
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.28.208.1:3000
+- Environments: .env.local
+✓ Ready in 1293ms
+Creating turbopack project {
+  dir: 'C:\\Users\\thuyt\\Desktop\\f\\KhaiPhaDuLieu\\frontend',
+  testMode: true
+}
+
+ GET /auth/login 200 in 3.2s (next.js: 2.8s, proxy.ts: 244ms, application-code: 242ms)
+  Reload env: .env.local
+ GET / 307 in 2.1s (next.js: 1421ms, proxy.ts: 421ms, application-code: 244ms)
+ GET /auth/login?next=%2Fdashboard 200 in 335ms (next.js: 24ms, proxy.ts: 16ms, application-code: 296ms)
+ GET / 307 in 1566ms (next.js: 25ms, proxy.ts: 1411ms, application-code: 130ms)
+ GET /auth/login?next=%2Fdashboard 200 in 189ms (next.js: 33ms, proxy.ts: 16ms, application-code: 139ms)
+ GET /auth/signup 200 in 1023ms (next.js: 934ms, proxy.ts: 14ms, application-code: 75ms)
+ GET / 307 in 417ms (next.js: 10ms, proxy.ts: 274ms, application-code: 133ms)
+ GET /auth/login?next=%2Fdashboard 200 in 105ms (next.js: 6ms, proxy.ts: 10ms, application-code: 89ms)
+ GET /auth/signup 200 in 106ms (next.js: 7ms, proxy.ts: 10ms, application-code: 89ms)
+ GET /auth/login 200 in 56ms (next.js: 7ms, proxy.ts: 8ms, application-code: 40ms)
+[?25h

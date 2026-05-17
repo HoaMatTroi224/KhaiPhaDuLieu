@@ -45,7 +45,7 @@ export default function TopNav() {
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        window.location.href = '/login'; // Redirect to login page after logout
+        window.location.href = '/auth/login'; // Redirect to login page after logout
     };
 
     const handleCreateProject = async (event: React.MouseEvent) => {
@@ -53,7 +53,7 @@ export default function TopNav() {
 
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
-            window.location.href = '/login';
+            window.location.href = '/auth/login';
             return;
         }
 
