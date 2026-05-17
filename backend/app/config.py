@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     PG_CONNECTION_STRING: str
     FACTCHECK_SERVICE_URL: str
 
-    REDIS_URL: str = "redis://localhost:6379/0"
+    # REDIS_URL: str = "redis://localhost:6379/0"
+    REDIS_URL: str
     CACHE_PROJECTS_TTL_SECONDS: int = 120
     CACHE_PROJECT_DETAIL_TTL_SECONDS: int = 300
     CACHE_DOCUMENTS_PENDING_TTL_SECONDS: int = 10
