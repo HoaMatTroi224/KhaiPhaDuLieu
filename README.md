@@ -1,25 +1,40 @@
-# 🚀 Dự án Khai phá dữ liệu báo khoa học Việt Nam
+# 🌟 Dự án Khai phá Dữ liệu: Summarize Paper
 
 ---
 
 ## 📖 Giới thiệu
 
-**KhaiPhaDuLieu** là một hệ thống hoàn chỉnh nhằm tự động hóa quá trình thu thập, làm sạch, chuẩn hóa và khai thác thông tin từ kho dữ liệu báo khoa học ngành khoa học - công nghệ Việt Nam. Dự án tích hợp các pipeline tự động (Python 100%), dịch vụ trích xuất - tóm tắt bằng AI (RAG, Semantic Chunking, LLM), chỉ mục hoá kiến thức (FAISS) và giao diện web thân thiện cho người dùng cuối.
+**KhaiPhaDuLieu** là một hệ thống tự động hóa toàn diện được thiết kế để thu thập, xử lý và khai thác thông tin từ dữ liệu báo khoa học tiếng Việt. Dự án sử dụng ngôn ngữ Python 100%, tích hợp các công nghệ tiên tiến bao gồm:
+- **Trí tuệ nhân tạo (AI):** Hỗ trợ tóm tắt bài báo và hỏi đáp thông minh.
+- **Xử lý dữ liệu lớn:** Làm sạch, chuẩn hóa và lưu trữ tập trung.
+- **Giao diện người dùng hiện đại:** Gồm cả giao diện web và ứng dụng mobile.
 
 ---
 
-## 🎯 Mục tiêu & Tính năng nổi bật
+## 🎯 Mục tiêu và Tính năng nổi bật
 
-- **Thu thập tự động** bài báo khoa học từ VJST, trích xuất PDF và metadata, chuẩn hóa lưu trữ tập trung.
-- **Tiền xử lý & Làm sạch mạnh mẽ:** Loại bỏ noise, định dạng lại văn bản, trích phần nội dung chính, chuẩn Unicode.
-- **Tóm tắt & hỏi đáp tự động bằng AI:** Sử dụng Google Gemini, Semantic Embeddings, RAG (Retrieval-Augmented Generation).
-- **Chỉ mục tìm kiếm & QA tốc độ cao:** FAISS vector store, search context cho hỏi đáp và tổng hợp báo cáo.
-- **Triển khai linh hoạt:** Có thể chạy batch/offline hoặc phục vụ API cho web frontend/backend.
-- **Giao diện người dùng:** Streamlit demo và web-app (FastAPI backend + frontend).
+### Mục tiêu:
+- Tự động hóa thu thập và quản lý bài báo khoa học.
+- Xây dựng các dịch vụ AI để truy vấn và cung cấp thông tin nhanh chóng, chính xác.
+- Hỗ trợ việc khai thác dữ liệu bài báo khoa học để phục vụ nghiên cứu.
+
+### Tính năng nổi bật:
+1. **Thu thập dữ liệu tự động:**
+   - Crawl dữ liệu từ nguồn báo khoa học VJST, trích xuất PDF + metadata.
+2. **Tiền xử lý mạnh mẽ:**
+   - Làm sạch văn bản, chuyển đổi sang Unicode chuẩn.
+3. **Tóm tắt và hỏi đáp bằng AI:**
+   - Ứng dụng `VietAI/vit5-base` với LoRA và RAG index embedding.
+4. **Triển khai linh hoạt:**
+   - Chạy được cả offline (batch) và online (API backend và UI).
+5. **Tìm kiếm nhanh chóng:**
+   - Tích hợp FAISS để xây dựng vector embedding và truy vấn.
 
 ---
 
-## 📦 Kiến trúc & Workflow tổng quát
+## 📦 Kiến trúc & Workflow
+
+Dưới đây là luồng hoạt động của toàn bộ hệ thống:
 
 ```mermaid
 flowchart TD
@@ -35,170 +50,101 @@ flowchart TD
     I1 --> J[(Frontend UI <br/> web/frontend/* )]
 ```
 
-**Chú giải**:<br>
-- <b>Xanh lam</b>: bước batch tự động (thu thập, cleaning, indexing).
-- <b>Cam/Vàng</b>: bước AI dịch vụ xử lý, truy xuất chỉ mục, infer/QA.
-- <b>Tím</b>: backend web và frontend trang người dùng cuối.
+Chi tiết:
+1. **Xanh lam:** Quy trình batch tự động: crawl, làm sạch, indexing.
+2. **Vàng:** Xử lý AI: RAG embedding, infer, hỏi đáp.
+3. **Tím:** Giao diện cho người dùng qua web-app (với `FastAPI`, Next.js).
 
 ---
 
-## 🗂️ Cấu trúc thư mục dự án
+## 🗂️ Cấu trúc thư mục Dự án Chi Tiết
 
-```
+```plaintext
 KhaiPhaDuLieu/
-├── README.md                # Tài liệu hướng dẫn này
-├── data-preprocessing/
-│   ├── crawl_data.py        # Thu thập và trích xuất nội dung báo VJST
-│   └── data_preprocessing.py # Tiền xử lý, làm sạch, xuất CSV/SQL
-│
-├── ai_module/Models/        # (nhánh ai_module)
-│   ├── model.py             # Streamlit app tóm tắt trực tuyến
-│   ├── test.py              # FastAPI Service: Hỏi đáp, tạo index, sinh summary...
-│   ├── model.ipynb          # Thí nghiệm notebook AI
-│   ├── requirements.txt     # Package dependencies
-│   └── service_*/           # (Q&A, Summarize services)
-│
-├── web/                     # (nhánh web)
-│   ├── docker-compose.yml   # Orchestration Docker cho backend/frontend/db
-│   ├── backend/
-│   │   └── app/             # FastAPI backend, routers, models, services
-│   └── frontend/            # Web client (UI)
-│
-├── khoahoc_vn.db            # SQLite (artifact, sinh ra khi crawl)
-├── ds-1000b.csv             # Data sạch (sinh ra khi preprocessing)
-├── data_postgres.sql        # SQL import vào Postgres/Supabase
-└── faiss_index_kpdl/        # FAISS index cho RAG (tạo khi chạy AI indexing)
+├── README.md                     # Hướng dẫn tổng quan dự án
+├── docker-compose.yml            # Quản lý container hóa backend, frontend, DB
+├── khoahoc_vn.db                 # SQLite file sinh ra từ quy trình crawl dữ liệu
+├── ds-1000b.csv                  # Dữ liệu sạch sau khi tiền xử lý
+├── data_postgres.sql             # Script SQL import lên PostgreSQL
+
+├── data-preprocessing/           # Tiền xử lý dữ liệu
+│   ├── README.md                 # Hướng dẫn cài đặt module này
+│   ├── requirements.txt          # Các thư viện cần thiết (pandas, regex,...)
+│   ├── crawl_data.py             # Script crawl và thu thập bài báo khoa học
+│   ├── data_preprocessing.py     # Làm sạch và chuẩn hóa dữ liệu
+│   └── utils/                    # Tiện ích hỗ trợ xử lý
+│       ├── cleaning_util.py      # Hàm xử lý noise trong văn bản
+│       ├── format_checker.py     # Kiểm tra định dạng Unicode
+│       └── constants.py          # Cấu hình biến cố định (thư mục/format)
+
+├── ai_module/                    # Các module AI hỗ trợ QA và tóm tắt
+│   ├── Models/                   # Chính sách AI: inference, indexing...
+│   │   ├── README.md             # Hướng dẫn tổng thể module AI
+│   │   ├── requirements.txt      # Thư viện AI (transformers, faiss, ...)
+│   │   ├── model.py              # Streamlit demo model hỏi đáp và tóm tắt
+│   │   ├── test.py               # FastAPI: routing toàn bộ dịch vụ AI
+│   │   ├── model.ipynb           # Thử nghiệm/ví dụ jupyter notebook
+│   │   ├── service_qa/           # Module RAG QA Service
+│   │   │   ├── README.md         # Tài liệu dịch vụ QA
+│   │   │   ├── config/           # Cấu hình QA
+│   │   │   ├── data_access/      # CRUD DB PostgreSQL/Supabase + xử lý metadata
+│   │   │   ├── embedding/        # Xử lý vector embedding (E5 model)
+│   │   │   ├── generation/       # RAG-based answer generator
+│   │   │   └── serving/          # Endpoints chính (FastAPI)
+│   │   ├── service_summarize/    # Module tóm tắt bài báo bằng tiếng Việt
+│   │   │   ├── README.md         # Tài liệu dịch vụ Tóm tắt
+│   │   │   ├── summarizer.py     # Chức năng chính để tóm tắt
+│   │   │   ├── vit5_lora/        # Fine-tuned ViT5 base + LoRA adapter
+│   │   │   └── pipeline/         # Quy trình giảm tokenize multi-doc
+│   └── faiss_index_kpdl/         # FAISS chỉ mục RAG-based QA
+│       ├── embeddings/           # Vector embeddings sinh sau preprocess
+│       ├── faiss_index.bin       # FAISS thuật toán index trả lời nhanh
+│       └── metadata.db           # Mapping id-chunk đến dữ liệu raw
+
+├── web/                          # Giao diện Web cả backend lẫn frontend
+│   ├── README.md                 # Tổng quan module Web
+│   ├── docker-compose.override.yml # Tùy chỉnh config background service
+│   ├── backend/                  # Django/FastAPI Backend
+│   │   ├── app/                  # Application backend logic
+│   │   │   ├── main.py           # Điểm vào chính của FastAPI
+│   │   │   ├── routers/          # Tích hợp routes (upload, hỏi đáp, log...)
+│   │   │   ├── models/           # Mô hình DB + Pydantic Validation
+│   │   │   ├── services/         # Handlers API chính (QA, tóm tắt, ...)
+│   └── frontend/                 # Frontend giao diện Next.js
+│       ├── components/           # React Components (Giao diện UI nhỏ)
+│       ├── pages/                # Routing chính Next.js
+│       ├── ChatBox.tsx           # Nhập chat cho hỏi đáp AI
+│       ├── FileUpload.tsx        # Khu vực upload file PDF
+│       ├── Dashboard.tsx         # Hiển thị dự án/tài liệu cá nhân
+
+├── mobile/                       # Ứng dụng di động Expo React Native
+│   ├── README.md                 # Hướng dẫn sử dụng app
+│   ├── package.json              # Cấu hình/yêu cầu dependencies
+│   └── app/                      # Cấu trúc chính Expo
+│       ├── pages/                # Các màn hình (Chính, dự án)
+│       ├── components/           # React Native Components reusable
+│       ├── App.js                # Điểm vào chính app React Native
+│       └── routing/              # Xử lý điều hướng di động
 ```
 
 ---
 
-## 🛠️ Hướng dẫn cài đặt & chạy thử
+## 🛠️ Hướng dẫn cài đặt và triển khai
 
-### 1. Thiết lập môi trường và cài dependencies
+### 1. Yêu cầu hệ thống
+- **Ngôn ngữ lập trình:** Python 3.10+
+- **Cơ sở dữ liệu:** PostgreSQL (hoặc Supabase)
+- **Công cụ bổ trợ:** Docker, Node.js, npm
 
-```bash
-# Tạo môi trường ảo Python
-python -m venv .venv
-source .venv/bin/activate
+### 2. Các bước cài đặt
 
-# Cài đặt bắt buộc cho crawl/cleaning
-pip install -r data-preprocessing/requirements.txt
+#### [A] Chuẩn bị môi trường
+- Tạo môi trường ảo và cài đặt dependencies (python, npm). 
+- Xem chi tiết tại từng `README.md` của các thư mục.
 
-# Module AI (embeddings, LLM)
-pip install -r ai_module/Models/requirements.txt
-
-# Web backend (FastAPI)
-pip install -r web/backend/requirements.txt
-```
-**Biến môi trường cần thiết**  
-Tạo file `.env` hoặc export các biến dưới đây:
-```
-GOOGLE_API_KEY=<Your_Google_Gemini_API_Key>
-DATABASE_URL=<Postgres_or_Supabase_URL>
-```
+#### [B] Triển khai cục bộ/dùng Docker
+- Chi tiết setup nằm tại các tệp hướng dẫn trong từng nhánh.
 
 ---
 
-### 2. Pipeline cơ bản end-to-end
-
-#### [A] Thu thập & làm sạch dữ liệu
-
-```bash
-# 1. Crawl bài báo (SQLite)
-python data-preprocessing/crawl_data.py
-
-# 2. Tiền xử lý & xuất dữ liệu sạch (CSV + SQL)
-python data-preprocessing/data_preprocessing.py
-```
-
-#### [B] Import vào Database (Postgres/Supabase)
-
-```bash
-psql $DATABASE_URL -f data_postgres.sql
-# hoặc dùng giao diện Supabase để import file SQL
-```
-
-#### [C] Khởi tạo AI Index/embeddings (FAISS)
-
-```bash
-cd ai_module/Models
-uvicorn test:app --reload --port 8001
-
-# Gọi API tạo chỉ mục FAISS từ DB
-curl -X POST http://localhost:8001/process_kpdl/
-```
-
-#### [D] Kiểm thử hỏi đáp, tóm tắt AI (QA/Summary)
-
-```bash
-# Ví dụ hỏi đáp
-curl -X POST http://localhost:8001/ask_question/ \
-  -H "Content-Type: application/json" \
-  -d '{"question":"Trình bày mục tiêu bài báo?", "chat_history":[]}'
-
-# Tạo summary và lưu lịch sử
-curl -X POST http://localhost:8001/generate_and_save_summary/ \
-  -H "Content-Type: application/json" \
-  -d '{"raw_text":"Nội dung mẫu cần tóm tắt ..."}'
-```
-
-#### [E] Demo UI (Streamlit hoặc Web-app)
-
-```bash
-# Chạy Streamlit demo nhanh cho tóm tắt/upload file
-streamlit run model.py --server.port 8501
-
-# Hoặc chạy toàn bộ backend/frontend qua Docker Compose
-cd web
-docker-compose up --build
-```
-
----
-
-## 🎛️ Các endpoint API chính (chi tiết hơn)
-
-| Endpoint                                 | Chức năng                               | Method | Nhánh/Module                  |
-|-------------------------------------------|-----------------------------------------|--------|-------------------------------|
-| /upload_document/                         | Upload file (pdf/txt/png/jpg) & trích xuất, overview, Q&A | POST   | ai_module/Models/test.py      |
-| /process_kpdl/                            | Đọc db, semantic chunking, build FAISS  | POST   | ai_module/Models/test.py      |
-| /ask_question/                            | Hỏi đáp RAG từ FAISS & chat_history     | POST   | ai_module/Models/test.py      |
-| /get_overview_and_questions/{paper_id}    | Sinh overview + 3 câu hỏi nhanh         | GET    | ai_module/Models/test.py      |
-| /generate_and_save_summary/               | Sinh và lưu tóm tắt cho đoạn văn        | POST   | ai_module/Models/test.py      |
-
----
-
-## 📝 Lưu ý triển khai & vận hành
-
-- Nên sử dụng Postgres/Supabase để lưu trữ lâu dài và AI indexer hiệu quả.
-- Giám sát FAISS, backup khoahoc_vn.db, user_history, kiểm soát quyền API.
-- Có thể mở rộng: thêm queue (Celery/Redis) cho long-running jobs, thêm authentication cho backend.
-- Regular job: cron/GitHub Actions để crawl + indexing định kỳ.
-
----
-
-## 🚩 Đóng góp & phát triển mở rộng
-
-- Fork, clone repo về, tạo branch cho tính năng mới, pull request kèm mô tả.
-- Viết test cho các module mới.
-- Góp ý, báo lỗi, ý tưởng cải tiến: tạo issue/new discussion.
-
----
-
-## 📚 Tài liệu tham khảo trong repo
-- `data-preprocessing/crawl_data.py`, `data_preprocessing.py`
-- `ai_module/Models/model.py`, `test.py`, `model.ipynb`
-- `web/backend/app/` (main.py, routers, services)
-- `docker-compose.yml` (deploy orchestration)
-
----
-
-## 📢 Bản quyền & liên hệ
-
-Copyright (c)  
-Repo: [HoaMatTroi224/KhaiPhaDuLieu](https://github.com/HoaMatTroi224/KhaiPhaDuLieu)
-
-Thắc mắc, hợp tác, báo lỗi: [Issue](https://github.com/HoaMatTroi224/KhaiPhaDuLieu/issues)
-
----
-
-**Chúc bạn sử dụng dự án hiệu quả và góp phần vào kho dữ liệu học thuật Việt Nam!**
+Hãy sử dụng README này để triển khai đồng bộ và phát triển dự án.
