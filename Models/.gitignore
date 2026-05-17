@@ -28,5 +28,3 @@ logs/
 *.tmp
 tmp/
 
-# Claude worktrees
-.claude/
