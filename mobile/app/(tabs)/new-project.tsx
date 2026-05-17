@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
 import { supabase } from '@/lib/supabase';
@@ -26,6 +26,7 @@ interface SelectedFile {
 export default function NewProjectScreen() {
   const router = useRouter();
   const [projectId, setProjectId] = useState<string>('');
+  const [projectName, setProjectName] = useState<string>('Untitled Mobile Project');
   const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -138,188 +139,136 @@ export default function NewProjectScreen() {
     setSelectedFiles((prev) => prev.filter((file) => file.id !== id));
   };
 
-  const uploadFiles = async () => {
-  if (selectedFiles.length === 0) {
-    setError('Please choose at least one PDF to upload.');
-    return;
-  }
+   const uploadFiles = async () => {
+   if (selectedFiles.length === 0) {
+     setError('Please choose at least one PDF to upload.');
+     return;
+   }
 
-  if (!projectId) {
-    setError('Project not initialized.');
-    return;
-  }
+   if (!projectId) {
+     setError('Project not initialized.');
+     return;
+   }
 
-  setUploading(true);
-  setError('');
+   if (!projectName.trim()) {
+     setError('Please enter a project name.');
+     return;
+   }
 
-  try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+   setUploading(true);
+   setError('');
 
-    if (!user) {
-      throw new Error('Authentication required');
-    }
+   try {
+     const {
+       data: { user },
+     } = await supabase.auth.getUser();
 
-    const uploadedDocuments: Array<{
-      file_name: string;
-      file_path: string;
-      file_url: string;
-      file_type: 'pdf';
-      file_size: number;
-    }> = [];
+     if (!user) {
+       throw new Error('Authentication required');
+     }
 
-    // for (const file of selectedFiles) {
-    //   console.log('Uploading:', file.name);
+     const uploadedDocuments: Array<{
+       file_name: string;
+       file_path: string;
+       file_url: string;
+       file_type: 'pdf';
+       file_size: number;
+     }> = [];
 
-    //   const timestamp = Date.now();
+     for (const file of selectedFiles) {
+       console.log('Uploading:', file.name);
 
-    //   const randomSuffix = Math.random()
-    //     .toString(36)
-    //     .substring(2, 8);
+       const timestamp = Date.now();
 
-    //   const safeName = file.name.replace(
-    //     /[^a-zA-Z0-9._-]/g,
-    //     '_'
-    //   );
+       const randomSuffix = Math.random()
+         .toString(36)
+         .substring(2, 8);
 
-    //   const storagePath =
-    //     `${user.id}/mobile_uploads/` +
-    //     `${timestamp}_${randomSuffix}_${safeName}`;
+       const safeName = file.name.replace(
+         /[^a-zA-Z0-9._-]/g,
+         '_'
+       );
 
-    //   const fileToUpload = {
-    //     uri: file.uri,
-    //     name: safeName,
-    //     type: file.mimeType || 'application/pdf',
-    //   };
+       const storagePath =
+         `${user.id}/mobile_uploads/` +
+         `${timestamp}_${randomSuffix}_${safeName}`;
 
-    //   const { data, error } = await supabase.storage
-    //     .from('documents')
-    //     .upload(
-    //       storagePath,
-    //       fileToUpload as any,
-    //       {
-    //         contentType:
-    //           file.mimeType || 'application/pdf',
-    //         upsert: false,
-    //       }
-    //     );
+       // IMPORTANT:
+       // fetch local file URI -> convert to Blob
 
-    //   console.log('UPLOAD DATA:', data);
-    //   console.log('UPLOAD ERROR:', error);
+       // 
+       
+       const response = await fetch(file.uri);
 
-    //   if (error) {
-    //     throw error;
-    //   }
+       const arrayBuffer = await response.arrayBuffer();
 
-    //   const { data: publicUrlData } =
-    //     supabase.storage
-    //       .from('documents')
-    //       .getPublicUrl(storagePath);
+       console.log('FILE URI:', file.uri);
 
-    //   uploadedDocuments.push({
-    //     file_name: file.name,
-    //     file_path: storagePath,
-    //     file_url: publicUrlData.publicUrl,
-    //     file_type: 'pdf',
-    //     file_size: file.size,
-    //   });
-    // }
+       console.log('ARRAY BUFFER SIZE:', arrayBuffer.byteLength);
 
-    for (const file of selectedFiles) {
-      console.log('Uploading:', file.name);
-
-      const timestamp = Date.now();
-
-      const randomSuffix = Math.random()
-        .toString(36)
-        .substring(2, 8);
-
-      const safeName = file.name.replace(
-        /[^a-zA-Z0-9._-]/g,
-        '_'
-      );
-
-      const storagePath =
-        `${user.id}/mobile_uploads/` +
-        `${timestamp}_${randomSuffix}_${safeName}`;
-
-      // IMPORTANT:
-      // fetch local file URI -> convert to Blob
-
-      // 
-      
-      const response = await fetch(file.uri);
-
-      const arrayBuffer = await response.arrayBuffer();
-
-      console.log('FILE URI:', file.uri);
-
-      console.log('ARRAY BUFFER SIZE:', arrayBuffer.byteLength);
-
-      console.log('STORAGE PATH:', storagePath);
+       console.log('STORAGE PATH:', storagePath);
 
 
-      const { data, error } = await supabase.storage
-        .from('documents')
-        .upload(
-          storagePath,
-          arrayBuffer,
-          {
-            contentType: 'application/pdf',
-            upsert: false,
-          }
-        );
+       const { data, error } = await supabase.storage
+         .from('documents')
+         .upload(
+           storagePath,
+           arrayBuffer,
+           {
+             contentType: 'application/pdf',
+             upsert: false,
+           }
+         );
 
-      console.log('UPLOAD DATA:', data);
-      console.log('UPLOAD ERROR:', error);
+       console.log('UPLOAD DATA:', data);
+       console.log('UPLOAD ERROR:', error);
 
-      
-      if (error) {
-        throw error;
-      }
+       
+       if (error) {
+         throw error;
+       }
 
-      const { data: publicUrlData } =
-        supabase.storage
-          .from('documents')
-          .getPublicUrl(storagePath);
+       const { data: publicUrlData } =
+         supabase.storage
+           .from('documents')
+           .getPublicUrl(storagePath);
 
-      uploadedDocuments.push({
-        file_name: file.name,
-        file_path: storagePath,
-        file_url: publicUrlData.publicUrl,
-        file_type: 'pdf',
-        file_size: file.size,
-      });
-    }
+       uploadedDocuments.push({
+         file_name: file.name,
+         file_path: storagePath,
+         file_url: publicUrlData.publicUrl,
+         file_type: 'pdf',
+         file_size: file.size,
+       });
+     }
 
-    console.log(
-      'Calling finalizeProject...'
-    );
+     console.log(
+       'Calling finalizeProject...'
+     );
 
-    await finalizeProject(projectId, {
-      name: 'Untitled Mobile Project',
-      domain: null,
-      documents: uploadedDocuments,
-    });
+     await finalizeProject(projectId, {
+       name: projectName,
+       domain: null,
+       documents: uploadedDocuments,
+     });
 
-    console.log('Finalize success');
-    console.log('Navigating to summary with projectId:', projectId);
+     console.log('Finalize success');
+     console.log('Navigating to summary with projectId:', projectId);
 
-    router.push(
-      `/Summary?projectId=${projectId}` as any
-    );
-  } catch (err: any) {
-    console.error('UPLOAD FLOW ERROR:', err);
+     router.push(
+       `/Summary?projectId=${projectId}` as any
+     );
+   } catch (err: any) {
+     console.error('UPLOAD FLOW ERROR:', err);
 
-    setError(
-      err?.message ||
-        'Upload failed. Please try again.'
-    );
-  } finally {
-    setUploading(false);
-  }
-};
+     setError(
+       err?.message ||
+         'Upload failed. Please try again.'
+     );
+   } finally {
+     setUploading(false);
+   }
+ };
 
   return (
     <ThemedView style={styles.page}>
@@ -333,18 +282,33 @@ export default function NewProjectScreen() {
           </ThemedText>
         </View>
 
-        <Pressable style={styles.dropZone} onPress={handlePickFiles} disabled={uploading}>
-          <View style={styles.uploadIcon}>
-            <IconSymbol size={32} name="cloud_upload" color="#FFFFFF" />
-          </View>
-          <ThemedText type="subtitle" style={styles.dropTitle}>
-            Tap to add PDFs
-          </ThemedText>
-          <ThemedText style={styles.dropText}>Select files from device storage</ThemedText>
-          <View style={styles.fileBadge}>
-            <ThemedText style={styles.fileBadgeText}>PDF ONLY</ThemedText>
-          </View>
-        </Pressable>
+         <View style={styles.projectNameInput}>
+           <ThemedText type="subtitle" style={styles.projectNameLabel}>
+             Project Name
+           </ThemedText>
+           <View style={styles.inputContainer}>
+             <TextInput
+               style={styles.projectNameInputField}
+               value={projectName}
+               onChangeText={setProjectName}
+               placeholder="Enter project name"
+               placeholderTextColor="#9CA3AF"
+             />
+           </View>
+         </View>
+
+         <Pressable style={styles.dropZone} onPress={handlePickFiles} disabled={uploading}>
+           <View style={styles.uploadIcon}>
+             <IconSymbol size={32} name="cloud_upload" color="#FFFFFF" />
+           </View>
+           <ThemedText type="subtitle" style={styles.dropTitle}>
+             Tap to add PDFs
+           </ThemedText>
+           <ThemedText style={styles.dropText}>Select files from device storage</ThemedText>
+           <View style={styles.fileBadge}>
+             <ThemedText style={styles.fileBadgeText}>PDF ONLY</ThemedText>
+           </View>
+         </Pressable>
 
         {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
 
@@ -522,7 +486,30 @@ const styles = StyleSheet.create({
     color: '#0040E0',
     fontWeight: '700',
   },
-  disabledButton: {
-    opacity: 0.65,
+  projectNameInput: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.02,
+    shadowRadius: 10,
+    elevation: 2,
+  },
+  projectNameLabel: {
+    fontSize: 18,
+    marginBottom: 8,
+    color: '#1F2937',
+  },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  projectNameInputField: {
+    fontSize: 16,
+    color: '#374151',
   },
 });

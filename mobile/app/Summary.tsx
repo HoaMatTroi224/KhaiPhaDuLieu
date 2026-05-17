@@ -59,12 +59,12 @@ export default function ProjectSummary() {
         {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
         {loading ? <ActivityIndicator /> : null}
 
-        {documents.map((doc) => (
-          <View key={doc.id} style={styles.card}>
-            <ThemedText type="defaultSemiBold">{doc.title ?? doc.file_name ?? 'Untitled'}</ThemedText>
-            <ThemedText style={styles.desc}>{doc.summary?.text ?? doc.summary?.content ?? 'No summary available'}</ThemedText>
-          </View>
-        ))}
+         {documents.map((doc) => (
+           <View key={doc.id} style={styles.card}>
+             <ThemedText type="defaultSemiBold">{doc.title ?? doc.file_name ?? 'Untitled'}</ThemedText>
+             <ThemedText style={styles.desc}>{doc.summary?.summary_text ?? 'No summary available'}</ThemedText>
+           </View>
+         ))}
       </ScrollView>
     </ThemedView>
   );
