@@ -9,6 +9,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 
+
 const MAX_FILE_COUNT = 4;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
@@ -44,136 +45,281 @@ export default function NewProjectScreen() {
     createProject();
   }, []);
 
-  const normalizeDocumentResult = (result: any): SelectedFile[] => {
-    if (result.type !== 'success') return [];
+  const normalizeDocumentResult = (
+  result: DocumentPicker.DocumentPickerResult
+): SelectedFile[] => {
+  if (result.canceled) {
+    return [];
+  }
 
-    const items = Array.isArray(result.output) ? result.output : [result];
-    return items
-      .filter((file: any) => file.type === 'success')
-      .map((file: any) => ({
-        id: `${file.uri}-${file.name}`,
-        name: file.name,
-        uri: file.uri,
-        size: file.size ?? 0,
-        mimeType: file.mimeType ?? 'application/pdf',
-      }));
-  };
+  return result.assets.map((file) => ({
+    id: `${file.uri}-${file.name}`,
+    name: file.name,
+    uri: file.uri,
+    size: file.size ?? 0,
+    mimeType: file.mimeType ?? 'application/pdf',
+  }));
+};
 
   const handlePickFiles = async () => {
-    setError('');
+  setError('');
 
-    try {
-      const result: any = await DocumentPicker.getDocumentAsync({
+  try {
+    const result =
+      await DocumentPicker.getDocumentAsync({
         type: 'application/pdf',
         multiple: true,
         copyToCacheDirectory: true,
       });
 
-      const pickedFiles = normalizeDocumentResult(result);
-      if (pickedFiles.length === 0) return;
+    console.log(
+      'DOCUMENT PICKER RESULT:',
+      JSON.stringify(result, null, 2)
+    );
 
-      const nextFiles = selectedFiles.concat(pickedFiles).slice(0, MAX_FILE_COUNT);
-      const invalidFile = pickedFiles.find((file) => file.size > MAX_FILE_SIZE || !file.name.toLowerCase().endsWith('.pdf'));
+    const pickedFiles =
+      normalizeDocumentResult(result);
 
-      if (invalidFile) {
-        setError('Only PDF files under 10MB are supported.');
-        return;
-      }
+    console.log(
+      'PICKED FILES:',
+      pickedFiles
+    );
 
-      if (nextFiles.length > MAX_FILE_COUNT) {
-        setError(`You can upload a maximum of ${MAX_FILE_COUNT} files.`);
-      }
-
-      setSelectedFiles(nextFiles);
-    } catch (err: unknown) {
-      console.error('Document picker error', err);
-      setError('Could not open file picker. Please try again.');
+    if (pickedFiles.length === 0) {
+      return;
     }
-  };
+
+    const invalidFile = pickedFiles.find(
+      (file) =>
+        file.size > MAX_FILE_SIZE ||
+        !file.name
+          .toLowerCase()
+          .endsWith('.pdf')
+    );
+
+    if (invalidFile) {
+      setError(
+        'Only PDF files under 10MB are supported.'
+      );
+      return;
+    }
+
+    const combinedFiles = [
+      ...selectedFiles,
+      ...pickedFiles,
+    ];
+
+    if (combinedFiles.length > MAX_FILE_COUNT) {
+      setError(
+        `Maximum ${MAX_FILE_COUNT} PDFs allowed.`
+      );
+
+      setSelectedFiles(
+        combinedFiles.slice(0, MAX_FILE_COUNT)
+      );
+
+      return;
+    }
+
+    setSelectedFiles(combinedFiles);
+  } catch (err) {
+    console.error(
+      'Document picker error:',
+      err
+    );
+
+    setError(
+      'Could not open file picker. Please try again.'
+    );
+  }
+};
 
   const removeFile = (id: string) => {
     setSelectedFiles((prev) => prev.filter((file) => file.id !== id));
   };
 
   const uploadFiles = async () => {
-    if (selectedFiles.length === 0) {
-      setError('Please choose at least one PDF to upload.');
-      return;
+  if (selectedFiles.length === 0) {
+    setError('Please choose at least one PDF to upload.');
+    return;
+  }
+
+  if (!projectId) {
+    setError('Project not initialized.');
+    return;
+  }
+
+  setUploading(true);
+  setError('');
+
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error('Authentication required');
     }
 
-    if (!projectId) {
-      setError('Unable to upload: project was not created yet. Please try again.');
-      return;
-    }
+    const uploadedDocuments: Array<{
+      file_name: string;
+      file_path: string;
+      file_url: string;
+      file_type: 'pdf';
+      file_size: number;
+    }> = [];
 
-    setUploading(true);
-    setError('');
+    // for (const file of selectedFiles) {
+    //   console.log('Uploading:', file.name);
 
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Authentication required');
+    //   const timestamp = Date.now();
 
-      const uploadedDocuments = [] as Array<{
-        file_name: string;
-        file_path: string;
-        file_url: string;
-        file_type: 'pdf';
-        file_size: number;
-      }>;
+    //   const randomSuffix = Math.random()
+    //     .toString(36)
+    //     .substring(2, 8);
 
-      for (const file of selectedFiles) {
-        const fileResponse = await fetch(file.uri);
-        const blob = await fileResponse.blob();
+    //   const safeName = file.name.replace(
+    //     /[^a-zA-Z0-9._-]/g,
+    //     '_'
+    //   );
 
-        const timestamp = Date.now();
-        const randomSuffix = Math.random().toString(36).substring(2, 8);
-        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        const storagePath = `${user.id}/mobile_uploads/${timestamp}_${randomSuffix}_${safeName}`;
+    //   const storagePath =
+    //     `${user.id}/mobile_uploads/` +
+    //     `${timestamp}_${randomSuffix}_${safeName}`;
 
-        const { error: uploadError } = await supabase.storage
-          .from('documents')
-          .upload(storagePath, blob, {
-            contentType: file.mimeType,
-            cacheControl: '3600',
+    //   const fileToUpload = {
+    //     uri: file.uri,
+    //     name: safeName,
+    //     type: file.mimeType || 'application/pdf',
+    //   };
+
+    //   const { data, error } = await supabase.storage
+    //     .from('documents')
+    //     .upload(
+    //       storagePath,
+    //       fileToUpload as any,
+    //       {
+    //         contentType:
+    //           file.mimeType || 'application/pdf',
+    //         upsert: false,
+    //       }
+    //     );
+
+    //   console.log('UPLOAD DATA:', data);
+    //   console.log('UPLOAD ERROR:', error);
+
+    //   if (error) {
+    //     throw error;
+    //   }
+
+    //   const { data: publicUrlData } =
+    //     supabase.storage
+    //       .from('documents')
+    //       .getPublicUrl(storagePath);
+
+    //   uploadedDocuments.push({
+    //     file_name: file.name,
+    //     file_path: storagePath,
+    //     file_url: publicUrlData.publicUrl,
+    //     file_type: 'pdf',
+    //     file_size: file.size,
+    //   });
+    // }
+
+    for (const file of selectedFiles) {
+      console.log('Uploading:', file.name);
+
+      const timestamp = Date.now();
+
+      const randomSuffix = Math.random()
+        .toString(36)
+        .substring(2, 8);
+
+      const safeName = file.name.replace(
+        /[^a-zA-Z0-9._-]/g,
+        '_'
+      );
+
+      const storagePath =
+        `${user.id}/mobile_uploads/` +
+        `${timestamp}_${randomSuffix}_${safeName}`;
+
+      // IMPORTANT:
+      // fetch local file URI -> convert to Blob
+
+      // 
+      
+      const response = await fetch(file.uri);
+
+      const arrayBuffer = await response.arrayBuffer();
+
+      console.log('FILE URI:', file.uri);
+
+      console.log('ARRAY BUFFER SIZE:', arrayBuffer.byteLength);
+
+      console.log('STORAGE PATH:', storagePath);
+
+
+      const { data, error } = await supabase.storage
+        .from('documents')
+        .upload(
+          storagePath,
+          arrayBuffer,
+          {
+            contentType: 'application/pdf',
             upsert: false,
-          });
+          }
+        );
 
-        if (uploadError) {
-          throw uploadError;
-        }
+      console.log('UPLOAD DATA:', data);
+      console.log('UPLOAD ERROR:', error);
 
-        const publicResponse = await supabase.storage
+      
+      if (error) {
+        throw error;
+      }
+
+      const { data: publicUrlData } =
+        supabase.storage
           .from('documents')
           .getPublicUrl(storagePath);
 
-        const publicUrl = publicResponse.data?.publicUrl;
-        if (!publicUrl) {
-          throw new Error('Failed to generate public URL');
-        }
-
-        uploadedDocuments.push({
-          file_name: file.name,
-          file_path: storagePath,
-          file_url: publicUrl,
-          file_type: 'pdf',
-          file_size: file.size,
-        });
-      }
-
-      await finalizeProject(projectId, {
-        name: 'Untitled Mobile Project',
-        domain: null,
-        documents: uploadedDocuments,
+      uploadedDocuments.push({
+        file_name: file.name,
+        file_path: storagePath,
+        file_url: publicUrlData.publicUrl,
+        file_type: 'pdf',
+        file_size: file.size,
       });
-
-      router.push(`/Summary?projectId=${projectId}` as any);
-    } catch (err: unknown) {
-      console.error('Upload error', err);
-      setError(err instanceof Error ? err.message : 'Upload failed. Please try again.');
-    } finally {
-      setUploading(false);
     }
-  };
+
+    console.log(
+      'Calling finalizeProject...'
+    );
+
+    await finalizeProject(projectId, {
+      name: 'Untitled Mobile Project',
+      domain: null,
+      documents: uploadedDocuments,
+    });
+
+    console.log('Finalize success');
+    console.log('Navigating to summary with projectId:', projectId);
+
+    router.push(
+      `/Summary?projectId=${projectId}` as any
+    );
+  } catch (err: any) {
+    console.error('UPLOAD FLOW ERROR:', err);
+
+    setError(
+      err?.message ||
+        'Upload failed. Please try again.'
+    );
+  } finally {
+    setUploading(false);
+  }
+};
 
   return (
     <ThemedView style={styles.page}>
