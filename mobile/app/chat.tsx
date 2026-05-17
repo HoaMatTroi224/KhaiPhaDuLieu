@@ -269,7 +269,7 @@ export default function ChatScreen() {
         <KeyboardAvoidingView
           style={styles.keyboardAvoid}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 60}
         >
           <ThemedView style={styles.page}>
             <View style={styles.header}>
@@ -467,7 +467,7 @@ const styles = StyleSheet.create({
   },
   chatList: {
     gap: 18,
-    paddingBottom: 60,
+    paddingBottom: 120,
   },
   headerRight: {
     alignItems: 'flex-end',
@@ -595,6 +595,22 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     gap: 2,
   },
+  outboundBubble: {
+  backgroundColor: '#0040E0',
+  alignSelf: 'flex-end',
+  borderRadius: 20,
+  padding: 14,
+},
+outboundText: {
+  color: '#FFFFFF',
+},
+inboundBubble: {
+  backgroundColor: '#FFFFFF',
+  alignSelf: 'flex-start',
+},
+inboundText: {
+  color: '#111827',
+},
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
