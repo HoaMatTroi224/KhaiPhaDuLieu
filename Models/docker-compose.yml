@@ -1,0 +1,63 @@
+version: "3.9"
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  summarization:
+    build: ./service_summarize
+    ports:
+      - "8001:8001"
+    env_file: ./service_summarize/.env
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  factcheck:
+    build: ./service_factcheck
+    ports:
+      - "8002:8000"
+    env_file: ./service_factcheck/.env
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  qa:
+    build: ./service_qa
+    ports:
+      - "8003:8000"
+    env_file: ./service_qa/.env
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "8000:8000"
+    env_file: ./.env
+    networks:
+      - app-network
+    depends_on:
+      qa:
+        condition: service_healthy
+      summarization:
+        condition: service_healthy
+      factcheck:
+        condition: service_healthy
+    restart: unless-stopped
