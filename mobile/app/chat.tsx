@@ -58,8 +58,8 @@ type CitationDetail = {
 };
 
 const normalizeFactCheckLabel = (label?: string): FactCheckLabel => {
-  const normalized = label?.toUpperCase() === 'SUPORTED' ? 'SUPPORTED' : label?.toUpperCase();
-  return normalized === 'REFUTED' || normalized === 'NEI' ? normalized : 'SUPPORTED';
+  const labelNorm = label?.toUpperCase() === 'SUPORTED' ? 'SUPPORTED' : label?.toUpperCase();
+  return labelNorm === 'REFUTED' || labelNorm === 'NEI' ? labelNorm : 'SUPPORTED';
 };
 
 const getFactCheckColors = (label: FactCheckLabel) => {
@@ -82,37 +82,35 @@ const formatTime = (isoString?: string) => {
   return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-const parsedCitationRegex = /([\[【\[])\s*(\S+?)\s*([\]】\]])/g;
+const parsedCitationRegex = /\[s(\d+)\]/gi;
 
 const renderTextWithCitations = (
   content: string,
   citations: Citation[] = [],
   onCitationPress: (detail: CitationDetail) => void
 ) => {
+  const citationMap = new Map<string, Citation>();
+  citations.forEach((c) => {
+    if (c.source_marker) {
+      citationMap.set(c.source_marker.toUpperCase(), c);
+    }
+  });
+
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   parsedCitationRegex.lastIndex = 0;
 
   while ((match = parsedCitationRegex.exec(content)) !== null) {
-    const rawMarker = match[2];
-    const bracketKind = match[1];
-    const closeBracket = match[3];
-
-    // Only treat it as a citation if the inner content is purely digits
-    if (!/^\d+$/.test(rawMarker)) {
-      parts.push(content.slice(lastIndex, match.index + match[0].length));
-      lastIndex = match.index + match[0].length;
-      continue;
-    }
+    const markerNumber = match[1];
 
     // Push preceding plain text
     if (match.index > lastIndex) {
       parts.push(content.slice(lastIndex, match.index));
     }
 
-    const index = parseInt(rawMarker, 10);
-    const citation = citations[index];
+    const sourceKey = 'S' + markerNumber;
+    const citation = citationMap.get(sourceKey);
 
     parts.push(
       <TouchableOpacity
@@ -129,10 +127,8 @@ const renderTextWithCitations = (
           }
         }}
       >
-        <ThemedText
-          style={styles.inlineCitationNumber}
-        >
-          {bracketKind}{rawMarker}{closeBracket}
+        <ThemedText style={styles.inlineCitationNumber}>
+          {markerNumber}
         </ThemedText>
       </TouchableOpacity>
     );
@@ -267,29 +263,13 @@ export default function ChatScreen() {
     }
   };
 
-  const renderCitations = (citations: Citation[]) => {
-    if (!citations?.length) return null;
-    return (
-      <View style={styles.citationList}>
-        {citations.map((citation, index) => (
-          <View key={`${citation.document_id}-${index}`} style={styles.citationItem}>
-            <ThemedText style={styles.citationTitle}>{citation.file_name}</ThemedText>
-            <ThemedText style={styles.citationMeta}>
-              Chunk #{citation.chunk_index + 1} • {(citation.relevance_score * 100).toFixed(1)}%
-            </ThemedText>
-          </View>
-        ))}
-      </View>
-    );
-  };
-
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <KeyboardAvoidingView
           style={styles.keyboardAvoid}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
         >
           <ThemedView style={styles.page}>
             <View style={styles.header}>
@@ -351,7 +331,6 @@ export default function ChatScreen() {
                           )}
                         </ThemedText>
                       )}
-                      {message.role === 'assistant' && renderCitations(message.citations || [])}
                       {message.role === 'assistant' && message.warning ? (
                         <ThemedText style={styles.warningText}>{message.warning}</ThemedText>
                       ) : null}
@@ -363,7 +342,7 @@ export default function ChatScreen() {
                     {message.role === 'assistant' && renderFactCheckBadge(message.fact_check)}
 
                     <ThemedText style={styles.messageMeta}>
-                      {message.role === 'assistant' ? 'Assistant' : 'You'}, {formatTime(message.created_at)}
+                      {message.role === 'assistant' ? 'Assistant' : 'You'}, {formatTime(message.created_at ?? message.time)}
                     </ThemedText>
                   </View>
                 ))
@@ -488,7 +467,7 @@ const styles = StyleSheet.create({
   },
   chatList: {
     gap: 18,
-    paddingBottom: 16,
+    paddingBottom: 60,
   },
   headerRight: {
     alignItems: 'flex-end',
@@ -518,75 +497,6 @@ const styles = StyleSheet.create({
     color: '#064E3B',
     fontSize: 12,
     fontWeight: '700',
-  },
-  messageBubble: {
-    borderRadius: 22,
-    padding: 18,
-    maxWidth: '85%',
-  },
-  inboundBubble: {
-    backgroundColor: '#FFFFFF',
-    alignSelf: 'flex-start',
-    shadowColor: '#000',
-    shadowOpacity: 0.03,
-    shadowRadius: 12,
-    elevation: 2,
-  },
-  outboundBubble: {
-    backgroundColor: '#0040E0',
-    alignSelf: 'flex-end',
-  },
-  messageBody: {
-    color: '#111827',
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  messageMeta: {
-    marginTop: 8,
-    color: '#6B7280',
-    fontSize: 11,
-  },
-  citationList: {
-    marginTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    paddingTop: 10,
-    gap: 10,
-  },
-  citationItem: {
-    backgroundColor: '#F3F4F6',
-    borderRadius: 14,
-    padding: 10,
-  },
-  citationTitle: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#111827',
-  },
-  citationMeta: {
-    marginTop: 4,
-    fontSize: 12,
-    color: '#6B7280',
-  },
-  errorText: {
-    color: '#B91C1C',
-    fontSize: 14,
-    marginVertical: 10,
-  },
-  emptyText: {
-    color: '#6B7280',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  outboundText: {
-    color: '#FFFFFF',
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  inboundText: {
-    color: '#111827',
-    fontSize: 15,
-    lineHeight: 22,
   },
   warningText: {
     marginTop: 8,
