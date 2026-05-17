@@ -31,6 +31,8 @@ def get_embedding_model() -> HuggingFaceEmbeddings:
                     cache_folder=os.getenv("SENTENCE_TRANSFORMERS_HOME"),
                     model_kwargs=model_kwargs,
                     encode_kwargs={"normalize_embeddings": True},
+                    # query_instruction="query: ",
+                    # embed_instruction="passage: ",
                 )
 
     return _embedding_model

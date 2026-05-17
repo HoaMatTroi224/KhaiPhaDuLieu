@@ -4,7 +4,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     HF_HOME=/opt/huggingface \
     SENTENCE_TRANSFORMERS_HOME=/opt/sentence-transformers \
-    EMBEDDING_MODEL_REPO=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 \
+    # EMBEDDING_MODEL_REPO=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 \
+    EMBEDDING_MODEL_REPO=intfloat/multilingual-e5-small \
     EMBEDDING_MODEL=/opt/models/embedding
 
 WORKDIR /app

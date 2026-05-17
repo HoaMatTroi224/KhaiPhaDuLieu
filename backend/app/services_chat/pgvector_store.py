@@ -54,7 +54,8 @@ class PGVectorStore:
         if not chunks:
             return []
 
-        texts = [chunk.page_content for chunk in chunks]
+        # texts = [chunk.page_content for chunk in chunks]
+        texts = [f"passage: {chunk.page_content}" for chunk in chunks] # E5 cần prefix
 
         embeddings_list = await asyncio.to_thread(
             self.embeddings.embed_documents,
@@ -113,8 +114,12 @@ class PGVectorStore:
 
         k = k or settings.TOP_K_CHUNKS
 
-        query_embedding = self.embeddings.embed_query(
-            query
+        # query_embedding = self.embeddings.embed_query(
+        #     query
+        # )
+        query_embedding = await asyncio.to_thread(
+            self.embeddings.embed_query,
+            f"query: {query}",
         )
 
         score = (

@@ -23,7 +23,9 @@ class Settings(BaseSettings):
     VIT5_SUMMARIZE_API_URL: str
     VIT5_SUMMARIZE_TIMEOUT_S: float = 180.0
 
-    EMBEDDING_MODEL: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    # EMBEDDING_MODEL: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    # EMBEDDING_MODEL: str = "infloat/multilingual-e5-small"
+    EMBEDDING_MODEL: str = "/opt/models/embedding"
     LARGE_LANGUAGE_MODEL: str = "llama-3.3-70b-versatile"
 
     # ADAPTER_PATH: str = str(Path(__file__).parent / "ai_model" / "vit5-lora-adapter")
