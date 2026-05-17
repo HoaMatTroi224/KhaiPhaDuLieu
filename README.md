@@ -25,35 +25,7 @@
    - Làm sạch văn bản, chuyển đổi sang Unicode chuẩn.
 3. **Tóm tắt và hỏi đáp bằng AI:**
    - Ứng dụng `VietAI/vit5-base` với LoRA và RAG index embedding.
-4. **Triển khai linh hoạt:**
-   - Chạy được cả offline (batch) và online (API backend và UI).
-5. **Tìm kiếm nhanh chóng:**
-   - Tích hợp FAISS để xây dựng vector embedding và truy vấn.
 
----
-
-## 📦 Kiến trúc & Workflow
-
-Dưới đây là luồng hoạt động của toàn bộ hệ thống:
-
-```mermaid
-flowchart TD
-    A[Crawl dữ liệu <br/> data-preprocessing/crawl_data.py] --> B[SQLite: khoahoc_vn.db]
-    B --> C[Tiền xử lý <br/> data-preprocessing/data_preprocessing.py]
-    C --> D{Xuất ds-1000b.csv <br/> và data_postgres.sql}
-    D --> E[Import vào <br/> Postgres/Supabase]
-    E --> F[AI Indexing <br/> ai_module/Models/test.py]
-    F --> G[FAISS index <br/> faiss_index_kpdl/]
-    G --> H[API Hỏi đáp - Tóm tắt <br/> ai_module/Models/test.py<br/> /ask_question/ ... ]
-    H --> I1[(Web backend<br/>web/backend/* )]
-    H --> I2[(Streamlit demo <br/> ai_module/Models/model.py)]
-    I1 --> J[(Frontend UI <br/> web/frontend/* )]
-```
-
-Chi tiết:
-1. **Xanh lam:** Quy trình batch tự động: crawl, làm sạch, indexing.
-2. **Vàng:** Xử lý AI: RAG embedding, infer, hỏi đáp.
-3. **Tím:** Giao diện cho người dùng qua web-app (với `FastAPI`, Next.js).
 
 ---
 
@@ -62,69 +34,143 @@ Chi tiết:
 ```plaintext
 KhaiPhaDuLieu/
 ├── README.md                     # Hướng dẫn tổng quan dự án
-├── docker-compose.yml            # Quản lý container hóa backend, frontend, DB
-├── khoahoc_vn.db                 # SQLite file sinh ra từ quy trình crawl dữ liệu
-├── ds-1000b.csv                  # Dữ liệu sạch sau khi tiền xử lý
-├── data_postgres.sql             # Script SQL import lên PostgreSQL
-
-├── data-preprocessing/           # Tiền xử lý dữ liệu
-│   ├── README.md                 # Hướng dẫn cài đặt module này
-│   ├── requirements.txt          # Các thư viện cần thiết (pandas, regex,...)
+│
+├── data/                         # Tiền xử lý dữ liệu
 │   ├── crawl_data.py             # Script crawl và thu thập bài báo khoa học
-│   ├── data_preprocessing.py     # Làm sạch và chuẩn hóa dữ liệu
-│   └── utils/                    # Tiện ích hỗ trợ xử lý
-│       ├── cleaning_util.py      # Hàm xử lý noise trong văn bản
-│       ├── format_checker.py     # Kiểm tra định dạng Unicode
-│       └── constants.py          # Cấu hình biến cố định (thư mục/format)
-
-├── ai_module/                    # Các module AI hỗ trợ QA và tóm tắt
-│   ├── Models/                   # Chính sách AI: inference, indexing...
-│   │   ├── README.md             # Hướng dẫn tổng thể module AI
-│   │   ├── requirements.txt      # Thư viện AI (transformers, faiss, ...)
-│   │   ├── model.py              # Streamlit demo model hỏi đáp và tóm tắt
-│   │   ├── test.py               # FastAPI: routing toàn bộ dịch vụ AI
-│   │   ├── model.ipynb           # Thử nghiệm/ví dụ jupyter notebook
-│   │   ├── service_qa/           # Module RAG QA Service
-│   │   │   ├── README.md         # Tài liệu dịch vụ QA
-│   │   │   ├── config/           # Cấu hình QA
-│   │   │   ├── data_access/      # CRUD DB PostgreSQL/Supabase + xử lý metadata
-│   │   │   ├── embedding/        # Xử lý vector embedding (E5 model)
-│   │   │   ├── generation/       # RAG-based answer generator
-│   │   │   └── serving/          # Endpoints chính (FastAPI)
-│   │   ├── service_summarize/    # Module tóm tắt bài báo bằng tiếng Việt
-│   │   │   ├── README.md         # Tài liệu dịch vụ Tóm tắt
-│   │   │   ├── summarizer.py     # Chức năng chính để tóm tắt
-│   │   │   ├── vit5_lora/        # Fine-tuned ViT5 base + LoRA adapter
-│   │   │   └── pipeline/         # Quy trình giảm tokenize multi-doc
-│   └── faiss_index_kpdl/         # FAISS chỉ mục RAG-based QA
-│       ├── embeddings/           # Vector embeddings sinh sau preprocess
-│       ├── faiss_index.bin       # FAISS thuật toán index trả lời nhanh
-│       └── metadata.db           # Mapping id-chunk đến dữ liệu raw
-
-├── web/                          # Giao diện Web cả backend lẫn frontend
-│   ├── README.md                 # Tổng quan module Web
-│   ├── docker-compose.override.yml # Tùy chỉnh config background service
-│   ├── backend/                  # Django/FastAPI Backend
-│   │   ├── app/                  # Application backend logic
-│   │   │   ├── main.py           # Điểm vào chính của FastAPI
-│   │   │   ├── routers/          # Tích hợp routes (upload, hỏi đáp, log...)
-│   │   │   ├── models/           # Mô hình DB + Pydantic Validation
-│   │   │   ├── services/         # Handlers API chính (QA, tóm tắt, ...)
-│   └── frontend/                 # Frontend giao diện Next.js
-│       ├── components/           # React Components (Giao diện UI nhỏ)
-│       ├── pages/                # Routing chính Next.js
-│       ├── ChatBox.tsx           # Nhập chat cho hỏi đáp AI
-│       ├── FileUpload.tsx        # Khu vực upload file PDF
-│       ├── Dashboard.tsx         # Hiển thị dự án/tài liệu cá nhân
-
-├── mobile/                       # Ứng dụng di động Expo React Native
-│   ├── README.md                 # Hướng dẫn sử dụng app
-│   ├── package.json              # Cấu hình/yêu cầu dependencies
-│   └── app/                      # Cấu trúc chính Expo
-│       ├── pages/                # Các màn hình (Chính, dự án)
-│       ├── components/           # React Native Components reusable
-│       ├── App.js                # Điểm vào chính app React Native
-│       └── routing/              # Xử lý điều hướng di động
+│   └── data_preprocessing.py     # Làm sạch và chuẩn hóa dữ liệu
+│
+├── ai_module/                    # Các module AI hỗ trợ QA, Fact-check và tóm tắt (Docker services)
+│   ├── docker-compose.yml        # Orchestration các AI services
+│   ├── README.md                 # Hướng dẫn tổng thể module AI
+│   │
+│   ├── gateway/                  # API Gateway - điểm vào chính cho các dịch vụ AI
+│   │   ├── Dockerfile           # Container image cho gateway
+│   │   └── main.py              # Routing chính, điều hướng requests tới các services
+│   │
+│   ├── service_qa/              # Dịch vụ Hỏi Đáp (RAG-based QA)
+│   │   ├── Dockerfile           # Container image cho QA service
+│   │   ├── requirements.txt      # Thư viện cần thiết
+│   │   ├── config/              # Cấu hình QA
+│   │   │   └── config.py
+│   │   ├── data_access/         # CRUD DB PostgreSQL/Supabase + xử lý metadata
+│   │   │   └── supabase_client.py
+│   │   ├── embedding/           # Xử lý vector embedding (E5 model)
+│   │   │   └── embedder.py
+│   │   ├── generation/          # RAG-based answer generator
+│   │   │   └── generator.py
+│   │   ├── retrieval/           # Truy vấn vector database (pgvector)
+│   │   │   └── pgvector_store.py
+│   │   └── serving/             # Endpoints chính (FastAPI)
+│   │       └── main.py
+│   │
+│   ├── service_factcheck/       # Dịch vụ Kiểm chứng Sự kiện (NLI-based)
+│   │   ├── Dockerfile           # Container image cho Fact-check service
+│   │   ├── download_model.py    # Script tải models
+│   │   ├── requirements.txt      # Thư viện cần thiết
+│   │   ├── config/              # Cấu hình Fact-check
+│   │   │   └── settings.py
+│   │   ├── inference/           # Inference NLI model
+│   │   │   └── nli.py
+│   │   ├── models/              # Model loading utilities
+│   │   │   └── model_loader.py
+│   │   └── serving/             # Endpoints chính (FastAPI)
+│   │       ├── api.py
+│   │       └── schemas.py
+│   │
+│   └── service_summarize/       # Dịch vụ Tóm tắt bài báo (ViT5 + LoRA)
+│       ├── Dockerfile           # Container image cho Summarize service
+│       ├── download_model.py    # Script tải models
+│       ├── requirements.txt      # Thư viện cần thiết
+│       ├── README.md             # Tài liệu dịch vụ Tóm tắt
+│       ├── config/              # Cấu hình Tóm tắt
+│       │   └── settings.py
+│       ├── inference/           # Inference summarization models
+│       │   ├── pdf_extractor.py # Trích xuất PDF
+│       │   └── summarize.py     # Logic tóm tắt bằng ViT5
+│       ├── models/              # Model loading utilities
+│       │   ├── model_loader.py
+│       │   └── vit5-lora-adapter/ # Fine-tuned ViT5 base + LoRA adapters
+│       └── serving/             # Endpoints chính (FastAPI)
+│           └── app.py
+│
+├── test/                         # Test scripts
+│   ├── test_api.py              # Test các API endpoints
+│   └── test_data.py             # Test data pipeline
+│
+├── web/                          # Giao diện Web (Backend + Frontend)
+│   ├── docker-compose.yml        # Orchestration web services
+│   ├── README.md                 # Hướng dẫn cài đặt web
+│   │
+│   ├── backend/                  # Backend FastAPI
+│   │   ├── Dockerfile           # Container image cho backend
+│   │   ├── requirements.txt      # Thư viện cần thiết
+│   │   └── app/                  # Application backend logic
+│   │       ├── main.py           # Điểm vào chính của FastAPI
+│   │       ├── config.py         # Cấu hình backend
+│   │       ├── core.py           # Các hàm core utilities
+│   │       ├── database.py       # Kết nối database
+│   │       ├── dependencies.py   # Dependency injection
+│   │       ├── models.py         # Mô hình DB
+│   │       ├── schemas.py        # Pydantic validation schemas
+│   │       ├── cache.py          # Cache utilities
+│   │       ├── routers/          # API routes (upload, QA, log, ...)
+│   │       └── services_chat/    # Services cho chat/QA
+│   │
+│   └── frontend/                 # Frontend Next.js
+│       ├── Dockerfile           # Container image cho frontend
+│       ├── package.json          # Dependencies Node.js
+│       ├── tsconfig.json         # Cấu hình TypeScript
+│       ├── next.config.ts        # Cấu hình Next.js
+│       ├── postcss.config.mjs    # Cấu hình PostCSS
+│       ├── eslint.config.mjs     # Cấu hình ESLint
+│       ├── proxy.ts              # Proxy API backend
+│       ├── components.json       # Cấu hình UI components
+│       ├── AGENTS.md             # Cấu hình AI agents cho Copilot
+│       ├── CLAUDE.md             # Cấu hình Claude
+│       ├── README.md             # Tài liệu frontend
+│       ├── app/                  # Routing chính Next.js
+│       ├── components/           # React Components tái sử dụng
+│       ├── lib/                  # Utilities và helpers
+│       ├── public/               # Tài nguyên tĩnh
+│       └── postcss.config.mjs    # PostCSS configuration
+│
+└── mobile/                       # Ứng dụng di động (Expo React Native)
+    ├── app.json                  # Cấu hình Expo
+    ├── package.json              # Dependencies Node.js
+    ├── tsconfig.json             # Cấu hình TypeScript
+    ├── eslint.config.js          # Cấu hình ESLint
+    ├── app/                      # Cấu trúc chính Expo
+    │   ├── _layout.tsx           # Root layout
+    │   ├── index.tsx             # Trang chính
+    │   ├── login.tsx             # Trang đăng nhập
+    │   ├── register.tsx          # Trang đăng ký
+    │   ├── chat.tsx              # Trang chat
+    │   ├── Summary.tsx           # Trang tóm tắt
+    │   ├── modal.tsx             # Modal dialogs
+    │   ├── (tabs)/               # Tab navigation screens
+    │   │   ├── _layout.tsx
+    │   │   ├── index.tsx
+    │   │   ├── library.tsx
+    │   │   └── new-project.tsx
+    ├── components/               # React Native Components
+    │   ├── external-link.tsx
+    │   ├── haptic-tab.tsx
+    │   ├── hello-wave.tsx
+    │   ├── parallax-scroll-view.tsx
+    │   ├── themed-text.tsx
+    │   ├── themed-view.tsx
+    │   └── ui/                   # UI component library
+    ├── constants/                # Hằng số ứng dụng
+    │   └── theme.ts
+    ├── hooks/                    # Custom React hooks
+    │   ├── use-color-scheme.ts
+    │   ├── use-color-scheme.web.ts
+    │   └── use-theme-color.ts
+    ├── lib/                      # Utilities
+    │   ├── backend.ts            # Backend API client
+    │   └── supabase.ts           # Supabase client
+    └── assets/                   # Tài nguyên ứng dụng
+        └── images/
 ```
 
 ---

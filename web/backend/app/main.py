@@ -1,6 +1,7 @@
+from .routers import chat, documents, projects
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import projects, documents, summaries, chat
+from .routers import summaries
 from .core import lifespan
 
 app = FastAPI(title="AI Paper Summarizer", version="1.0.0", lifespan=lifespan)
